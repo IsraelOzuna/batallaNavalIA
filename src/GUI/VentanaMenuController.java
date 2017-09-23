@@ -14,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -31,6 +33,9 @@ public class VentanaMenuController implements Initializable {
         
     }    
     
+    @FXML
+    private Button botonIniciarPartida;
+      
     @FXML
     public void buscarPartida(ActionEvent event) throws IOException{
     FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaBuscarPartida.fxml"));
