@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="526.0" prefWidth="327.0" style="-fx-background-color: #0B0B61;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaIniciarSesionController">
+<AnchorPane id="AnchorPane" prefHeight="526.0" prefWidth="327.0" style="-fx-background-color: #000066;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaIniciarSesionController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <children>
-      <Button fx:id="botonIniciarSesion" layoutX="120.0" layoutY="444.0" mnemonicParsing="false" opacity="0.99" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #1f56c6;" text="Iniciar Sesión" textFill="WHITE">
+      <Button fx:id="botonIniciarSesion" defaultButton="true" layoutX="120.0" layoutY="444.0" mnemonicParsing="false" opacity="0.99" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #1f56c6;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Blend />
+         </effect></Button>
       <Separator layoutX="245.0" layoutY="14.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="6.0" />
-      <Button fx:id="botonEspañol" layoutX="248.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE">
+      <Button fx:id="botonEspañol" layoutX="243.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
-         </font></Button>
-      <Button fx:id="botonIngles" layoutX="187.0" layoutY="13.0" mnemonicParsing="false" onAction="#cambiarIdiomaIngles" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: bluedark;" text="Inglés" textFill="WHITE">
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="botonIngles" layoutX="196.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaIngles" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: bluedark;" text="Inglés" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
-         </font></Button>
-      <ImageView fitHeight="156.0" fitWidth="295.0" layoutX="16.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <ImageView fitHeight="124.0" fitWidth="327.0" layoutX="-2.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/barco.png" />
          </image>
       </ImageView>
-      <Button fx:id="botonRegistrarse" layoutX="217.0" layoutY="487.0" mnemonicParsing="false" style="-fx-background-color: bluedark;" text="Registrate aqui" textFill="WHITE">
+      <Button fx:id="botonRegistrarse" layoutX="217.0" layoutY="487.0" mnemonicParsing="false" style="-fx-background-color: bluedark;" text="Registrate aqui" textFill="WHITE" underline="true">
          <effect>
             <ColorAdjust />
          </effect>
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <TextField layoutX="90.0" layoutY="366.0" />
-      <PasswordField layoutX="89.0" layoutY="275.0" />
-      <Label fx:id="etiquetaBatallaNaval" layoutX="89.0" layoutY="66.0" prefHeight="27.0" prefWidth="149.0" text="BATALLA NAVAL" textFill="WHITE">
+      <TextField fx:id="campoUsuario" layoutX="90.0" layoutY="275.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <PasswordField fx:id="campoContrasena" layoutX="90.0" layoutY="370.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></PasswordField>
+      <Label fx:id="etiquetaBatallaNaval" layoutX="102.0" layoutY="65.0" prefHeight="27.0" prefWidth="149.0" text="BATALLA NAVAL" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="18.0" />
          </font>
