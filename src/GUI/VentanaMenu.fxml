@@ -13,17 +13,17 @@
    <children>
       <ImageView id="barcoMenu" fx:id="imagenBarcoMenu" fitHeight="329.0" fitWidth="637.0" layoutX="16.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../UV/5to/Tecnologias/Proyecto/Imagenes/barcoMenu.png" />
+            <Image url="@../Imagenes/barcoMenu.png" />
          </image>
       </ImageView>
       <ImageView id="misil" fx:id="imagenMisil" fitHeight="110.0" fitWidth="148.0" layoutX="426.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../UV/5to/Tecnologias/Proyecto/Imagenes/misil.png" />
+            <Image url="@../Imagenes/misil.png" />
          </image>
       </ImageView>
       <ImageView id="radar" fx:id="imagenRadar" fitHeight="150.0" fitWidth="200.0" layoutX="693.0" layoutY="322.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../UV/5to/Tecnologias/Proyecto/Imagenes/radar2.gif" />
+            <Image url="@../Imagenes/radar2.gif" />
          </image>
       </ImageView>
       <Button id="botonIniciarPartida" fx:id="botonIniciarPartida" layoutX="333.0" layoutY="367.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #E65C0A;" text="Iniciar partida" textAlignment="CENTER" textFill="WHITE">

@@ -8,13 +8,9 @@ package batallanaval;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -24,14 +20,14 @@ import javafx.stage.Stage;
 public class BatallaNaval extends Application {
     
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage ventanaIniciarSesion) throws IOException {
         ResourceBundle recurso = ResourceBundle.getBundle("recursos.idioma_es_MX");
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/VentanaIniciarSesion.fxml"),recurso);
         
         Scene scene = new Scene(root);
         
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        ventanaIniciarSesion.setScene(scene);
+        ventanaIniciarSesion.show();
     }
 
     /**

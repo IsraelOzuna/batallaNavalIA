@@ -19,7 +19,7 @@
       <Insets />
    </opaqueInsets>
    <children>
-      <Button fx:id="botonIniciarSesion" defaultButton="true" layoutX="120.0" layoutY="444.0" mnemonicParsing="false" opacity="0.99" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #1f56c6;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="botonIniciarSesion" defaultButton="true" layoutX="114.0" layoutY="444.0" mnemonicParsing="false" onAction="#iniciarSesion" opacity="0.99" prefHeight="32.0" prefWidth="105.0" style="-fx-background-color: #1f56c6;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
@@ -30,14 +30,14 @@
             <Blend />
          </effect></Button>
       <Separator layoutX="245.0" layoutY="14.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="6.0" />
-      <Button fx:id="botonEspañol" layoutX="243.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE">
+      <Button fx:id="botonEspañol" layoutX="243.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="32.0" prefWidth="67.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="botonIngles" layoutX="196.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaIngles" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: bluedark;" text="Inglés" textFill="WHITE">
+      <Button fx:id="botonIngles" layoutX="184.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaIngles" prefHeight="32.0" prefWidth="67.0" style="-fx-background-color: bluedark;" text="Inglés" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
@@ -60,11 +60,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TextField fx:id="campoUsuario" layoutX="90.0" layoutY="275.0">
+      <TextField fx:id="campoUsuario" layoutX="90.0" layoutY="275.0" promptText="Ingresa tu usuario...">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></TextField>
-      <PasswordField fx:id="campoContrasena" layoutX="90.0" layoutY="370.0">
+      <PasswordField fx:id="campoContrasena" layoutX="90.0" layoutY="370.0" promptText="Ingresa tu contraeña...">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor></PasswordField>
