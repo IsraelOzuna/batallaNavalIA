@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PantallaBuscarPartidaController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaBuscarPartidaController">
    <children>
       <ImageView fx:id="imagenMundo" fitHeight="502.0" fitWidth="850.0" pickOnBounds="true" preserveRatio="true">
          <image>

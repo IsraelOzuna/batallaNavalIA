@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 
 /**
@@ -25,29 +26,41 @@ import javafx.stage.Stage;
  */
 public class VentanaMenuController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    private ResourceBundle recurso;
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
+        recurso = rb;           
+       configurarIdioma();             
+    }
+
     @FXML
     private Button botonIniciarPartida;
-      
     @FXML
-    public void buscarPartida(ActionEvent event) throws IOException{
-    FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaBuscarPartida.fxml"));
-        
-       
-        Parent root = (Parent)loger.load();
+    private Button botonCerrarSesion;
+    @FXML
+    private TableColumn columnaJugador;
+    @FXML
+    private TableColumn columnaPuntaje;
+
+    public void configurarIdioma() {
+        botonIniciarPartida.setText(recurso.getString("botIniciarPartida"));
+        botonCerrarSesion.setText(recurso.getString("botCerrarSesion"));
+        columnaJugador.setText(recurso.getString("columJugador"));
+        columnaPuntaje.setText(recurso.getString("columPuntaje"));
+    }
+
+    @FXML
+    public void buscarPartida(ActionEvent event) throws IOException {
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaBuscarPartida.fxml"), recurso);
+
+        Parent root = (Parent) loger.load();
         Stage buscarPartida = new Stage();
 
         buscarPartida.setScene(new Scene(root));
         buscarPartida.show();
 
     }
-    
-   
+
 }

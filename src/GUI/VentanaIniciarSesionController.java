@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * @author Irdevelo
  */
 public class VentanaIniciarSesionController implements Initializable {
-    ResourceBundle recurso;
+    private ResourceBundle recurso;
     
     @FXML
     private Label etiquetaUsuario;
@@ -45,8 +45,8 @@ public class VentanaIniciarSesionController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        recurso = rb;
+    public void initialize(URL url, ResourceBundle recurso) {
+        this.recurso = recurso;
         configurarIdioma();
         
     }
@@ -74,7 +74,8 @@ public class VentanaIniciarSesionController implements Initializable {
     
      @FXML
     private void iniciarSesion(ActionEvent event) throws IOException {
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"));
+         System.out.println(recurso);
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"),recurso);
         
        
         Parent root = (Parent)loger.load();

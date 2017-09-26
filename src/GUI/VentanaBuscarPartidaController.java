@@ -18,11 +18,19 @@ import javafx.scene.control.Label;
  */
 public class VentanaBuscarPartidaController implements Initializable {
 
+    private ResourceBundle recurso;
+
     @FXML
     private Label etiquetaBuscandoPartida;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-    }    
+        recurso = rb;
+        configurarIdioma();
+    }
     
+    public void configurarIdioma() {
+        etiquetaBuscandoPartida.setText(recurso.getString("etBuscandoPartida"));
+    }
+
 }

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="850.0" style="-fx-background-color: #000066;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="850.0" style="-fx-background-color: #000066;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaMenuController">
    <children>
-      <ImageView id="barcoMenu" fx:id="imagenBarcoMenu" fitHeight="329.0" fitWidth="637.0" layoutX="201.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="barcoMenu" fx:id="imagenBarcoMenu" fitHeight="329.0" fitWidth="637.0" layoutX="208.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/barcoMenu.png" />
          </image>
@@ -27,7 +27,7 @@
             <Image url="@../Imagenes/radar2.gif" />
          </image>
       </ImageView>
-      <Button id="botonIniciarPartida" fx:id="botonIniciarPartida" layoutX="333.0" layoutY="367.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #E65C0A;" text="Iniciar partida" textAlignment="CENTER" textFill="WHITE">
+      <Button id="botonIniciarPartida" fx:id="botonIniciarPartida" layoutX="333.0" layoutY="367.0" mnemonicParsing="false" onAction="#buscarPartida" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #E65C0A;" text="Iniciar partida" textAlignment="CENTER" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
