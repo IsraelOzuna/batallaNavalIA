@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="1000.0" prefHeight="500.0" prefWidth="1000.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaTableroController">
+   <children>
+      <Pane fx:id="panelOponente" layoutX="37.0" layoutY="36.0" maxHeight="450.0" maxWidth="450.0" prefHeight="450.0" prefWidth="450.0" style="-fx-background-color: #ffff;">
+         <children>
+            <GridPane fx:id="tableroOponente" gridLinesVisible="true" prefHeight="450.0" prefWidth="450.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXButton fx:id="botonA1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" />
+                  <JFXButton fx:id="botonB1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" />
+                  <JFXButton fx:id="botonC1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" />
+                  <JFXButton fx:id="botonD1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" />
+                  <JFXButton fx:id="botonE1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" />
+                  <JFXButton fx:id="botonF1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" />
+                  <JFXButton fx:id="botonG1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" />
+                  <JFXButton fx:id="botonH1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" />
+                  <JFXButton fx:id="botonI1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" />
+                  <JFXButton fx:id="botonJ1" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" />
+                  <JFXButton fx:id="botonA2" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonA3" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonA4" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonA5" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonA6" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonA7" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonA8" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonA9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonA10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonB2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonB3" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonB4" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonB5" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonB6" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonB7" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonB8" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonB9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonB10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonC2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonC3" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonC4" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonC5" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonC6" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonC7" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonC8" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonC9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonC10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonD2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonD3" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonD4" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonD5" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonD6" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonD7" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonD8" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonD9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonD10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonE2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonE3" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonE4" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonE5" opacity="0.8" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonE6" opacity="0.8" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonE7" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonE8" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonE9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonE10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonF2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonF3" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonF4" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonF5" opacity="0.8" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonF6" opacity="0.8" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonF7" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonF8" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonF9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonF10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonG2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonG3" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonG4" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonG5" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonG6" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonG7" opacity="0.85" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonG8" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonG9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonG10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonH2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonH3" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonH4" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonH5" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonH6" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonH7" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonH8" opacity="0.9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonH9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonH10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonI2" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonI4" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonI5" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonI6" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonI7" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonI8" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonI9" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonI10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonJ2" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="botonJ3" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="botonJ4" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+                  <JFXButton fx:id="botonJ5" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="4" />
+                  <JFXButton fx:id="botonJ6" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="5" />
+                  <JFXButton fx:id="botonJ7" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="6" />
+                  <JFXButton fx:id="botonJ8" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="7" />
+                  <JFXButton fx:id="botonJ9" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="8" />
+                  <JFXButton fx:id="botonJ10" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" GridPane.rowIndex="9" />
+                  <JFXButton fx:id="botonI3" opacity="0.95" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text=" " GridPane.columnIndex="8" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane fx:id="panelPropio" layoutX="518.0" layoutY="36.0" maxHeight="450.0" maxWidth="450.0" prefHeight="450.0" prefWidth="450.0" style="-fx-background-color: #ffff;">
+         <children>
+            <GridPane fx:id="tableroPropio" gridLinesVisible="true" maxHeight="450.0" maxWidth="450.0" minHeight="450.0" minWidth="450.0" opacity="0.75" prefHeight="450.0" prefWidth="450.0" style="-fx-background-color: #303F66;">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children></Pane>
+      <Label fx:id="etiquetaA" layoutX="58.0" layoutY="14.0" text="A" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaB" layoutX="101.0" layoutY="14.0" text="B" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaC" layoutX="148.0" layoutY="14.0" text="C" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaD" layoutX="193.0" layoutY="14.0" text="D" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaE" layoutX="237.0" layoutY="14.0" text="E" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaF" layoutX="282.0" layoutY="14.0" text="F" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaG" layoutX="328.0" layoutY="14.0" text="G" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaH" layoutX="373.0" layoutY="14.0" text="H" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaI" layoutX="415.0" layoutY="14.0" text="I" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaJ" layoutX="461.0" layoutY="14.0" text="J" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta1" layoutX="21.0" layoutY="49.0" text="1" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta2" layoutX="21.0" layoutY="97.0" text="2" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta3" layoutX="21.0" layoutY="136.0" text="3" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta4" layoutX="21.0" layoutY="185.0" text="4" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta5" layoutX="21.0" layoutY="232.0" text="5" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta6" layoutX="21.0" layoutY="275.0" text="6" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta7" layoutX="21.0" layoutY="320.0" text="7" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta8" layoutX="21.0" layoutY="364.0" text="8" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta9" layoutX="21.0" layoutY="408.0" text="9" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiqueta10" layoutX="21.0" layoutY="455.0" text="10" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

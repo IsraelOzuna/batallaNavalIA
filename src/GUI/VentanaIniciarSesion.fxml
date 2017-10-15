@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -7,28 +8,17 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="526.0" prefWidth="327.0" style="-fx-background-color: #000066;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaIniciarSesionController">
+<AnchorPane id="AnchorPane" prefHeight="526.0" prefWidth="327.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaIniciarSesionController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <children>
-      <Button fx:id="botonIniciarSesion" defaultButton="true" layoutX="114.0" layoutY="444.0" mnemonicParsing="false" onAction="#iniciarSesion" opacity="0.99" prefHeight="32.0" prefWidth="105.0" style="-fx-background-color: #1f56c6;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="12.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <effect>
-            <Blend />
-         </effect></Button>
       <Separator layoutX="245.0" layoutY="14.0" orientation="VERTICAL" prefHeight="27.0" prefWidth="6.0" />
       <Button fx:id="botonEspañol" layoutX="243.0" layoutY="15.0" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="32.0" prefWidth="67.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE">
          <font>
@@ -83,5 +73,10 @@
              <Font name="Berlin Sans FB Demi Bold" size="18.0" />
          </font>
       </Label>
+      <JFXButton fx:id="botonIniciarSesion" layoutX="115.0" layoutY="435.0" onAction="#iniciarSesion" prefHeight="32.0" prefWidth="99.0" style="-fx-background-color: #1f56c6;" text="Iniciar sesión" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
