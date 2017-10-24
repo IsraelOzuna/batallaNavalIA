@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="436.0" prefWidth="335.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaRegistrarUsuarioController">
+<AnchorPane id="AnchorPane" prefHeight="436.0" prefWidth="335.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaRegistrarUsuarioController">
    <children>
       <Label fx:id="etiquetaIngresarDatos" layoutX="31.0" layoutY="39.0" text="Ingresa tus datos:" textFill="WHITE">
          <font>
@@ -40,36 +40,42 @@
             <Font name="Berlin Sans FB Demi Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="campoNombre" layoutX="111.0" layoutY="93.0" prefHeight="25.0" prefWidth="187.0" promptText="Ingresa tu nombre...">
+      <TextField fx:id="campoNombre" layoutX="111.0" layoutY="93.0" prefHeight="25.0" prefWidth="187.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="campoApellidos" layoutX="111.0" layoutY="147.0" prefHeight="25.0" prefWidth="187.0" promptText="Ingresa tus apellidos...">
+      <TextField fx:id="campoApellidos" layoutX="111.0" layoutY="147.0" prefHeight="25.0" prefWidth="187.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="campoCorreo" layoutX="111.0" layoutY="202.0" prefHeight="25.0" prefWidth="187.0" promptText="Ingresa tu correo...">
+      <TextField fx:id="campoCorreo" layoutX="111.0" layoutY="202.0" prefHeight="25.0" prefWidth="187.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="campoUsuario" layoutX="111.0" layoutY="257.0" prefHeight="25.0" prefWidth="187.0" promptText="Ingresa tu nombre de usuario...">
+      <TextField fx:id="campoUsuario" layoutX="111.0" layoutY="257.0" prefHeight="25.0" prefWidth="187.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <PasswordField fx:id="campoContrasena" layoutX="111.0" layoutY="312.0" prefHeight="25.0" prefWidth="187.0" promptText="Ingresa una contraseña..." />
-      <JFXButton defaultButton="true" layoutX="65.0" layoutY="378.0" style="-fx-background-color: #1f56c6;" text="Registrarse" textFill="WHITE">
+      <PasswordField fx:id="campoContrasena" layoutX="111.0" layoutY="312.0" prefHeight="25.0" prefWidth="187.0" />
+      <JFXButton fx:id="botonRegistrarse" defaultButton="true" layoutX="65.0" layoutY="378.0" style="-fx-background-color: #1f56c6;" text="Registrarse" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
-      <JFXButton cancelButton="true" layoutX="205.0" layoutY="378.0" style="-fx-background-color: #ffff;" text="Cancelar">
+      <JFXButton fx:id="botonCancelar" cancelButton="true" layoutX="205.0" layoutY="378.0" style="-fx-background-color: #ffff;" text="Cancelar">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
 </AnchorPane>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="850.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaMenuController">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="850.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaMenuController">
    <children>
       <ImageView id="barcoMenu" fx:id="imagenBarcoMenu" fitHeight="329.0" fitWidth="637.0" layoutX="208.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -40,7 +40,7 @@
       </TableView>
       <Button fx:id="botonCerrarSesion" layoutX="758.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: bluedark;" text="Cerrar sesión" textFill="WHITE" underline="true">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+            <Font name="Berlin Sans FB" size="12.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -53,6 +53,9 @@
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="19.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
 </AnchorPane>

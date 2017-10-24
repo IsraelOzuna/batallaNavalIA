@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -27,6 +29,16 @@ import javafx.stage.Stage;
 public class VentanaMenuController implements Initializable {
 
     private ResourceBundle recurso;
+    @FXML
+    private ImageView imagenBarcoMenu;
+    @FXML
+    private ImageView imagenMisil;
+    @FXML
+    private ImageView imagenRadar;
+    @FXML
+    private TableView<?> tablaRank;
+    @FXML
+    private TableColumn<?, ?> columnaPosicion;
 
 
     @Override

@@ -5,12 +5,14 @@
  */
 package GUI;
 
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -19,20 +21,20 @@ import javafx.scene.control.Label;
  */
 public class VentanaRegistrarUsuarioController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+    private ResourceBundle recurso;
+
     @FXML
-    private Button botonRegistrarse;
+    private TextField campoNombre;
     @FXML
-    private Button botonCancelar;
+    private TextField campoApellidos;
     @FXML
-    private Label etiquetaIngresarDatos;    
+    private TextField campoCorreo;
+    @FXML
+    private TextField campoUsuario;
+    @FXML
+    private PasswordField campoContrasena;
+    @FXML
+    private Label etiquetaIngresarDatos;
     @FXML
     private Label etiquetaNombre;
     @FXML
@@ -43,5 +45,28 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     private Label etiquetaUsuario;
     @FXML
     private Label etiquetaContrasena;
+    @FXML
+    private JFXButton botonRegistrarse;
+    @FXML
+    private JFXButton botonCancelar;
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle recurso) {
+        this.recurso=recurso;
+        configurarIdioma();
+    }
     
+    public void configurarIdioma(){
+        etiquetaIngresarDatos.setText((recurso.getString("etIngresarDatos")));
+        etiquetaNombre.setText(recurso.getString("etNombre"));
+        etiquetaApellidos.setText(recurso.getString("etApellidos"));
+        etiquetaCorreo.setText(recurso.getString("etCorreo"));
+        etiquetaUsuario.setText(recurso.getString("etUsuarioRegistro"));
+        etiquetaContrasena.setText(recurso.getString("etContrasenaRegistro"));
+        botonRegistrarse.setText(recurso.getString("botRegistrarse"));
+        botonCancelar.setText(recurso.getString("botCancelar"));        
+    }
 }
