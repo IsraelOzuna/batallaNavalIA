@@ -5,26 +5,32 @@
  */
 package GUI;
 
+import Negocio.ICuenta;
+import Negocio.Jugador;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Irdevelo
- */
 public class VentanaIniciarSesionController implements Initializable {
 
     private ResourceBundle recurso;
@@ -81,24 +87,63 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     @FXML
-    private void iniciarSesion(ActionEvent event) throws IOException {        
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"), recurso);
+    private void iniciarSesion(ActionEvent event) throws IOException {
+        boolean usuarioEncontrado;
+        ICuenta stub;
+        String host = "127.0.0.1";
 
-        Parent root = (Parent) loger.load();
-        Stage menu = new Stage();
+        if (campoUsuario.getText().isEmpty() | campoContrasena.getText().isEmpty()) {
+            Alert alertaCamposVacios = new Alert(Alert.AlertType.WARNING);
+            alertaCamposVacios.setHeaderText("Campo vacio");
+            alertaCamposVacios.setContentText("Algún campo esta vacío");
+            alertaCamposVacios.show();
+        } else {
+            try {
+                Registry registry = LocateRegistry.getRegistry(host);
+                stub = (ICuenta) registry.lookup("ServidorBatallaNaval");
+               
+                usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(),cifrarContrasena(campoContrasena.getText()));
 
-        menu.setScene(new Scene(root));
-        menu.show();
+                if (usuarioEncontrado) {
+                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"), recurso);
+
+                    Parent root = (Parent) loger.load();
+                    Stage menu = new Stage();
+
+                    menu.setScene(new Scene(root));
+                    menu.show();
+                } else {
+                    Alert alertaDatosIncorrectos = new Alert(Alert.AlertType.WARNING);
+                    alertaDatosIncorrectos.setHeaderText("Datos incorrectos");
+                    alertaDatosIncorrectos.setContentText("Datos no validos");
+                    alertaDatosIncorrectos.show();
+                }
+
+            } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
+                Logger.getLogger(VentanaIniciarSesionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
-    
-    @FXML 
-    private void registrarUsuario(ActionEvent event) throws IOException{
+
+    private String cifrarContrasena(String string) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = messageDigest.digest(string.getBytes());
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < hash.length; i++) {
+            stringBuilder.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return stringBuilder.toString();
+    }
+
+    @FXML
+    private void registrarUsuario(ActionEvent event) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaRegistrarUsuario.fxml"), recurso);
-        
+
         Parent root = (Parent) loger.load();
         Stage registro = new Stage();
-        
+
         registro.setScene(new Scene(root));
         registro.show();
     }
