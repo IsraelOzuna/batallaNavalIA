@@ -13,7 +13,7 @@
             <Image url="@../Imagenes/tumblr_inline_nn42ukt26f1t5rqin_540.gif" />
          </image>
       </ImageView>
-      <Label fx:id="etiquetaBuscandoPartida" layoutX="37.0" layoutY="28.0" prefHeight="35.0" prefWidth="216.0" style="-fx-background-color: 0B0B61;" text="Buscando..." textFill="#ff8d01">
+      <Label fx:id="etiquetaBuscandoPartida" layoutX="37.0" layoutY="28.0" onMouseClicked="#jugarPartida" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: 0B0B61;" text="Buscando..." textFill="#ff8d01">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="24.0" />
          </font>

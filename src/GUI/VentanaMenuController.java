@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
@@ -28,7 +27,7 @@ import javafx.stage.Stage;
  */
 public class VentanaMenuController implements Initializable {
 
-    private ResourceBundle recurso;
+    private ResourceBundle idioma;
     @FXML
     private ImageView imagenBarcoMenu;
     @FXML
@@ -42,8 +41,8 @@ public class VentanaMenuController implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        recurso = rb;           
+    public void initialize(URL url, ResourceBundle idioma) {
+        this.idioma = idioma;           
        configurarIdioma();             
     }
 
@@ -57,15 +56,15 @@ public class VentanaMenuController implements Initializable {
     private TableColumn columnaPuntaje;
 
     public void configurarIdioma() {
-        botonIniciarPartida.setText(recurso.getString("botIniciarPartida"));
-        botonCerrarSesion.setText(recurso.getString("botCerrarSesion"));
-        columnaJugador.setText(recurso.getString("columJugador"));
-        columnaPuntaje.setText(recurso.getString("columPuntaje"));
+        botonIniciarPartida.setText(idioma.getString("botIniciarPartida"));
+        botonCerrarSesion.setText(idioma.getString("botCerrarSesion"));
+        columnaJugador.setText(idioma.getString("columJugador"));
+        columnaPuntaje.setText(idioma.getString("columPuntaje"));
     }
 
     @FXML
     public void buscarPartida(ActionEvent event) throws IOException {
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaBuscarPartida.fxml"), recurso);
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaBuscarPartida.fxml"), idioma);
 
         Parent root = (Parent) loger.load();
         Stage buscarPartida = new Stage();

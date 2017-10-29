@@ -11,18 +11,18 @@ import java.io.Serializable;
  *
  * @author Irdevelo
  */
-public class Jugador implements Serializable{
+public class Jugador implements Serializable {
 
-     private String nombreJugador;
-    
+    private String nombreJugador;
+
     private String contrasena;
-    
+
     private String correo;
-    
+
     private String nombre;
-    
+
     private String apellidos;
-    
+
     public String getNombreJugador() {
         return nombreJugador;
     }
@@ -62,8 +62,4 @@ public class Jugador implements Serializable{
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
-    
-   
-   
-
 }

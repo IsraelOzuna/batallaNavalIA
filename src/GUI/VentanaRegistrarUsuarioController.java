@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
  */
 public class VentanaRegistrarUsuarioController implements Initializable {
 
-    private ResourceBundle recurso;
+    private ResourceBundle idioma;
 
     @FXML
     private TextField campoNombre;
@@ -54,19 +54,19 @@ public class VentanaRegistrarUsuarioController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle recurso) {
-        this.recurso=recurso;
+    public void initialize(URL url, ResourceBundle idioma) {
+        this.idioma = idioma;
         configurarIdioma();
     }
-    
-    public void configurarIdioma(){
-        etiquetaIngresarDatos.setText((recurso.getString("etIngresarDatos")));
-        etiquetaNombre.setText(recurso.getString("etNombre"));
-        etiquetaApellidos.setText(recurso.getString("etApellidos"));
-        etiquetaCorreo.setText(recurso.getString("etCorreo"));
-        etiquetaUsuario.setText(recurso.getString("etUsuarioRegistro"));
-        etiquetaContrasena.setText(recurso.getString("etContrasenaRegistro"));
-        botonRegistrarse.setText(recurso.getString("botRegistrarse"));
-        botonCancelar.setText(recurso.getString("botCancelar"));        
+
+    public void configurarIdioma() {
+        etiquetaIngresarDatos.setText((idioma.getString("etIngresarDatos")));
+        etiquetaNombre.setText(idioma.getString("etNombre"));
+        etiquetaApellidos.setText(idioma.getString("etApellidos"));
+        etiquetaCorreo.setText(idioma.getString("etCorreo"));
+        etiquetaUsuario.setText(idioma.getString("etUsuarioRegistro"));
+        etiquetaContrasena.setText(idioma.getString("etContrasenaRegistro"));
+        botonRegistrarse.setText(idioma.getString("botRegistrarse"));
+        botonCancelar.setText(idioma.getString("botCancelar"));
     }
 }

@@ -48,6 +48,9 @@
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="18.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </Label>
             <TextField fx:id="campoUsuario" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <cursor>
@@ -64,7 +67,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </PasswordField>
-            <JFXButton fx:id="botonIniciarSesion" alignment="CENTER" contentDisplay="CENTER" onAction="#iniciarSesion" prefHeight="32.0" prefWidth="99.0" style="-fx-background-color: #1f56c6;" text="Iniciar sesión" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <JFXButton fx:id="botonIniciarSesion" alignment="CENTER" contentDisplay="CENTER" onAction="#ingresar" prefHeight="32.0" prefWidth="99.0" style="-fx-background-color: #1f56c6;" text="Iniciar sesión" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="14.0" />
                </font>
@@ -75,7 +78,7 @@
                   <Insets bottom="60.0" left="45.0" />
                </GridPane.margin>
             </JFXButton>
-            <Button fx:id="botonEspañol" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="32.0" prefWidth="58.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE" GridPane.columnIndex="2">
+            <Button fx:id="botonEspañol" mnemonicParsing="false" onAction="#cambiarIdiomaEspañol" prefHeight="32.0" prefWidth="67.0" style="-fx-background-color: bluedark;" text="Español" textFill="WHITE" GridPane.columnIndex="2">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                </font>
@@ -83,16 +86,16 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="botonIngles" mnemonicParsing="false" onAction="#cambiarIdiomaIngles" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: bluedark;" text="Inglés" textFill="WHITE" GridPane.columnIndex="1">
+            <Button fx:id="botonIngles" mnemonicParsing="false" onAction="#cambiarIdiomaIngles" prefHeight="32.0" prefWidth="59.0" style="-fx-background-color: bluedark;" text="Inglés" textFill="WHITE" GridPane.columnIndex="1">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-               <padding>
-                  <Insets left="145.0" />
-               </padding>
+               <GridPane.margin>
+                  <Insets left="130.0" />
+               </GridPane.margin>
             </Button>
             <Button fx:id="botonRegistrarse" alignment="BASELINE_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#registrarUsuario" prefHeight="23.0" prefWidth="101.0" style="-fx-background-color: bluedark;" text="Registrate aqui" textFill="WHITE" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <effect>

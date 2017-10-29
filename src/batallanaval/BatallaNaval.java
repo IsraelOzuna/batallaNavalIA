@@ -21,8 +21,8 @@ public class BatallaNaval extends Application {
     
     @Override
     public void start(Stage ventanaIniciarSesion) throws IOException {
-        ResourceBundle recurso = ResourceBundle.getBundle("recursos.idioma_es_MX");
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/VentanaIniciarSesion.fxml"),recurso);
+        ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/VentanaIniciarSesion.fxml"),idioma);
         
         Scene scene = new Scene(root);
         

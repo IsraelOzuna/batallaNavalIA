@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -25,6 +26,7 @@ import javafx.scene.layout.Pane;
  */
 public class VentanaTableroController implements Initializable {
 
+    private ResourceBundle idioma;
     @FXML
     private Pane panelOponente;
     @FXML
@@ -277,32 +279,184 @@ public class VentanaTableroController implements Initializable {
     private JFXComboBox<Integer> comboFilas;
     @FXML
     private JFXComboBox<String> comboColumnas;
+    @FXML
+    private ImageView barco1;
+    @FXML
+    private ImageView barco2;
+    @FXML
+    private ImageView barco3;
+    @FXML
+    private ImageView barco4;
+    @FXML
+    private ImageView barco5;
+    @FXML
+    private Label etiquetaFilas;
+    @FXML
+    private Label etiquetaColumnas;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle idioma) {
+        this.idioma = idioma;
+        configurarIdioma();
+    }
 
+    public void configurarIdioma() {
+        etiquetaFilas.setText(idioma.getString("etFilas"));
+        etiquetaColumnas.setText(idioma.getString("etColumnas"));
+    }
+
+    public int convertirLetrasANumeros(String letra) {
+        int numeroConvertido = 0;
+        switch (letra) {
+            case "A":
+                numeroConvertido = 0;
+                break;
+            case "B":
+                numeroConvertido = 1;
+                break;
+            case "C":
+                numeroConvertido = 2;
+                break;
+            case "D":
+                numeroConvertido = 3;
+                break;
+            case "E":
+                numeroConvertido = 4;
+                break;
+            case "F":
+                numeroConvertido = 5;
+                break;
+            case "G":
+                numeroConvertido = 6;
+                break;
+            case "H":
+                numeroConvertido = 7;
+                break;
+            case "I":
+                numeroConvertido = 8;
+                break;
+            case "J":
+                numeroConvertido = 9;
+                break;
+
+        }
+
+        return numeroConvertido;
+    }
+
+    public void llenarMatriz() {
+        int[][] tablero = new int[10][10];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                tablero[i][j] = 0;
+            }
+        }
+    }
+
+    public boolean verificarCombos() {
+        boolean vacio = true;
+        if (comboColumnas.getItems().isEmpty()) {
+            System.out.println("Selecciona una columna");
+            vacio = false;
+        }
+
+        if (comboFilas.getItems().isEmpty()) {
+            System.out.println("Selecciona una fila");
+            vacio = false;
+        }
+        return vacio;
     }
 
     @FXML
-    private void desactivarBoton(ActionEvent event) {
+    public void desactivarBoton(ActionEvent event) {
         JFXButton botonPresionado = (JFXButton) event.getSource();
         botonPresionado.setDisable(true);
         botonPresionado.setStyle("-fx-background-color: FF2625");
     }
 
     @FXML
-    private void llenarComboFilas() {
-        ObservableList<Integer> numeroFilas = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10);        
+    public void llenarComboFilas() {
+        ObservableList<Integer> numeroFilas = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         comboFilas.setItems(numeroFilas);
     }
-    
+
     @FXML
-    private void llenarComboColumnas(){
-        ObservableList<String> letrasColumnas = FXCollections.observableArrayList("A","B","C","D","E","F","G",
-                "H","I","J");
+    public void llenarComboColumnas() {
+        ObservableList<String> letrasColumnas = FXCollections.observableArrayList("A", "B", "C", "D", "E", "F", "G",
+                "H", "I", "J");
         comboColumnas.setItems(letrasColumnas);
     }
+
+    @FXML
+    public void colocarBarco1() {
+        if (verificarCombos()) {
+            int ordenadaNumero = comboFilas.getValue();
+            String ordenadaLetra = comboColumnas.getValue();
+
+            GridPane.setConstraints(barco1, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+
+            tableroPropio.getChildren().add(barco1);
+            barco1.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void colocarBarco2() {
+        if (verificarCombos()) {
+
+            int ordenadaNumero = comboFilas.getValue();
+            String ordenadaLetra = comboColumnas.getValue();
+
+            GridPane.setConstraints(barco2, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+
+            tableroPropio.getChildren().add(barco2);
+            barco2.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void colocarBarco3() {
+        if (verificarCombos()) {
+
+            int ordenadaNumero = comboFilas.getValue();
+            String ordenadaLetra = comboColumnas.getValue();
+
+            GridPane.setConstraints(barco3, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+
+            tableroPropio.getChildren().add(barco3);
+            barco3.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void colocarBarco4() {
+        if (verificarCombos()) {
+
+            int ordenadaNumero = comboFilas.getValue();
+            String ordenadaLetra = comboColumnas.getValue();
+
+            GridPane.setConstraints(barco4, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+
+            tableroPropio.getChildren().add(barco4);
+            barco4.setDisable(true);
+        }
+    }
+
+    @FXML
+    public void colocarBarco5() {
+        if (verificarCombos()) {
+
+            int ordenadaNumero = comboFilas.getValue();
+            String ordenadaLetra = comboColumnas.getValue();
+
+            GridPane.setConstraints(barco5, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+
+            tableroPropio.getChildren().add(barco5);
+            barco5.setDisable(true);
+        }
+    }
+
 }

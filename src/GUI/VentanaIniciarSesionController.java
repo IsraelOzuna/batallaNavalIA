@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Negocio.ICuenta;
-import Negocio.Jugador;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -16,8 +10,6 @@ import java.rmi.registry.Registry;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +25,7 @@ import javafx.stage.Stage;
 
 public class VentanaIniciarSesionController implements Initializable {
 
-    private ResourceBundle recurso;
+    private ResourceBundle idioma;
 
     @FXML
     private Label etiquetaUsuario;
@@ -58,54 +50,55 @@ public class VentanaIniciarSesionController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle recurso) {
-        this.recurso = recurso;
+    public void initialize(URL url, ResourceBundle idioma) {
+        this.idioma = idioma;
         configurarIdioma();
 
     }
 
     public void configurarIdioma() {
-        etiquetaBatallaNaval.setText(recurso.getString("etBatallaNaval"));
-        etiquetaUsuario.setText(recurso.getString("etUsuario"));
-        etiquetaContraseña.setText(recurso.getString("etContraseña"));
-        botonIngles.setText(recurso.getString("botIngles"));
-        botonEspañol.setText(recurso.getString("botEspañol"));
-        botonIniciarSesion.setText(recurso.getString("botIniciarSesion"));
-        botonRegistrarse.setText(recurso.getString("botRegistrarseAqui"));
+        etiquetaBatallaNaval.setText(idioma.getString("etBatallaNaval"));
+        etiquetaUsuario.setText(idioma.getString("etUsuario"));
+        etiquetaContraseña.setText(idioma.getString("etContraseña"));
+        botonIngles.setText(idioma.getString("botIngles"));
+        botonEspañol.setText(idioma.getString("botEspañol"));
+        botonIniciarSesion.setText(idioma.getString("botIniciarSesion"));
+        botonRegistrarse.setText(idioma.getString("botRegistrarseAqui"));
     }
 
     @FXML
-    private void cambiarIdiomaIngles(ActionEvent event) {
-        recurso = ResourceBundle.getBundle("recursos.idioma_en_US");
+    public void cambiarIdiomaIngles(ActionEvent event) {
+        idioma = ResourceBundle.getBundle("recursos.idioma_en_US");
         configurarIdioma();
     }
 
     @FXML
-    private void cambiarIdiomaEspañol(ActionEvent event) {
-        recurso = ResourceBundle.getBundle("recursos.idioma_es_MX");
+    public void cambiarIdiomaEspañol(ActionEvent event) {
+        idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
         configurarIdioma();
     }
 
     @FXML
-    private void iniciarSesion(ActionEvent event) throws IOException {
+    public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
         ICuenta stub;
-        String host = "127.0.0.1";
+        String host = "192.168.0.14";
 
         if (campoUsuario.getText().isEmpty() | campoContrasena.getText().isEmpty()) {
             Alert alertaCamposVacios = new Alert(Alert.AlertType.WARNING);
-            alertaCamposVacios.setHeaderText("Campo vacio");
-            alertaCamposVacios.setContentText("Algún campo esta vacío");
+            alertaCamposVacios.setTitle(idioma.getString("tituloAdvertencia"));
+            alertaCamposVacios.setHeaderText(idioma.getString("encabezadoCamposVacios"));
+            alertaCamposVacios.setContentText(idioma.getString("contenidoCamposVacios"));
             alertaCamposVacios.show();
         } else {
             try {
                 Registry registry = LocateRegistry.getRegistry(host);
                 stub = (ICuenta) registry.lookup("ServidorBatallaNaval");
-               
-                usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(),cifrarContrasena(campoContrasena.getText()));
+
+                usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(), cifrarContrasena(campoContrasena.getText()));
 
                 if (usuarioEncontrado) {
-                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"), recurso);
+                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"), idioma);
 
                     Parent root = (Parent) loger.load();
                     Stage menu = new Stage();
@@ -114,21 +107,26 @@ public class VentanaIniciarSesionController implements Initializable {
                     menu.show();
                 } else {
                     Alert alertaDatosIncorrectos = new Alert(Alert.AlertType.WARNING);
-                    alertaDatosIncorrectos.setHeaderText("Datos incorrectos");
-                    alertaDatosIncorrectos.setContentText("Datos no validos");
+                    alertaDatosIncorrectos.setTitle(idioma.getString("tituloAdvertencia"));
+                    alertaDatosIncorrectos.setHeaderText(idioma.getString("encabezadoDatosIncorrectos"));
+                    alertaDatosIncorrectos.setContentText(idioma.getString("contenidoDatosIncorrectos"));
                     alertaDatosIncorrectos.show();
                 }
 
             } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
-                Logger.getLogger(VentanaIniciarSesionController.class.getName()).log(Level.SEVERE, null, ex);
+                Alert alertaNoConexion = new Alert(Alert.AlertType.WARNING);
+                alertaNoConexion.setTitle(idioma.getString("tituloAdvertencia"));
+                alertaNoConexion.setHeaderText(idioma.getString("encabezadoNoConexion"));
+                alertaNoConexion.setContentText(idioma.getString("contenidoNoConexion"));
+                alertaNoConexion.show();
             }
         }
 
     }
 
-    private String cifrarContrasena(String string) throws NoSuchAlgorithmException {
+    public String cifrarContrasena(String contrasena) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-        byte[] hash = messageDigest.digest(string.getBytes());
+        byte[] hash = messageDigest.digest(contrasena.getBytes());
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < hash.length; i++) {
@@ -138,8 +136,8 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     @FXML
-    private void registrarUsuario(ActionEvent event) throws IOException {
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaRegistrarUsuario.fxml"), recurso);
+    public void registrarUsuario(ActionEvent event) throws IOException {
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaRegistrarUsuario.fxml"), idioma);
 
         Parent root = (Parent) loger.load();
         Stage registro = new Stage();

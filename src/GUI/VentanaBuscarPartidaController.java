@@ -5,12 +5,17 @@
  */
 package GUI;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -19,21 +24,30 @@ import javafx.scene.image.ImageView;
  */
 public class VentanaBuscarPartidaController implements Initializable {
 
-    private ResourceBundle recurso;
+    private ResourceBundle idioma;
 
     @FXML
     private Label etiquetaBuscandoPartida;
     @FXML
     private ImageView imagenMundo;
-    
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        recurso = rb;
+    public void initialize(URL url, ResourceBundle idioma) {
+        this.idioma = idioma;
         configurarIdioma();
     }
-    
-    public void configurarIdioma() {
-        etiquetaBuscandoPartida.setText(recurso.getString("etBuscandoPartida"));
-    }
 
+    public void configurarIdioma() {
+        etiquetaBuscandoPartida.setText(idioma.getString("etBuscandoPartida"));
+    }
+    
+    public void jugarPartida() throws IOException{
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaTablero.fxml"), idioma);
+
+        Parent root = (Parent) loger.load();
+        Stage tableros = new Stage();
+
+        tableros.setScene(new Scene(root));
+        tableros.show();
+    }
 }
