@@ -82,7 +82,7 @@ public class VentanaIniciarSesionController implements Initializable {
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
         ICuenta stub;
-        String host = "192.168.0.14";
+        String host = "127.0.0.1";
 
         if (campoUsuario.getText().isEmpty() | campoContrasena.getText().isEmpty()) {
             Alert alertaCamposVacios = new Alert(Alert.AlertType.WARNING);
@@ -119,6 +119,7 @@ public class VentanaIniciarSesionController implements Initializable {
                 alertaNoConexion.setHeaderText(idioma.getString("encabezadoNoConexion"));
                 alertaNoConexion.setContentText(idioma.getString("contenidoNoConexion"));
                 alertaNoConexion.show();
+                ex.printStackTrace();
             }
         }
 
