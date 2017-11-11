@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="1020.0" prefHeight="500.0" prefWidth="980.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaTableroController">
+<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="1030.0" prefHeight="500.0" prefWidth="1030.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentanaTableroController">
    <children>
       <Pane fx:id="panelOponente" layoutX="37.0" layoutY="36.0" maxHeight="400.0" maxWidth="400.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #ffff;">
          <children>
@@ -276,33 +277,44 @@
             <Font name="Berlin Sans FB Demi Bold" size="16.0" />
          </font>
       </Label>
-      <JFXComboBox fx:id="comboFilas" focusColor="#d1d4dd" layoutX="896.0" layoutY="71.0" onMouseClicked="#llenarComboFilas" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #d1d4dd;" unFocusColor="#121f38">
+      <JFXComboBox fx:id="comboFilas" focusColor="#d1d4dd" layoutX="896.0" layoutY="45.0" onMouseClicked="#llenarComboFilas" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #d1d4dd;" unFocusColor="#121f38">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></JFXComboBox>
-      <JFXComboBox fx:id="comboColumnas" focusColor="#d1d4dd" layoutX="896.0" layoutY="142.0" onMouseClicked="#llenarComboColumnas" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #d1d4dd;" unFocusColor="#121f38">
+      <JFXComboBox fx:id="comboColumnas" focusColor="#d1d4dd" layoutX="896.0" layoutY="111.0" onMouseClicked="#llenarComboColumnas" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #d1d4dd;" unFocusColor="#121f38">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></JFXComboBox>
-      <Label fx:id="etiquetaFilas" layoutX="895.0" layoutY="47.0" text="Filas" textFill="WHITE">
+      <Label fx:id="etiquetaFilas" layoutX="895.0" layoutY="18.0" text="Filas" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaColumnas" layoutX="896.0" layoutY="116.0" text="Columnas" textFill="WHITE">
+      <Label fx:id="etiquetaColumnas" layoutX="900.0" layoutY="87.0" text="Columnas" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
       </Label>
-      <ImageView fx:id="barco2" fitHeight="30.0" fitWidth="80.0" layoutX="933.0" layoutY="182.0" onMouseClicked="#colocarBarco2" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Imagenes/barcoPos2.png" />
-         </image>
+      <ImageView fx:id="barco5" fitHeight="220.0" fitWidth="35.0" layoutX="884.0" layoutY="230.0" onMouseClicked="#colocarBarco5" pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <rotationAxis>
+            <Point3D x="90.0" y="90.0" z="1.0" />
+         </rotationAxis>
+         <image>
+            <Image url="@../Imagenes/barco5.png" />
+         </image>
       </ImageView>
-      <ImageView fx:id="barco3" fitHeight="30.0" fitWidth="120.0" layoutX="876.0" layoutY="224.0" onMouseClicked="#colocarBarco3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="barco4" fitHeight="220.0" fitWidth="35.0" layoutX="950.0" layoutY="228.0" onMouseClicked="#colocarBarco4" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <image>
+            <Image url="@../Imagenes/barco4.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="barco3" fitHeight="30.0" fitWidth="105.0" layoutX="897.0" layoutY="190.0" onMouseClicked="#colocarBarco3" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/barcoPos3.png" />
          </image>
@@ -310,25 +322,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="barco1" fitHeight="30.0" fitWidth="40.0" layoutX="872.0" layoutY="186.0" onMouseClicked="#colocarBarco1" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="barco2" fitHeight="30.0" fitWidth="70.0" layoutX="935.0" layoutY="152.0" onMouseClicked="#colocarBarco2" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/barcoPos2.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="barco1" fitHeight="30.0" fitWidth="35.0" layoutX="880.0" layoutY="156.0" onMouseClicked="#colocarBarco1" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/barcoPos1.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fx:id="barco4" fitHeight="30.0" fitWidth="160.0" layoutX="817.0" layoutY="343.0" onMouseClicked="#colocarBarco4" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-         <image>
-            <Image url="@../Imagenes/barcoPos4.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fx:id="barco5" fitHeight="30.0" fitWidth="160.0" layoutX="886.0" layoutY="343.0" onMouseClicked="#colocarBarco5" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-         <image>
-            <Image url="@../Imagenes/barcoPos5.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

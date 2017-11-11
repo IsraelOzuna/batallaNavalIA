@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author Irdevelo
  */
 public class Jugador implements Serializable {
-
+    
     private String nombreJugador;
 
     private String contrasena;
@@ -20,8 +20,19 @@ public class Jugador implements Serializable {
     private String correo;
 
     private String nombre;
-
+    
     private String apellidos;
+    
+    private Short estado;
+
+    public Short getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Short estado) {
+        this.estado = estado;
+    }
+
 
     public String getNombreJugador() {
         return nombreJugador;

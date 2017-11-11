@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaBuscarPartidaController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentanaBuscarPartidaController">
    <children>
       <ImageView fx:id="imagenMundo" fitHeight="502.0" fitWidth="850.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/tumblr_inline_nn42ukt26f1t5rqin_540.gif" />
          </image>
       </ImageView>
-      <Label fx:id="etiquetaBuscandoPartida" layoutX="37.0" layoutY="28.0" onMouseClicked="#jugarPartida" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: 0B0B61;" text="Buscando..." textFill="#ff8d01">
+      <Label fx:id="etiquetaBuscandoPartida" layoutX="37.0" layoutY="28.0" prefHeight="35.0" prefWidth="129.0" style="-fx-background-color: 0B0B61;" text="Buscando..." textFill="#ff8d01">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="24.0" />
          </font>

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="436.0" prefWidth="335.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.VentanaRegistrarUsuarioController">
+<AnchorPane id="AnchorPane" prefHeight="436.0" prefWidth="335.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentanaRegistrarUsuarioController">
    <children>
       <GridPane prefHeight="436.0" prefWidth="338.0">
         <columnConstraints>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package Controlador;
 
 import Negocio.ICuenta;
 import Negocio.Jugador;
@@ -64,7 +64,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     private JFXButton botonCancelar;
 
     private static String formatoCorreo = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    
+
     /**
      * Initializes the controller class.
      */
@@ -87,11 +87,9 @@ public class VentanaRegistrarUsuarioController implements Initializable {
 
     @FXML
     private void registrarUsuario(ActionEvent event) {
-        
-        
-        
         ICuenta stub;
-        String host = "127.0.0.1";
+        //String host = "192.168.43.223";
+        String host = "192.168.0.14";
         boolean usuarioExistente;
 
         if (verificarCamposVacios(campoNombre, campoApellidos, campoCorreo, campoUsuario, campoContrasena)) {
@@ -112,20 +110,19 @@ public class VentanaRegistrarUsuarioController implements Initializable {
                     alertaCamposVacios.setContentText(idioma.getString("contenidoUsuarioExistente"));
                     alertaCamposVacios.show();
                 } else {
-                   
-                    if(validarCorreo(campoCorreo.getText())){
-                    registrarJugadorValidado(stub);
-                    }else{
-                    Alert correoInvalido = new Alert(Alert.AlertType.WARNING);
-                    correoInvalido.setTitle(idioma.getString("tituloAdvertencia"));
-                    correoInvalido.setHeaderText(idioma.getString("encabezadoCorreoInvalido"));
-                    correoInvalido.setContentText(idioma.getString("contenidoCorreoInvalido"));
-                    correoInvalido.show();
+
+                    if (validarCorreo(campoCorreo.getText())) {
+                        registrarJugadorValidado(stub);
+                    } else {
+                        Alert correoInvalido = new Alert(Alert.AlertType.WARNING);
+                        correoInvalido.setTitle(idioma.getString("tituloAdvertencia"));
+                        correoInvalido.setHeaderText(idioma.getString("encabezadoCorreoInvalido"));
+                        correoInvalido.setContentText(idioma.getString("contenidoCorreoInvalido"));
+                        correoInvalido.show();
                     }
-                    
-                    
+
                 }
-            } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
+            } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {                
                 Alert alertaNoConexion = new Alert(Alert.AlertType.WARNING);
                 alertaNoConexion.setTitle(idioma.getString("tituloAdvertencia"));
                 alertaNoConexion.setHeaderText(idioma.getString("encabezadoNoConexion"));
@@ -133,7 +130,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
                 alertaNoConexion.show();
             }
         } else {
-   
+
             Alert alertaNombreIncorrecto = new Alert(Alert.AlertType.WARNING);
             alertaNombreIncorrecto.setTitle(idioma.getString("tituloAdvertencia"));
             alertaNombreIncorrecto.setHeaderText(idioma.getString("encabezadoUsuarioNoValido"));
@@ -185,8 +182,8 @@ public class VentanaRegistrarUsuarioController implements Initializable {
         alertaCamposVacios.show();
 
     }
-    
-        public static boolean validarCorreo(String correo) {
+
+    public static boolean validarCorreo(String correo) {
         Pattern patron = Pattern.compile(formatoCorreo);
         Matcher matcher = patron.matcher(correo);
         return matcher.matches();
@@ -219,5 +216,4 @@ public class VentanaRegistrarUsuarioController implements Initializable {
             event.consume();
         }
     }
-
 }

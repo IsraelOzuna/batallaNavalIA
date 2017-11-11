@@ -1,4 +1,4 @@
-package GUI;
+package Controlador;
 
 import Negocio.ICuenta;
 import java.io.IOException;
@@ -82,7 +82,8 @@ public class VentanaIniciarSesionController implements Initializable {
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
         ICuenta stub;
-        String host = "127.0.0.1";
+        //String host = "192.168.43.223";
+        String host = "192.168.0.14";
 
         if (campoUsuario.getText().isEmpty() | campoContrasena.getText().isEmpty()) {
             Alert alertaCamposVacios = new Alert(Alert.AlertType.WARNING);
@@ -97,13 +98,15 @@ public class VentanaIniciarSesionController implements Initializable {
 
                 usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(), cifrarContrasena(campoContrasena.getText()));
 
-                if (usuarioEncontrado) {
-                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaMenu.fxml"), idioma);
-
+                if (usuarioEncontrado) {                                             
+                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/Vista/VentanaMenu.fxml"), idioma);
                     Parent root = (Parent) loger.load();
+                    
+                    VentanaMenuController controladorMenu = loger.getController();
+                    controladorMenu.obtenerNombreUsuario(campoUsuario.getText());                                        
+                    
                     Stage menu = new Stage();
-
-                    menu.setScene(new Scene(root));
+                    menu.setScene(new Scene(root));                    
                     menu.show();
                 } else {
                     Alert alertaDatosIncorrectos = new Alert(Alert.AlertType.WARNING);
@@ -118,11 +121,9 @@ public class VentanaIniciarSesionController implements Initializable {
                 alertaNoConexion.setTitle(idioma.getString("tituloAdvertencia"));
                 alertaNoConexion.setHeaderText(idioma.getString("encabezadoNoConexion"));
                 alertaNoConexion.setContentText(idioma.getString("contenidoNoConexion"));
-                alertaNoConexion.show();
-                ex.printStackTrace();
+                alertaNoConexion.show();               
             }
         }
-
     }
 
     public String cifrarContrasena(String contrasena) throws NoSuchAlgorithmException {
@@ -138,7 +139,7 @@ public class VentanaIniciarSesionController implements Initializable {
 
     @FXML
     public void registrarUsuario(ActionEvent event) throws IOException {
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/GUI/VentanaRegistrarUsuario.fxml"), idioma);
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/Vista/VentanaRegistrarUsuario.fxml"), idioma);
 
         Parent root = (Parent) loger.load();
         Stage registro = new Stage();
@@ -146,5 +147,4 @@ public class VentanaIniciarSesionController implements Initializable {
         registro.setScene(new Scene(root));
         registro.show();
     }
-
 }

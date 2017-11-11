@@ -12,8 +12,7 @@ import java.rmi.RemoteException;
  *
  * @author Irdevelo
  */
-public interface ICuenta extends Remote{
-    
+public interface ICuenta extends Remote{    
     public boolean iniciarSesion(String nombreJugador, String contrasena)throws RemoteException;
     public boolean verificarExistenciaCuenta(String nombreJugador)throws RemoteException;
     public boolean registrarJugador(Jugador jugador)throws RemoteException;

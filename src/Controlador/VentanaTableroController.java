@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package Controlador;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -294,6 +295,10 @@ public class VentanaTableroController implements Initializable {
     @FXML
     private Label etiquetaColumnas;
 
+    private String coordenadasOcupadas[] = new String[16];
+
+    private int contadorCoordenadas = 0;
+
     /**
      * Initializes the controller class.
      */
@@ -306,6 +311,64 @@ public class VentanaTableroController implements Initializable {
     public void configurarIdioma() {
         etiquetaFilas.setText(idioma.getString("etFilas"));
         etiquetaColumnas.setText(idioma.getString("etColumnas"));
+    }
+
+    public String[] generarCoordenadas(int posicionColumna, int posicionFila, int tamanoBarco) {
+
+        String coordenadas[] = null;
+
+        switch (tamanoBarco) {
+            case 1:
+                coordenadas = new String[1];
+                coordenadas[0] = String.valueOf(posicionColumna) + "," + String.valueOf(posicionFila);
+                break;
+
+            case 2:
+                coordenadas = new String[2];
+                coordenadas[0] = posicionColumna + "," + posicionFila;
+                coordenadas[1] = (posicionColumna + 1) + "," + posicionFila;
+                break;
+
+            case 3:
+                coordenadas = new String[3];
+                coordenadas[0] = posicionColumna + "," + posicionFila;
+                coordenadas[1] = (posicionColumna + 1) + "," + posicionFila;
+                coordenadas[2] = (posicionColumna + 2) + "," + posicionFila;
+                break;
+
+            case 5:
+                coordenadas = new String[5];
+                coordenadas[0] = posicionColumna + "," + posicionFila;
+                coordenadas[1] = posicionColumna + "," + (posicionFila + 1);
+                coordenadas[2] = posicionColumna + "," + (posicionFila + 2);
+                coordenadas[3] = posicionColumna + "," + (posicionFila + 3);
+                coordenadas[4] = posicionColumna + "," + (posicionFila + 4);
+                break;
+
+            default:
+        }
+        return coordenadas;
+    }
+
+    public boolean verificarCoordenadas(String coordenadas[]) {
+        boolean posicionDisponible = true;
+
+        for (int i = 0; i < coordenadasOcupadas.length; i++) {
+            for (int j = 0; j < coordenadas.length; j++) {
+                if (coordenadas[j].equals(coordenadasOcupadas[i])) {
+                    posicionDisponible = false;
+                    break;
+                }
+            }
+        }
+        return posicionDisponible;
+    }
+
+    public void guardarCoordenadas(String coordenadas[]) {
+        for (int i = 0; i < coordenadas.length; i++) {
+            coordenadasOcupadas[contadorCoordenadas] = coordenadas[i];
+            contadorCoordenadas++;
+        }
     }
 
     public int convertirLetrasANumeros(String letra) {
@@ -347,27 +410,34 @@ public class VentanaTableroController implements Initializable {
         return numeroConvertido;
     }
 
-    public void llenarMatriz() {
-        int[][] tablero = new int[10][10];
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                tablero[i][j] = 0;
-            }
-        }
-    }
-
     public boolean verificarCombos() {
-        boolean vacio = true;
+        boolean comboVacio = true;
         if (comboColumnas.getItems().isEmpty()) {
-            System.out.println("Selecciona una columna");
-            vacio = false;
+            Alert alertaCamposVacios = new Alert(Alert.AlertType.INFORMATION);
+            alertaCamposVacios.setTitle(idioma.getString("tituloInformacion"));
+            alertaCamposVacios.setHeaderText(idioma.getString("encabezadoComboColumnas"));
+            alertaCamposVacios.setContentText(idioma.getString("contenidoComboColumnas"));
+            alertaCamposVacios.show();
+            comboVacio = false;
         }
 
         if (comboFilas.getItems().isEmpty()) {
-            System.out.println("Selecciona una fila");
-            vacio = false;
+            Alert alertaCamposVacios = new Alert(Alert.AlertType.INFORMATION);
+            alertaCamposVacios.setTitle(idioma.getString("tituloInformacion"));
+            alertaCamposVacios.setHeaderText(idioma.getString("encabezadoComboFilas"));
+            alertaCamposVacios.setContentText(idioma.getString("contenidoComboFilas"));
+            alertaCamposVacios.show();
+            comboVacio = false;
         }
-        return vacio;
+        return comboVacio;
+    }
+
+    public void posicionOcupada() {
+        Alert alertaCamposVacios = new Alert(Alert.AlertType.INFORMATION);
+        alertaCamposVacios.setTitle(idioma.getString("tituloAdvertencia"));
+        alertaCamposVacios.setHeaderText(idioma.getString("encabezadoPosOcupada"));
+        alertaCamposVacios.setContentText(idioma.getString("contenidoPosOcupada"));
+        alertaCamposVacios.show();
     }
 
     @FXML
@@ -392,71 +462,105 @@ public class VentanaTableroController implements Initializable {
 
     @FXML
     public void colocarBarco1() {
+        int tamanoBarco = 1;
         if (verificarCombos()) {
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            GridPane.setConstraints(barco1, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+            String coordenadasBarco1[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            tableroPropio.getChildren().add(barco1);
-            barco1.setDisable(true);
+            if (verificarCoordenadas(coordenadasBarco1)) {
+                guardarCoordenadas(coordenadasBarco1);
+                GridPane.setConstraints(barco1, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+                tableroPropio.getChildren().add(barco1);
+                barco1.setDisable(true);
+            } else {
+                posicionOcupada();
+            }
         }
     }
 
     @FXML
     public void colocarBarco2() {
+        int tamanoBarco = 2;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            GridPane.setConstraints(barco2, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+            String coordenadasBarco2[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            tableroPropio.getChildren().add(barco2);
-            barco2.setDisable(true);
+            if (verificarCoordenadas(coordenadasBarco2)) {
+                guardarCoordenadas(coordenadasBarco2);
+                GridPane.setConstraints(barco2, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+                tableroPropio.getChildren().add(barco2);
+                barco2.setDisable(true);
+            } else {
+                posicionOcupada();
+            }
         }
     }
 
     @FXML
     public void colocarBarco3() {
+        int tamanoBarco = 3;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            GridPane.setConstraints(barco3, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+            String coordenadasBarco3[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            tableroPropio.getChildren().add(barco3);
-            barco3.setDisable(true);
+            if (verificarCoordenadas(coordenadasBarco3)) {
+                guardarCoordenadas(coordenadasBarco3);
+                GridPane.setConstraints(barco3, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+                tableroPropio.getChildren().add(barco3);
+                barco3.setDisable(true);
+            } else {
+                posicionOcupada();
+            }
         }
     }
 
     @FXML
     public void colocarBarco4() {
+        int tamanoBarco = 5;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            GridPane.setConstraints(barco4, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+            String coordenadasBarco4[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            tableroPropio.getChildren().add(barco4);
-            barco4.setDisable(true);
+            if (verificarCoordenadas(coordenadasBarco4)) {
+                guardarCoordenadas(coordenadasBarco4);
+                GridPane.setConstraints(barco4, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero + 1);
+                tableroPropio.getChildren().add(barco4);
+                barco4.setDisable(true);
+            } else {
+                posicionOcupada();
+            }
         }
     }
 
     @FXML
     public void colocarBarco5() {
+        int tamanoBarco = 5;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            GridPane.setConstraints(barco5, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+            String coordenadasBarco5[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            tableroPropio.getChildren().add(barco5);
-            barco5.setDisable(true);
+            if (verificarCoordenadas(coordenadasBarco5)) {
+                guardarCoordenadas(coordenadasBarco5);
+                GridPane.setConstraints(barco5, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero + 1);
+                tableroPropio.getChildren().add(barco5);
+                barco5.setDisable(true);
+            } else {
+                posicionOcupada();
+            }
         }
     }
-
 }
