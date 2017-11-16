@@ -22,7 +22,7 @@ public class BatallaNaval extends Application {
     @Override
     public void start(Stage ventanaIniciarSesion) throws IOException {
         ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
-        Parent root = FXMLLoader.load(getClass().getResource("/Vista/VentanaIniciarSesion.fxml"),idioma);
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaIniciarSesion.fxml"),idioma);
         
         Scene scene = new Scene(root);
         
