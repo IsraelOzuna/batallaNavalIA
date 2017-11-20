@@ -88,8 +88,8 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     private void registrarUsuario(ActionEvent event) {
         IJugador stub;
         //String host = "192.168.43.223";
-        //String host = "192.168.0.14";
-        String host = "127.0.0.1";
+        String host = "192.168.0.14";
+        //String host = "127.0.0.1";
         boolean usuarioExistente;
 
         if (verificarCamposVacios(campoNombre, campoApellidos, campoCorreo, campoUsuario, campoContrasena)) {

@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import negocio.Barco;
 
 /**
  * FXML Controller class
@@ -31,11 +32,7 @@ public class VentanaTableroController implements Initializable {
 
     private ResourceBundle idioma;
     @FXML
-    private Pane panelOponente;
-    @FXML
     private GridPane tableroOponente;
-    @FXML
-    private Pane panelPropio;
     @FXML
     private GridPane tableroPropio;
     @FXML
@@ -57,20 +54,26 @@ public class VentanaTableroController implements Initializable {
     @FXML
     private Label etiquetaColumnas;
 
-    private String coordenadasOcupadas[] = new String[16];
-    
     private String[] coordenadasBarcosEnemigos;
 
-    private int contadorCoordenadas = 0;
-    
     private Boolean primerTirador;
-    
+
     private Socket socket;
-    
+
     private String nombreUsuario;
-    
+
     private String nombreRival;
+
+    private final String coordenadasOcupadas[] = new String[16];
+
+    private int posicionesASalvo = 16;
+
+    private int contadorCoordenadas = 0;
+
+    private int contadorTiros = 3;
     
+    private int contadorTirosContrincante = 0;
+
     @FXML
     private JFXButton botonEmpezar;
     @FXML
@@ -78,140 +81,40 @@ public class VentanaTableroController implements Initializable {
     @FXML
     private Label etiquetaMiUsuario;
 
- 
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
-        configurarIdioma();        
+        configurarIdioma();
         tableroOponente.setDisable(true);
-    }
-
-    public void configurarIdioma() {
-        etiquetaFilas.setText(idioma.getString("etFilas"));
-        etiquetaColumnas.setText(idioma.getString("etColumnas"));
-        botonEmpezar.setText(idioma.getString("botonEmpezar"));
-    }
-    
-    public String[] generarCoordenadas(int posicionColumna, int posicionFila, int tamanoBarco) {
-
-        String coordenadas[] = null;
-
-        switch (tamanoBarco) {
-            case 1:
-                coordenadas = new String[1];
-                coordenadas[0] = String.valueOf(posicionColumna) + "," + String.valueOf(posicionFila);
-                break;
-
-            case 2:
-                coordenadas = new String[2];
-                coordenadas[0] = posicionColumna + "," + posicionFila;
-                coordenadas[1] = (posicionColumna + 1) + "," + posicionFila;
-                break;
-
-            case 3:
-                coordenadas = new String[3];
-                coordenadas[0] = posicionColumna + "," + posicionFila;
-                coordenadas[1] = (posicionColumna + 1) + "," + posicionFila;
-                coordenadas[2] = (posicionColumna + 2) + "," + posicionFila;
-                break;
-
-            case 5:
-                coordenadas = new String[5];
-                coordenadas[0] = posicionColumna + "," + posicionFila;
-                coordenadas[1] = posicionColumna + "," + (posicionFila + 1);
-                coordenadas[2] = posicionColumna + "," + (posicionFila + 2);
-                coordenadas[3] = posicionColumna + "," + (posicionFila + 3);
-                coordenadas[4] = posicionColumna + "," + (posicionFila + 4);
-                break;
-
-            default:
-        }
-        return coordenadas;
-    }
-
-    public boolean verificarCoordenadas(String coordenadas[]) {
-        boolean posicionDisponible = true;
-
-        for (int i = 0; i < coordenadasOcupadas.length; i++) {
-            for (int j = 0; j < coordenadas.length; j++) {
-                if (coordenadas[j].equals(coordenadasOcupadas[i])) {
-                    posicionDisponible = false;
-                    break;
-                }
-            }
-        }
-        return posicionDisponible;
-    }
-
-    public void guardarCoordenadas(String coordenadas[]) {
-        for (int i = 0; i < coordenadas.length; i++) {
-            coordenadasOcupadas[contadorCoordenadas] = coordenadas[i];
-            contadorCoordenadas++;
-        }
-    }
-
-    public int convertirLetrasANumeros(String letra) {
-        int numeroConvertido = 0;
-        switch (letra) {
-            case "A":
-                numeroConvertido = 0;
-                break;
-            case "B":
-                numeroConvertido = 1;
-                break;
-            case "C":
-                numeroConvertido = 2;
-                break;
-            case "D":
-                numeroConvertido = 3;
-                break;
-            case "E":
-                numeroConvertido = 4;
-                break;
-            case "F":
-                numeroConvertido = 5;
-                break;
-            case "G":
-                numeroConvertido = 6;
-                break;
-            case "H":
-                numeroConvertido = 7;
-                break;
-            case "I":
-                numeroConvertido = 8;
-                break;
-            case "J":
-                numeroConvertido = 9;
-                break;
-
-        }
-
-        return numeroConvertido;
-    }
-
-    public boolean verificarCombos() {
-        boolean comboVacio = true;
-        if (comboColumnas.getItems().isEmpty()) {
-             mostrarMensajeInformacion("tituloInformacion", "encabezadoComboColumnas", "contenidoComboColumnas");
-            comboVacio = false;
-        }
-
-        if (comboFilas.getItems().isEmpty()) {
-            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboFilas", "contenidoComboFilas");
-            comboVacio = false;
-        }
-        return comboVacio;
-    }
-
-    public void posicionOcupada() {
-        mostrarMensajeInformacion("tituloAdvertencia", "encabezadoPosOcupada", "contenidoPosOcupada");
     }
 
     @FXML
     public void desactivarBoton(ActionEvent event) {
-        JFXButton botonPresionado = (JFXButton) event.getSource();
-        botonPresionado.setDisable(true);
-        botonPresionado.setStyle("-fx-background-color: FF2625");
+        
+        if(contadorTiros > 0){
+            JFXButton botonPresionado = (JFXButton) event.getSource();
+            botonPresionado.setDisable(true);
+            botonPresionado.setStyle("-fx-background-color: FF2625");
+            socket.emit("tiroRecibido", botonPresionado.getId(), primerTirador, nombreUsuario);
+            contadorTiros--;    
+        }
+        
+         if(contadorTiros==0){
+            contadorTiros = 3;
+            tableroOponente.setDisable(true);
+            }
+    }
+
+    public boolean verificarPosicionesBarcos() {
+        return posicionesASalvo == 0;
+    }
+
+    public void registrarTiroRecibido(String tiroRecibido) {
+        for (int i = 0; i < coordenadasOcupadas.length; i++) {
+            if(tiroRecibido.equals(coordenadasOcupadas[i])){
+                posicionesASalvo--;
+            } 
+        }           
     }
 
     @FXML
@@ -227,109 +130,146 @@ public class VentanaTableroController implements Initializable {
         comboColumnas.setItems(letrasColumnas);
     }
 
+    public void guardarCoordenadas(String coordenadas[]) {
+        for (int i = 0; i < coordenadas.length; i++) {
+            coordenadasOcupadas[contadorCoordenadas] = coordenadas[i];
+            contadorCoordenadas++;
+        }
+    }
+
     @FXML
     public void colocarBarco1() {
+        Barco barco = new Barco();
         int tamanoBarco = 1;
         if (verificarCombos()) {
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            String coordenadasBarco1[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
+            String coordenadasBarco1[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            if (verificarCoordenadas(coordenadasBarco1)) {
+            if (barco.verificarCoordenadas(coordenadasBarco1, coordenadasOcupadas)) {
                 guardarCoordenadas(coordenadasBarco1);
-                GridPane.setConstraints(barco1, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+                GridPane.setConstraints(barco1, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
                 tableroPropio.getChildren().add(barco1);
                 barco1.setDisable(true);
             } else {
-                posicionOcupada();
+                mostrarMensajeInformacion("tituloAdvertencia", "encabezadoPosOcupada", "contenidoPosOcupada");
             }
         }
     }
 
     @FXML
     public void colocarBarco2() {
+        Barco barco = new Barco();
         int tamanoBarco = 2;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            String coordenadasBarco2[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
+            String coordenadasBarco2[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            if (verificarCoordenadas(coordenadasBarco2)) {
-                guardarCoordenadas(coordenadasBarco2);
-                GridPane.setConstraints(barco2, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
-                tableroPropio.getChildren().add(barco2);
-                barco2.setDisable(true);
+            if (!barco.limitarTablero(coordenadasBarco2, tamanoBarco)) {
+                if (barco.verificarCoordenadas(coordenadasBarco2, coordenadasOcupadas)) {
+                    guardarCoordenadas(coordenadasBarco2);
+                    GridPane.setConstraints(barco2, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+                    tableroPropio.getChildren().add(barco2);
+                    barco2.setDisable(true);
+                } else {
+                    mostrarMensajeInformacion("tituloAdvertencia", "encabezadoPosOcupada", "contenidoPosOcupada");
+                }
             } else {
-                posicionOcupada();
+                System.out.println("fuera");
             }
         }
     }
 
     @FXML
     public void colocarBarco3() {
+        Barco barco = new Barco();
         int tamanoBarco = 3;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            String coordenadasBarco3[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
+            String coordenadasBarco3[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            if (verificarCoordenadas(coordenadasBarco3)) {
-                guardarCoordenadas(coordenadasBarco3);
-                GridPane.setConstraints(barco3, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
-                tableroPropio.getChildren().add(barco3);
-                barco3.setDisable(true);
+            if (!barco.limitarTablero(coordenadasBarco3, tamanoBarco)) {
+                if (barco.verificarCoordenadas(coordenadasBarco3, coordenadasOcupadas)) {
+                    guardarCoordenadas(coordenadasBarco3);
+                    GridPane.setConstraints(barco3, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
+                    tableroPropio.getChildren().add(barco3);
+                    barco3.setDisable(true);
+                } else {
+                    mostrarMensajeInformacion("tituloAdvertencia", "encabezadoPosOcupada", "contenidoPosOcupada");
+                }
             } else {
-                posicionOcupada();
+                System.out.println("fuera");
             }
         }
     }
 
-    
     @FXML
     public void colocarBarco4() {
+        Barco barco = new Barco();
         int tamanoBarco = 5;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            String coordenadasBarco4[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
+            String coordenadasBarco4[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            if (verificarCoordenadas(coordenadasBarco4)) {
-                guardarCoordenadas(coordenadasBarco4);
-                GridPane.setConstraints(barco4, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
-                tableroPropio.getChildren().add(barco4);
-                barco4.setDisable(true);
+            if (!barco.limitarTablero(coordenadasBarco4, tamanoBarco)) {
+                if (barco.verificarCoordenadas(coordenadasBarco4, coordenadasOcupadas)) {
+                    guardarCoordenadas(coordenadasBarco4);
+                    GridPane.setConstraints(barco4, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero + 1);
+                    tableroPropio.getChildren().add(barco4);
+                    barco4.setDisable(true);
+                } else {
+                    mostrarMensajeInformacion("tituloAdvertencia", "encabezadoPosOcupada", "contenidoPosOcupada");
+                }
             } else {
-                posicionOcupada();
+                System.out.println("fuera");
             }
         }
+        
+        for(int i=0; i<coordenadasOcupadas.length;i++){
+            System.out.println(coordenadasOcupadas[i]);
+        }
+        
     }
 
     @FXML
     public void colocarBarco5() {
+        Barco barco = new Barco();
         int tamanoBarco = 5;
         if (verificarCombos()) {
 
             int ordenadaNumero = comboFilas.getValue();
             String ordenadaLetra = comboColumnas.getValue();
 
-            String coordenadasBarco5[] = generarCoordenadas(convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
+            String coordenadasBarco5[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            if (verificarCoordenadas(coordenadasBarco5)) {
-                guardarCoordenadas(coordenadasBarco5);
-                GridPane.setConstraints(barco5, convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
-                tableroPropio.getChildren().add(barco5);
-                barco5.setDisable(true);
+            if (!barco.limitarTablero(coordenadasBarco5, tamanoBarco)) {
+                if (barco.verificarCoordenadas(coordenadasBarco5, coordenadasOcupadas)) {
+                    guardarCoordenadas(coordenadasBarco5);
+                    GridPane.setConstraints(barco5, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero + 1);
+                    tableroPropio.getChildren().add(barco5);
+                    barco5.setDisable(true);
+                } else {
+                    mostrarMensajeInformacion("tituloAdvertencia", "encabezadoPosOcupada", "contenidoPosOcupada");
+                }
             } else {
-                posicionOcupada();
+                System.out.println("fuera");
             }
         }
+    }
+
+    @FXML
+    private void empezarPartida(ActionEvent event) {
+        socket.emit("configurarPartida", primerTirador, nombreUsuario);
     }
 
     public void mostrarMensajeInformacion(String titulo, String encabezado, String contenido) {
@@ -339,48 +279,75 @@ public class VentanaTableroController implements Initializable {
         advertencia.setContentText(idioma.getString(contenido));
         advertencia.show();
     }
-    
-    public void adquirirDatos(Socket socket,String nombreUsuario,String nombreRival, Boolean primerTirador){
-        this.socket=socket;
-        this.nombreUsuario=nombreUsuario;
-        this.nombreRival=nombreRival;
-        this.primerTirador=primerTirador;
+
+    private void obtenerPosicionamientoBarcosEnmigos() {
+
+        socket.on("iniciarPartida", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                if (primerTirador) {
+                    tableroOponente.setDisable(false);
+                }
+            }
+        });
+
+        socket.on("tiroContrincante", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                registrarTiroRecibido((String) os[0]);
+                contadorTirosContrincante ++;
+                System.out.println("contador Contrincante" + contadorTirosContrincante);
+                if (verificarPosicionesBarcos()) {
+                    socket.emit("perderPartida", primerTirador, nombreUsuario);
+                    System.out.println("perdiste");
+                }else{
+                    System.out.println("Valor esperado "+contadorTirosContrincante);
+                    if(contadorTirosContrincante == 3){
+                        System.out.println("Valor esperado "+contadorTirosContrincante);
+                        contadorTirosContrincante = 0;
+                        tableroOponente.setDisable(false);
+                    }
+                }
+            }
+        });
+
+        socket.on("ganarPartida", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                System.out.println("ganaste");
+            }
+        });
+
+    }
+
+    public void adquirirDatos(Socket socket, String nombreUsuario, String nombreRival, Boolean primerTirador) {
+        this.socket = socket;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreRival = nombreRival;
+        this.primerTirador = primerTirador;
         etiquetaMiUsuario.setText(nombreUsuario);
         etiquetaUsuarioRival.setText(nombreRival);
         obtenerPosicionamientoBarcosEnmigos();
     }
-    
-    @FXML
-    private void empezarPartida(ActionEvent event) {
-        socket.emit("configurarPartida", (Object[]) coordenadasOcupadas,primerTirador, nombreUsuario);
+
+    public void configurarIdioma() {
+        etiquetaFilas.setText(idioma.getString("etFilas"));
+        etiquetaColumnas.setText(idioma.getString("etColumnas"));
+        botonEmpezar.setText(idioma.getString("botonEmpezar"));
     }
-    
-    private void obtenerPosicionamientoBarcosEnmigos(){
-    
-        socket.on("posicionesBarcos", new Emitter.Listener(){
-            @Override
-            public void call(Object... os) {
-               coordenadasBarcosEnemigos = (String[]) os[0];
-            }
-            
-        });
-        
-        socket.on("inciarPartida", new Emitter.Listener() {
-            @Override
-            public void call(Object... os) {
-                if(primerTirador){
-                tableroOponente.setDisable(false);
-                }
-            }
-        });
-    
-        socket.on("tiroContrincante", new Emitter.Listener() {
-            @Override
-            public void call(Object... os) {
-                System.out.println("Hola Rancho Viejo");  
-            }
-        });
-    
+
+    public boolean verificarCombos() {
+        boolean comboVacio = true;
+        if (comboColumnas.getItems().isEmpty()) {
+            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboColumnas", "contenidoComboColumnas");
+            comboVacio = false;
+        }
+
+        if (comboFilas.getItems().isEmpty()) {
+            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboFilas", "contenidoComboFilas");
+            comboVacio = false;
+        }
+        return comboVacio;
     }
 
 }

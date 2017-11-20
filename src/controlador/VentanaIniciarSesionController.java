@@ -81,8 +81,8 @@ public class VentanaIniciarSesionController implements Initializable {
         boolean usuarioEncontrado;
         IJugador stub;
         //String host = "192.168.43.223";
-       // String host = "192.168.0.14";
-       String host = "127.0.0.1";
+        String host = "192.168.0.14";
+        //String host = "127.0.0.1";
         if (campoUsuario.getText().isEmpty() | campoContrasena.getText().isEmpty()) {
             mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
         } else {
@@ -100,7 +100,7 @@ public class VentanaIniciarSesionController implements Initializable {
                     controladorMenu.obtenerNombreUsuario(campoUsuario.getText());
 
                     Stage menu = new Stage();
-                    menu.setScene(new Scene(root));                    
+                    menu.setScene(new Scene(root));
                     menu.show();
                     Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     ventanaAnterior.close();

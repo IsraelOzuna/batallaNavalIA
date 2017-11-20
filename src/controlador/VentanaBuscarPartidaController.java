@@ -18,7 +18,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -62,14 +61,15 @@ public class VentanaBuscarPartidaController implements Initializable {
     }
 
     private void crearConexion() throws URISyntaxException {
-        socket = IO.socket("http://127.0.0.1:9000");
+        socket = IO.socket("http://192.168.0.16:9000");
 
         socket.on("SeHaEncontradoUnaFlotaEnemiga", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
                 Platform.runLater(() -> {
                     try {
-                        jugarPartida((String) os[0],(Boolean) os[1]);
+                        System.out.println((Boolean) os[1]);
+                        desplegarTablero((String) os[0],(Boolean) os[1]);                        
                         socket.off("SeHaEncontradoUnaFlotaEnemiga");
                     } catch (IOException ex) {
                         Logger.getLogger(VentanaBuscarPartidaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +81,7 @@ public class VentanaBuscarPartidaController implements Initializable {
         socket.connect();
     }
 
-    public void jugarPartida(String nombreRival, Boolean primerTirador) throws IOException {
+    public void desplegarTablero(String nombreRival, Boolean primerTirador) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaTablero.fxml"), idioma);
         Parent root = (Parent) loger.load();
 
