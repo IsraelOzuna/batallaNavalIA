@@ -20,7 +20,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import negocio.Barco;
 
 /**
@@ -54,15 +53,13 @@ public class VentanaTableroController implements Initializable {
     @FXML
     private Label etiquetaColumnas;
 
-    private String[] coordenadasBarcosEnemigos;
-
-    private Boolean primerTirador;
+    private String nombreRival;
+    
+    private Boolean esPrimerTirador;
 
     private Socket socket;
 
     private String nombreUsuario;
-
-    private String nombreRival;
 
     private final String coordenadasOcupadas[] = new String[16];
 
@@ -71,7 +68,7 @@ public class VentanaTableroController implements Initializable {
     private int contadorCoordenadas = 0;
 
     private int contadorTiros = 3;
-    
+
     private int contadorTirosContrincante = 0;
 
     @FXML
@@ -90,31 +87,39 @@ public class VentanaTableroController implements Initializable {
 
     @FXML
     public void desactivarBoton(ActionEvent event) {
-        
-        if(contadorTiros > 0){
+
+        if (contadorTiros > 0) {
             JFXButton botonPresionado = (JFXButton) event.getSource();
             botonPresionado.setDisable(true);
             botonPresionado.setStyle("-fx-background-color: FF2625");
-            socket.emit("tiroRecibido", botonPresionado.getId(), primerTirador, nombreUsuario);
-            contadorTiros--;    
+            socket.emit("tiroRecibido", botonPresionado.getId(), esPrimerTirador, nombreUsuario);
+            contadorTiros--;
         }
-        
-         if(contadorTiros==0){
+
+        if (contadorTiros == 0) {
             contadorTiros = 3;
             tableroOponente.setDisable(true);
-            }
+        }
     }
 
-    public boolean verificarPosicionesBarcos() {
-        return posicionesASalvo == 0;
+    public void configurarIdioma() {
+        etiquetaFilas.setText(idioma.getString("etFilas"));
+        etiquetaColumnas.setText(idioma.getString("etColumnas"));
+        botonEmpezar.setText(idioma.getString("botonEmpezar"));
     }
 
-    public void registrarTiroRecibido(String tiroRecibido) {
-        for (int i = 0; i < coordenadasOcupadas.length; i++) {
-            if(tiroRecibido.equals(coordenadasOcupadas[i])){
-                posicionesASalvo--;
-            } 
-        }           
+    public boolean verificarCombos() {
+        boolean comboVacio = true;
+        if (comboColumnas.getItems().isEmpty()) {
+            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboColumnas", "contenidoComboColumnas");
+            comboVacio = false;
+        }
+
+        if (comboFilas.getItems().isEmpty()) {
+            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboFilas", "contenidoComboFilas");
+            comboVacio = false;
+        }
+        return comboVacio;
     }
 
     @FXML
@@ -128,13 +133,6 @@ public class VentanaTableroController implements Initializable {
         ObservableList<String> letrasColumnas = FXCollections.observableArrayList("A", "B", "C", "D", "E", "F", "G",
                 "H", "I", "J");
         comboColumnas.setItems(letrasColumnas);
-    }
-
-    public void guardarCoordenadas(String coordenadas[]) {
-        for (int i = 0; i < coordenadas.length; i++) {
-            coordenadasOcupadas[contadorCoordenadas] = coordenadas[i];
-            contadorCoordenadas++;
-        }
     }
 
     @FXML
@@ -234,11 +232,7 @@ public class VentanaTableroController implements Initializable {
                 System.out.println("fuera");
             }
         }
-        
-        for(int i=0; i<coordenadasOcupadas.length;i++){
-            System.out.println(coordenadasOcupadas[i]);
-        }
-        
+
     }
 
     @FXML
@@ -268,8 +262,8 @@ public class VentanaTableroController implements Initializable {
     }
 
     @FXML
-    private void empezarPartida(ActionEvent event) {
-        socket.emit("configurarPartida", primerTirador, nombreUsuario);
+    public void empezarPartida(ActionEvent event) {
+        socket.emit("configurarPartida", esPrimerTirador, nombreUsuario);
     }
 
     public void mostrarMensajeInformacion(String titulo, String encabezado, String contenido) {
@@ -280,12 +274,12 @@ public class VentanaTableroController implements Initializable {
         advertencia.show();
     }
 
-    private void obtenerPosicionamientoBarcosEnmigos() {
+    private void jugarPartida() {
 
         socket.on("iniciarPartida", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
-                if (primerTirador) {
+                if (esPrimerTirador) {
                     tableroOponente.setDisable(false);
                 }
             }
@@ -295,15 +289,15 @@ public class VentanaTableroController implements Initializable {
             @Override
             public void call(Object... os) {
                 registrarTiroRecibido((String) os[0]);
-                contadorTirosContrincante ++;
+                contadorTirosContrincante++;
                 System.out.println("contador Contrincante" + contadorTirosContrincante);
                 if (verificarPosicionesBarcos()) {
-                    socket.emit("perderPartida", primerTirador, nombreUsuario);
+                    socket.emit("perderPartida", esPrimerTirador, nombreUsuario);
                     System.out.println("perdiste");
-                }else{
-                    System.out.println("Valor esperado "+contadorTirosContrincante);
-                    if(contadorTirosContrincante == 3){
-                        System.out.println("Valor esperado "+contadorTirosContrincante);
+                } else {
+                    System.out.println("Valor esperado " + contadorTirosContrincante);
+                    if (contadorTirosContrincante == 3) {
+                        System.out.println("Valor esperado " + contadorTirosContrincante);
                         contadorTirosContrincante = 0;
                         tableroOponente.setDisable(false);
                     }
@@ -324,30 +318,29 @@ public class VentanaTableroController implements Initializable {
         this.socket = socket;
         this.nombreUsuario = nombreUsuario;
         this.nombreRival = nombreRival;
-        this.primerTirador = primerTirador;
+        this.esPrimerTirador = primerTirador;
         etiquetaMiUsuario.setText(nombreUsuario);
         etiquetaUsuarioRival.setText(nombreRival);
-        obtenerPosicionamientoBarcosEnmigos();
+        jugarPartida();
     }
 
-    public void configurarIdioma() {
-        etiquetaFilas.setText(idioma.getString("etFilas"));
-        etiquetaColumnas.setText(idioma.getString("etColumnas"));
-        botonEmpezar.setText(idioma.getString("botonEmpezar"));
+    public void guardarCoordenadas(String coordenadas[]) {
+        for (String coordenada : coordenadas) {
+            coordenadasOcupadas[contadorCoordenadas] = coordenada;
+            contadorCoordenadas++;
+        }
     }
 
-    public boolean verificarCombos() {
-        boolean comboVacio = true;
-        if (comboColumnas.getItems().isEmpty()) {
-            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboColumnas", "contenidoComboColumnas");
-            comboVacio = false;
-        }
+    public boolean verificarPosicionesBarcos() {
+        return posicionesASalvo == 0;
+    }
 
-        if (comboFilas.getItems().isEmpty()) {
-            mostrarMensajeInformacion("tituloInformacion", "encabezadoComboFilas", "contenidoComboFilas");
-            comboVacio = false;
+    public void registrarTiroRecibido(String tiroRecibido) {
+        for (String coordenadasOcupada : coordenadasOcupadas) {
+            if (tiroRecibido.equals(coordenadasOcupada)) {
+                posicionesASalvo--;
+            }
         }
-        return comboVacio;
     }
 
 }

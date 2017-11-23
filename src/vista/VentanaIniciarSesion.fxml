@@ -97,7 +97,7 @@
                   <Insets left="130.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="botonRegistrarse" alignment="BASELINE_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#registrarUsuario" prefHeight="23.0" prefWidth="101.0" style="-fx-background-color: bluedark;" text="Registrate aqui" textFill="WHITE" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <Button fx:id="botonRegistrarse" alignment="BASELINE_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#desplegarVentanaRegistrarUsuario" prefHeight="23.0" prefWidth="101.0" style="-fx-background-color: bluedark;" text="Registrate aqui" textFill="WHITE" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <effect>
                   <ColorAdjust />
                </effect>

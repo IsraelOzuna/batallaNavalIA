@@ -20,21 +20,21 @@ import javafx.stage.Stage;
 public class BatallaNaval extends Application {
     
     @Override
-    public void start(Stage ventanaIniciarSesion) throws IOException {
+    public void start(Stage ventanaIP) throws IOException {
         ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaIniciarSesion.fxml"),idioma);
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaPeticionIP.fxml"),idioma);
         
         Scene scene = new Scene(root);
         
-        ventanaIniciarSesion.setScene(scene);
-        ventanaIniciarSesion.show();
+        ventanaIP.setScene(scene);
+        ventanaIP.show();
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+        launch(args); 
     }
     
 }

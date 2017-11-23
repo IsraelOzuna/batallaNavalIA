@@ -5,7 +5,6 @@
  */
 package controlador;
 
-import io.socket.client.Socket;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
+import negocio.ConfiguracionConexion;
 
 /**
  * FXML Controller class
@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 public class VentanaMenuController implements Initializable {
 
     private ResourceBundle idioma;
+    
     private String nombreUsuario;    
 
     @FXML
@@ -41,6 +42,8 @@ public class VentanaMenuController implements Initializable {
     private TableColumn columnaPuntaje;
     @FXML
     private Label etiquetaNombreUsuario;
+    
+    private String ipNode;
 
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
@@ -67,6 +70,7 @@ public class VentanaMenuController implements Initializable {
 
         VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
         controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
+        controladorBuscarPartida.obtenerIpNode(ipNode);
         controladorBuscarPartida.comenzarBusqueda();
 
         Stage buscarPartida = new Stage();
@@ -74,5 +78,9 @@ public class VentanaMenuController implements Initializable {
         buscarPartida.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
+    }
+    
+    public void obtenerIpNode(String ipNode){
+        this.ipNode = ipNode;
     }
 }

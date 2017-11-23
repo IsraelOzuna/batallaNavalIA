@@ -33,6 +33,8 @@ public class VentanaBuscarPartidaController implements Initializable {
     private ResourceBundle idioma;
     private String nombreUsuario;
     private Socket socket;
+    
+    private String ipNode;
 
     @FXML
     private Label etiquetaBuscandoPartida;
@@ -61,14 +63,13 @@ public class VentanaBuscarPartidaController implements Initializable {
     }
 
     private void crearConexion() throws URISyntaxException {
-        socket = IO.socket("http://192.168.0.16:9000");
+        socket = IO.socket("http://" + ipNode + ":9000");
 
         socket.on("SeHaEncontradoUnaFlotaEnemiga", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
                 Platform.runLater(() -> {
                     try {
-                        System.out.println((Boolean) os[1]);
                         desplegarTablero((String) os[0],(Boolean) os[1]);                        
                         socket.off("SeHaEncontradoUnaFlotaEnemiga");
                     } catch (IOException ex) {
@@ -94,4 +95,9 @@ public class VentanaBuscarPartidaController implements Initializable {
         //Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //ventanaAnterior.close();
     }
+    
+    public void obtenerIpNode(String ipNode){
+        this.ipNode = ipNode;
+    }
+
 }

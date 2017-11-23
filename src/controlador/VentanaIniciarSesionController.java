@@ -6,7 +6,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,7 +21,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import negocio.ConfiguracionConexion;
 import negocio.IJugador;
+import negocio.Utileria;
 
 public class VentanaIniciarSesionController implements Initializable {
 
@@ -47,11 +48,16 @@ public class VentanaIniciarSesionController implements Initializable {
     @FXML
     private PasswordField campoContrasena;
 
+    private String ipRMI;
+
+    private String ipNode;
+
+    private ConfiguracionConexion conexionIP;
+
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
         configurarIdioma();
-
     }
 
     public void configurarIdioma() {
@@ -80,25 +86,23 @@ public class VentanaIniciarSesionController implements Initializable {
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
         IJugador stub;
-        //String host = "192.168.43.223";
-        String host = "192.168.0.14";
-        //String host = "127.0.0.1";
-        if (campoUsuario.getText().isEmpty() | campoContrasena.getText().isEmpty()) {
+        if (campoUsuario.getText().isEmpty() || campoContrasena.getText().isEmpty()) {
             mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
         } else {
             try {
-                Registry registry = LocateRegistry.getRegistry(host);
+                Registry registry = LocateRegistry.getRegistry(ipRMI);
                 stub = (IJugador) registry.lookup("ServidorBatallaNaval");
+                Utileria contraseña = new Utileria();
 
-                usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(), cifrarContrasena(campoContrasena.getText()));
+                usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(), contraseña.cifrarContrasena(campoContrasena.getText()));
 
                 if (usuarioEncontrado) {
                     FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
                     Parent root = (Parent) loger.load();
-
                     VentanaMenuController controladorMenu = loger.getController();
                     controladorMenu.obtenerNombreUsuario(campoUsuario.getText());
-
+                    controladorMenu.obtenerIpNode(ipNode);
+                    System.out.println(ipNode);
                     Stage menu = new Stage();
                     menu.setScene(new Scene(root));
                     menu.show();
@@ -115,12 +119,10 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     @FXML
-    public void registrarUsuario(ActionEvent event) throws IOException {
+    public void desplegarVentanaRegistrarUsuario(ActionEvent event) throws IOException {           
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaRegistrarUsuario.fxml"), idioma);
-
         Parent root = (Parent) loger.load();
         Stage registro = new Stage();
-
         registro.setScene(new Scene(root));
         registro.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -134,16 +136,4 @@ public class VentanaIniciarSesionController implements Initializable {
         advertencia.setContentText(idioma.getString(contenido));
         advertencia.show();
     }
-
-    public String cifrarContrasena(String contrasena) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-        byte[] hash = messageDigest.digest(contrasena.getBytes());
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (int i = 0; i < hash.length; i++) {
-            stringBuilder.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return stringBuilder.toString();
-    }
-
 }

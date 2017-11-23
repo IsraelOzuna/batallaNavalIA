@@ -9,8 +9,8 @@ package negocio;
  *
  * @author iro19
  */
-public class Barco {    
-    
+public class Barco {
+
     public String[] generarCoordenadas(int posicionColumna, int posicionFila, int tamanoBarco) {
         String coordenadas[] = null;
 
@@ -50,14 +50,14 @@ public class Barco {
     public boolean verificarCoordenadas(String coordenadas[], String coordenadasOcupadas[]) {
         boolean posicionDisponible = true;
 
-        for (int i = 0; i < coordenadasOcupadas.length; i++) {
-            for (int j = 0; j < coordenadas.length; j++) {
-                if (coordenadas[j].equals(coordenadasOcupadas[i])) {
+        for (String coordenadasOcupada : coordenadasOcupadas) {
+            for (String coordenada : coordenadas) {
+                if (coordenada.equals(coordenadasOcupada)) {
                     posicionDisponible = false;
                     break;
                 }
             }
-        }              
+        }
         return posicionDisponible;
     }
 
@@ -94,6 +94,8 @@ public class Barco {
             case "J":
                 numeroConvertido = 9;
                 break;
+            default:
+                break;
 
         }
 
@@ -101,73 +103,112 @@ public class Barco {
     }
 
     public boolean limitarTablero(String[] coordenadasBarco, int longitudCoordenadas) {
+        boolean limiteExcedido = false ;
+        String coordenadasAOcupar[] = null;
+
+        switch (longitudCoordenadas) {
+
+            case 2:
+                limiteExcedido = limitarBarco2(coordenadasBarco, coordenadasAOcupar);
+                break;
+
+            case 3:
+                limiteExcedido = limitarBarco3(coordenadasBarco, coordenadasAOcupar);
+                break;
+
+            case 5:
+                limiteExcedido = limitarBarco5(coordenadasBarco, coordenadasAOcupar);
+                break;
+
+            default:
+                break;
+        }
+
+        return limiteExcedido;
+    }
+
+    public boolean limitarBarco2(String[] coordenadasBarco, String[] coordenadasAOcupar) {
+        boolean limiteExcedido = false;
+        String coordenadaColumna1 = null;
+        String coordenadaColumna2 = null;
+        for (int i = 0; i < coordenadasBarco.length; i++) {
+            coordenadasAOcupar = coordenadasBarco[i].split(",");
+            if (i == 0) {
+                coordenadaColumna1 = coordenadasAOcupar[0];
+            } else {
+                coordenadaColumna2 = coordenadasAOcupar[0];
+            }
+        }
+        if (Integer.parseInt(coordenadaColumna1) >= 9 || Integer.parseInt(coordenadaColumna2) > 9) {
+            limiteExcedido = true;
+        }
+        return limiteExcedido;
+    }
+
+    public boolean limitarBarco3(String[] coordenadasBarco, String[] coordenadasAOcupar) {
+        boolean limiteExcedido = false;
+        String coordenadaColumna1 = null;
+        String coordenadaColumna2 = null;
+        String coordenadaColumna3 = null;
+        for (int i = 0; i < coordenadasBarco.length; i++) {
+            coordenadasAOcupar = coordenadasBarco[i].split(",");
+            switch (i) {
+                case 0:
+                    coordenadaColumna1 = coordenadasAOcupar[0];
+                    break;
+                case 1:
+                    coordenadaColumna2 = coordenadasAOcupar[0];
+                    break;
+                case 2:
+                    coordenadaColumna3 = coordenadasAOcupar[0];
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (Integer.parseInt(coordenadaColumna1) >= 9 || Integer.parseInt(coordenadaColumna2) >= 9
+                || Integer.parseInt(coordenadaColumna3) > 9) {
+            limiteExcedido = true;
+        }
+
+        return limiteExcedido;
+    }
+
+    public boolean limitarBarco5(String[] coordenadasBarco, String[] coordenadasAOcupar) {
         boolean limiteExcedido = false;
         String coordenadaColumna1 = null;
         String coordenadaColumna2 = null;
         String coordenadaColumna3 = null;
         String coordenadaColumna4 = null;
         String coordenadaColumna5 = null;
-
-        String aux[];
-
-        switch (longitudCoordenadas) {
-
-            case 2:
-                for (int i = 0; i < coordenadasBarco.length; i++) {
-                    aux = coordenadasBarco[i].split(",");
-                    if (i == 0) {
-                        coordenadaColumna1 = aux[0];
-                    } else {
-                        coordenadaColumna2 = aux[0];
-                    }
-                }
-                if (Integer.parseInt(coordenadaColumna1) >= 9 || Integer.parseInt(coordenadaColumna2) > 9) {
-                    limiteExcedido = true;
-                }
-                break;
-
-            case 3:
-                for (int i = 0; i < coordenadasBarco.length; i++) {
-                    aux = coordenadasBarco[i].split(",");
-                    if (i == 0) {
-                        coordenadaColumna1 = aux[0];
-                    } else if (i == 1) {
-                        coordenadaColumna2 = aux[0];
-                    } else if (i == 2) {
-                        coordenadaColumna3 = aux[0];
-                    }
-                }
-                if (Integer.parseInt(coordenadaColumna1) >= 9 || Integer.parseInt(coordenadaColumna2) >= 9
-                        || Integer.parseInt(coordenadaColumna3) > 9) {
-                    limiteExcedido = true;
-                }
-                break;
-
-            case 5:
-                for (int i = 0; i < coordenadasBarco.length; i++) {
-                    aux = coordenadasBarco[i].split(",");
-                    if (i == 0) {
-                        coordenadaColumna1 = aux[1];
-                    } else if (i == 1) {
-                        coordenadaColumna2 = aux[1];
-                    } else if (i == 2) {
-                        coordenadaColumna3 = aux[1];
-                    } else if (i == 3) {
-                        coordenadaColumna4 = aux[1];
-                    } else if (i == 4) {
-                        coordenadaColumna5 = aux[1];
-                    }
-                }
-
-                if (Integer.parseInt(coordenadaColumna1) >= 9 || Integer.parseInt(coordenadaColumna2) >= 9
-                        || Integer.parseInt(coordenadaColumna3) >= 9 || Integer.parseInt(coordenadaColumna4) >= 9
-                        || Integer.parseInt(coordenadaColumna5) > 9) {
-                    limiteExcedido = true;
-                }
-
-                break;
+        for (int i = 0; i < coordenadasBarco.length; i++) {
+            coordenadasAOcupar = coordenadasBarco[i].split(",");
+            switch (i) {
+                case 0:
+                    coordenadaColumna1 = coordenadasAOcupar[1];
+                    break;
+                case 1:
+                    coordenadaColumna2 = coordenadasAOcupar[1];
+                    break;
+                case 2:
+                    coordenadaColumna3 = coordenadasAOcupar[1];
+                    break;
+                case 3:
+                    coordenadaColumna4 = coordenadasAOcupar[1];
+                    break;
+                case 4:
+                    coordenadaColumna5 = coordenadasAOcupar[1];
+                    break;
+                default:
+                    break;
+            }
         }
 
+        if (Integer.parseInt(coordenadaColumna1) >= 9 || Integer.parseInt(coordenadaColumna2) >= 9
+                || Integer.parseInt(coordenadaColumna3) >= 9 || Integer.parseInt(coordenadaColumna4) >= 9
+                || Integer.parseInt(coordenadaColumna5) > 9) {
+            limiteExcedido = true;
+        }
         return limiteExcedido;
     }
 
