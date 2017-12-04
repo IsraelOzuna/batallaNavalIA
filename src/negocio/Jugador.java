@@ -23,17 +23,6 @@ public class Jugador implements Serializable {
     
     private String apellidos;
     
-    private Short estado;
-
-    public Short getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Short estado) {
-        this.estado = estado;
-    }
-
-
     public String getNombreJugador() {
         return nombreJugador;
     }

@@ -50,10 +50,10 @@
                   <JFXButton id="3,0" fx:id="botonD1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" />
                   <JFXButton id="4,0" fx:id="botonE1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" />
                   <JFXButton id="5,0" fx:id="botonF1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" />
-                  <JFXButton fx:id="botonG1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" />
-                  <JFXButton fx:id="botonH1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" />
-                  <JFXButton fx:id="botonI1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" />
-                  <JFXButton fx:id="botonJ1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" />
+                  <JFXButton id="6.0" fx:id="botonG1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" />
+                  <JFXButton id="7,0" fx:id="botonH1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" />
+                  <JFXButton id="8,0" fx:id="botonI1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" />
+                  <JFXButton id="9,0" fx:id="botonJ1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" />
                   <JFXButton id="0,1" fx:id="botonA2" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="1" />
                   <JFXButton id="0,2" fx:id="botonA3" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="2" />
                   <JFXButton id="0,3" fx:id="botonA4" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.rowIndex="3" />

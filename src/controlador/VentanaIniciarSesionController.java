@@ -47,13 +47,7 @@ public class VentanaIniciarSesionController implements Initializable {
     private TextField campoUsuario;
     @FXML
     private PasswordField campoContrasena;
-
-    private String ipRMI;
-
-    private String ipNode;
-
-    private ConfiguracionConexion conexionIP;
-
+            
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
@@ -85,11 +79,14 @@ public class VentanaIniciarSesionController implements Initializable {
     @FXML
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
-        IJugador stub;
+        IJugador stub;        
         if (campoUsuario.getText().isEmpty() || campoContrasena.getText().isEmpty()) {
             mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
         } else {
             try {
+                ConfiguracionConexion conexionRMI = new ConfiguracionConexion();                
+                String ipRMI = conexionRMI.obtenerIPRMI();
+                
                 Registry registry = LocateRegistry.getRegistry(ipRMI);
                 stub = (IJugador) registry.lookup("ServidorBatallaNaval");
                 Utileria contraseña = new Utileria();
@@ -101,8 +98,6 @@ public class VentanaIniciarSesionController implements Initializable {
                     Parent root = (Parent) loger.load();
                     VentanaMenuController controladorMenu = loger.getController();
                     controladorMenu.obtenerNombreUsuario(campoUsuario.getText());
-                    controladorMenu.obtenerIpNode(ipNode);
-                    System.out.println(ipNode);
                     Stage menu = new Stage();
                     menu.setScene(new Scene(root));
                     menu.show();
@@ -119,12 +114,12 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaRegistrarUsuario(ActionEvent event) throws IOException {           
+    public void desplegarVentanaRegistrarUsuario(ActionEvent event) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaRegistrarUsuario.fxml"), idioma);
         Parent root = (Parent) loger.load();
         Stage registro = new Stage();
         registro.setScene(new Scene(root));
-        registro.show();
+        registro.show();       
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
     }

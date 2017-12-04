@@ -19,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
-import negocio.ConfiguracionConexion;
 
 /**
  * FXML Controller class
@@ -69,8 +68,7 @@ public class VentanaMenuController implements Initializable {
         Parent root = (Parent) loger.load();
 
         VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
-        controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
-        controladorBuscarPartida.obtenerIpNode(ipNode);
+        controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);        
         controladorBuscarPartida.comenzarBusqueda();
 
         Stage buscarPartida = new Stage();

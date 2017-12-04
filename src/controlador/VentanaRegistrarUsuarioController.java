@@ -63,11 +63,8 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     @FXML
     private JFXButton botonCancelar;
 
-    private static final String formatoCorreo = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";        
-    
-    private String ipRMI;
-    
-    
+    private static final String formatoCorreo = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";              
+        
     /**
      * Initializes the controller class.
      */
@@ -101,6 +98,9 @@ public class VentanaRegistrarUsuarioController implements Initializable {
 
         } else if (verificarNombreUsuarioCorrecto(campoUsuario.getText())) {
             try {
+                ConfiguracionConexion conexionRMI = new ConfiguracionConexion();                
+                String ipRMI = conexionRMI.obtenerIPRMI();
+                
                 Registry registry = LocateRegistry.getRegistry(ipRMI);
                 stub = (IJugador) registry.lookup("ServidorBatallaNaval");
                 usuarioExistente = stub.verificarExistenciaCuenta(campoUsuario.getText());
@@ -112,7 +112,8 @@ public class VentanaRegistrarUsuarioController implements Initializable {
                     mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCorreoInvalido", "contenidoCorreoInvalido");
                 }
             } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
-                mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion");
+                mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion");  
+                System.out.println(ex.getMessage());
             }
         } else {
             mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoUsuarioNoValido", "contenidoUsuarioNoValido");

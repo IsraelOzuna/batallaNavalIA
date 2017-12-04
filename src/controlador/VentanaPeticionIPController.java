@@ -5,12 +5,10 @@
  */
 package controlador;
 
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import javafx.beans.property.Property;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import negocio.ConfiguracionConexion;
@@ -46,11 +45,14 @@ public class VentanaPeticionIPController implements Initializable {
     @FXML
     private TextField campoIPNode4;
 
+    @FXML
+    private TextField campoPuertoNode;
+
     private String ipRMI;
 
     private String ipNode;
 
-    private ConfiguracionConexion conexionIP;
+    private String puertoNode;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,36 +62,34 @@ public class VentanaPeticionIPController implements Initializable {
     @FXML
     public void desplegarIniciarSesion(ActionEvent event) throws IOException {
 
-        if (verificarCamposVaciosIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarCamposVaciosIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
-            if (verificarlongitudCamposIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarLongitudCamposIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
+        if (verificarCampoVacioPuertoNode(campoPuertoNode)) {
+            if (verificarCamposVaciosIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarCamposVaciosIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
+                if (verificarLongitudCamposIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarLongitudCamposIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
 
-                Properties p = new Properties();
+                    ConfiguracionConexion conexionIP = new ConfiguracionConexion();
+                    ipRMI = campoIPRMI1.getText() + "." + campoIPRMI2.getText() + "." + campoIPRMI3.getText() + "." + campoIPRMI4.getText();
+                    ipNode = campoIPNode1.getText() + "." + campoIPNode2.getText() + "." + campoIPNode3.getText() + "." + campoIPNode4.getText();
+                    puertoNode = campoPuertoNode.getText();
 
-                ipRMI = campoIPRMI1.getText() + "." + campoIPRMI2.getText() + "." + campoIPRMI3.getText() + "." + campoIPRMI4.getText();
-                ipNode = campoIPNode1.getText() + "." + campoIPNode2.getText() + "." + campoIPNode3.getText() + "." + campoIPNode4.getText();
+                    conexionIP.actualizarIP(ipRMI, ipNode, puertoNode);
 
-                try (InputStream propertiesStream = ClassLoader.getSystemResourceAsStream("recursos/direccionesIP.properties")) {
-                    p.load(propertiesStream);
-                    p.setProperty("RMI", ipRMI);
-                    p.setProperty("Node", ipNode);
+                    ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
+                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
+                    Parent root = (Parent) loger.load();
+                    Stage iniciarSesion = new Stage();
+                    iniciarSesion.setScene(new Scene(root));
+                    iniciarSesion.show();
+                    Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    ventanaAnterior.close();
+                } else {
+                    System.out.println("Los campos no pueden tener más de 3 numeros");
                 }
-
-                ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
-                FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
-                Parent root = (Parent) loger.load();
-                Stage iniciarSesion = new Stage();
-                iniciarSesion.setScene(new Scene(root));
-                iniciarSesion.show();
-                Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                ventanaAnterior.close();
             } else {
-                System.out.println("Los campos no pueden tener más de 3 numeros");
+                System.out.println("Alguno de los campos esta vacio");
             }
-
         } else {
-            System.out.println("Alguno de los campos esta vacio");
+            System.out.println("Puerto vacío");
         }
-
     }
 
     public boolean verificarCamposVaciosIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
@@ -108,7 +108,15 @@ public class VentanaPeticionIPController implements Initializable {
         return camposLlenos;
     }
 
-    public boolean verificarlongitudCamposIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
+    public boolean verificarCampoVacioPuertoNode(TextField campoPuertoNode) {
+        boolean campoLleno = true;
+        if (campoPuertoNode.getText().isEmpty()) {
+            campoLleno = false;
+        }
+        return campoLleno;
+    }
+
+    public boolean verificarLongitudCamposIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
         boolean camposCorrectos = true;
         if (campoIPRMI1.getText().length() > 3 || campoIPRMI2.getText().length() > 3 || campoIPRMI3.getText().length() > 3 || campoIPRMI4.getText().length() > 3) {
             camposCorrectos = false;

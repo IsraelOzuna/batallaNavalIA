@@ -291,7 +291,7 @@ public class VentanaTableroController implements Initializable {
                 registrarTiroRecibido((String) os[0]);
                 contadorTirosContrincante++;
                 System.out.println("contador Contrincante" + contadorTirosContrincante);
-                if (verificarPosicionesBarcos()) {
+                if (verificarPosicionesBarcosASalvo()) {
                     socket.emit("perderPartida", esPrimerTirador, nombreUsuario);
                     System.out.println("perdiste");
                 } else {
@@ -331,7 +331,7 @@ public class VentanaTableroController implements Initializable {
         }
     }
 
-    public boolean verificarPosicionesBarcos() {
+    public boolean verificarPosicionesBarcosASalvo() {
         return posicionesASalvo == 0;
     }
 
@@ -342,5 +342,4 @@ public class VentanaTableroController implements Initializable {
             }
         }
     }
-
 }
