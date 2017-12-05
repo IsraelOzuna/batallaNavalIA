@@ -7,7 +7,13 @@ package controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +24,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import negocio.ConfiguracionConexion;
+import negocio.IJugador;
 
 /**
  * FXML Controller class
@@ -28,8 +38,8 @@ import javafx.stage.Stage;
 public class VentanaMenuController implements Initializable {
 
     private ResourceBundle idioma;
-    
-    private String nombreUsuario;    
+
+    private String nombreUsuario;
 
     @FXML
     private Button botonIniciarPartida;
@@ -41,8 +51,21 @@ public class VentanaMenuController implements Initializable {
     private TableColumn columnaPuntaje;
     @FXML
     private Label etiquetaNombreUsuario;
-    
+
     private String ipNode;
+    @FXML
+    private ImageView imagenBarcoMenu;
+    @FXML
+    private ImageView imagenMisil;
+    @FXML
+    private ImageView imagenRadar;
+    @FXML
+    private TableView<?> tablaRank;
+    @FXML
+    private TableColumn<?, ?> columnaPosicion;
+
+    ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
+    String ipRMI = conexionRMI.obtenerIPRMI();
 
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
@@ -68,7 +91,7 @@ public class VentanaMenuController implements Initializable {
         Parent root = (Parent) loger.load();
 
         VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
-        controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);        
+        controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
         controladorBuscarPartida.comenzarBusqueda();
 
         Stage buscarPartida = new Stage();
@@ -77,8 +100,28 @@ public class VentanaMenuController implements Initializable {
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
     }
-    
-    public void obtenerIpNode(String ipNode){
+
+    public void obtenerIpNode(String ipNode) {
         this.ipNode = ipNode;
+    }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) throws IOException {
+        IJugador stub;
+        try {
+            Registry registry = LocateRegistry.getRegistry(ipRMI);
+            stub = (IJugador) registry.lookup("ServidorBatallaNaval");
+            stub.cerrarSesion(nombreUsuario);
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(VentanaMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
+        Parent root = (Parent) loger.load();
+        Stage menu = new Stage();
+        menu.setScene(new Scene(root));
+        menu.show();
+        Stage ventanaRegistrar = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        ventanaRegistrar.close();
+
     }
 }

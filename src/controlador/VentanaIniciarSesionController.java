@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import negocio.ConfiguracionConexion;
 import negocio.IJugador;
+import negocio.Jugador;
 import negocio.Utileria;
 
 public class VentanaIniciarSesionController implements Initializable {
@@ -47,7 +48,7 @@ public class VentanaIniciarSesionController implements Initializable {
     private TextField campoUsuario;
     @FXML
     private PasswordField campoContrasena;
-            
+
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
@@ -79,14 +80,14 @@ public class VentanaIniciarSesionController implements Initializable {
     @FXML
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
-        IJugador stub;        
+        IJugador stub;
         if (campoUsuario.getText().isEmpty() || campoContrasena.getText().isEmpty()) {
             mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
         } else {
             try {
-                ConfiguracionConexion conexionRMI = new ConfiguracionConexion();                
+                ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
                 String ipRMI = conexionRMI.obtenerIPRMI();
-                
+
                 Registry registry = LocateRegistry.getRegistry(ipRMI);
                 stub = (IJugador) registry.lookup("ServidorBatallaNaval");
                 Utileria contraseña = new Utileria();
@@ -94,15 +95,20 @@ public class VentanaIniciarSesionController implements Initializable {
                 usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(), contraseña.cifrarContrasena(campoContrasena.getText()));
 
                 if (usuarioEncontrado) {
-                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
-                    Parent root = (Parent) loger.load();
-                    VentanaMenuController controladorMenu = loger.getController();
-                    controladorMenu.obtenerNombreUsuario(campoUsuario.getText());
-                    Stage menu = new Stage();
-                    menu.setScene(new Scene(root));
-                    menu.show();
-                    Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    ventanaAnterior.close();
+                    if (stub.verificarJugadorConectado(campoUsuario.getText())) {
+                        mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoUsuarioConectado", "contenidoUsuarioConectado");
+                    } else {
+                        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
+                        Parent root = (Parent) loger.load();
+                        VentanaMenuController controladorMenu = loger.getController();
+                        controladorMenu.obtenerNombreUsuario(campoUsuario.getText());
+                        Stage menu = new Stage();
+                        menu.setScene(new Scene(root));
+                        menu.show();
+                        Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        ventanaAnterior.close();
+                    }
+
                 } else {
                     mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoDatosIncorrectos", "contenidoDatosIncorrectos");
                 }
@@ -119,7 +125,7 @@ public class VentanaIniciarSesionController implements Initializable {
         Parent root = (Parent) loger.load();
         Stage registro = new Stage();
         registro.setScene(new Scene(root));
-        registro.show();       
+        registro.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
     }

@@ -17,4 +17,5 @@ public interface IJugador extends Remote{
     public boolean verificarExistenciaCuenta(String nombreJugador)throws RemoteException;
     public boolean registrarJugador(Jugador jugador)throws RemoteException;
     public boolean verificarJugadorConectado(String nombreJugador)throws RemoteException;
+    public void cerrarSesion(String nombreJugador)throws RemoteException;
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="1030.0" prefHeight="500.0" prefWidth="1030.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaTableroController">
+<AnchorPane id="AnchorPane" maxHeight="500.0" maxWidth="1030.0" prefHeight="500.0" prefWidth="1030.0" style="-fx-background-color: #121F38;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaTableroController">
    <children>
       <Pane fx:id="panelOponente" layoutX="37.0" layoutY="36.0" maxHeight="400.0" maxWidth="400.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #ffff;">
          <children>
@@ -50,7 +50,7 @@
                   <JFXButton id="3,0" fx:id="botonD1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="3" />
                   <JFXButton id="4,0" fx:id="botonE1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="4" />
                   <JFXButton id="5,0" fx:id="botonF1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="5" />
-                  <JFXButton id="6.0" fx:id="botonG1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" />
+                  <JFXButton id="6,0" fx:id="botonG1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="6" />
                   <JFXButton id="7,0" fx:id="botonH1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="7" />
                   <JFXButton id="8,0" fx:id="botonI1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="8" />
                   <JFXButton id="9,0" fx:id="botonJ1" onAction="#desactivarBoton" opacity="0.99" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #303F66;" text="" GridPane.columnIndex="9" />

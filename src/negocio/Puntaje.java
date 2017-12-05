@@ -13,17 +13,9 @@ import java.io.Serializable;
  */
 public class Puntaje implements Serializable{
     
-    private String nombreJugador;
     
     private int puntosTotales;
 
-    public String getNombreJugador() {
-        return nombreJugador;
-    }
-
-    public void setNombreJugador(String nombreJugador) {
-        this.nombreJugador = nombreJugador;
-    }
 
     public int getPuntosTotales() {
         return puntosTotales;
