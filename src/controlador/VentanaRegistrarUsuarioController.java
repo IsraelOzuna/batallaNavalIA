@@ -15,6 +15,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
@@ -25,6 +27,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -93,7 +97,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
 
     @FXML
     public void registrarUsuario(ActionEvent event) {
-        IJugador stub;
+        IJugador stubJugador;
         boolean usuarioExistente;
 
         if (verificarCamposVacios(campoNombre, campoApellidos, campoCorreo, campoUsuario, campoContrasena)) {
@@ -108,16 +112,17 @@ public class VentanaRegistrarUsuarioController implements Initializable {
                 String ipRMI = conexionRMI.obtenerIPRMI();
 
                 Registry registry = LocateRegistry.getRegistry(ipRMI);
-                stub = (IJugador) registry.lookup("ServidorBatallaNaval");
-                usuarioExistente = stub.verificarExistenciaCuenta(campoUsuario.getText());
+                stubJugador = (IJugador) registry.lookup("ServidorBatallaNaval");
+                usuarioExistente = stubJugador.verificarExistenciaCuenta(campoUsuario.getText());
                 if (usuarioExistente) {
                     mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoUsuarioExistente", "contenidoUsuarioExistente");
                 } else if (validarCorreo(campoCorreo.getText())) {
-                    registrarJugadorValidado(stub);
+                    registrarJugadorValidado(stubJugador);
                 } else {
                     mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCorreoInvalido", "contenidoCorreoInvalido");
                 }
             } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
+                Logger.getLogger(VentanaRegistrarUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
                 mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion");
             }
         } else {
@@ -138,7 +143,19 @@ public class VentanaRegistrarUsuarioController implements Initializable {
         advertencia.setTitle(idioma.getString(titulo));
         advertencia.setHeaderText(idioma.getString(encabezado));
         advertencia.setContentText(idioma.getString(contenido));
+        ButtonType botonOK = new ButtonType("OK", ButtonData.OK_DONE);
+        advertencia.getButtonTypes().setAll(botonOK);
         advertencia.show();
+    }
+
+    public void mostrarMensajeInformacion(String titulo, String encabezado, String contenido) {
+        Alert informacion = new Alert(Alert.AlertType.INFORMATION);
+        informacion.setTitle(idioma.getString(titulo));
+        informacion.setHeaderText(idioma.getString(encabezado));
+        informacion.setContentText(idioma.getString(contenido));
+        ButtonType botonOK = new ButtonType("OK", ButtonData.OK_DONE);
+        informacion.getButtonTypes().setAll(botonOK);
+        informacion.show();
     }
 
     public boolean verificarLongitud(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoUsuario) {
@@ -159,8 +176,13 @@ public class VentanaRegistrarUsuarioController implements Initializable {
         jugador.setCorreo(campoCorreo.getText());
         jugador.setNombre(campoNombre.getText());
         jugador.setApellidos(campoApellidos.getText());
-        stub.registrarJugador(jugador);
-        mostrarMensajeAdvertencia("tituloCuadroDialogo", "encabezadoRegistroExitoso", "contenidoRegistroExitoso");
+        stub.registrarJugador(jugador);        
+        mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoRegistroExitoso", "contenidoRegistroExitoso");
+        campoNombre.setText("");
+        campoApellidos.setText("");
+        campoContrasena.setText("");
+        campoCorreo.setText("");
+        campoUsuario.setText("");
     }
 
     public boolean verificarNombreUsuarioCorrecto(String nombreUsuario) {
@@ -179,7 +201,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     @FXML
-    private void regresarVentanaIniciarSesion(ActionEvent event) throws IOException {
+    public void regresarVentanaIniciarSesion(ActionEvent event) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
         Parent root = (Parent) loger.load();
         Stage menu = new Stage();

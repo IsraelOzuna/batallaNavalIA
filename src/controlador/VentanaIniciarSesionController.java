@@ -8,6 +8,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +19,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import negocio.ConfiguracionConexion;
 import negocio.IJugador;
-import negocio.Jugador;
 import negocio.Utileria;
 
 public class VentanaIniciarSesionController implements Initializable {
@@ -80,7 +83,7 @@ public class VentanaIniciarSesionController implements Initializable {
     @FXML
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
-        IJugador stub;
+        IJugador stubJugador;
         if (campoUsuario.getText().isEmpty() || campoContrasena.getText().isEmpty()) {
             mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
         } else {
@@ -89,13 +92,13 @@ public class VentanaIniciarSesionController implements Initializable {
                 String ipRMI = conexionRMI.obtenerIPRMI();
 
                 Registry registry = LocateRegistry.getRegistry(ipRMI);
-                stub = (IJugador) registry.lookup("ServidorBatallaNaval");
+                stubJugador = (IJugador) registry.lookup("ServidorBatallaNaval");
                 Utileria contraseña = new Utileria();
 
-                usuarioEncontrado = stub.iniciarSesion(campoUsuario.getText(), contraseña.cifrarContrasena(campoContrasena.getText()));
+                usuarioEncontrado = stubJugador.iniciarSesion(campoUsuario.getText(), contraseña.cifrarContrasena(campoContrasena.getText()));
 
                 if (usuarioEncontrado) {
-                    if (stub.verificarJugadorConectado(campoUsuario.getText())) {
+                    if (stubJugador.verificarJugadorConectado(campoUsuario.getText())) {
                         mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoUsuarioConectado", "contenidoUsuarioConectado");
                     } else {
                         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
@@ -114,6 +117,7 @@ public class VentanaIniciarSesionController implements Initializable {
                 }
 
             } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
+                Logger.getLogger(VentanaIniciarSesionController.class.getName()).log(Level.SEVERE, null, ex);
                 mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion");
             }
         }
@@ -135,6 +139,8 @@ public class VentanaIniciarSesionController implements Initializable {
         advertencia.setTitle(idioma.getString(titulo));
         advertencia.setHeaderText(idioma.getString(encabezado));
         advertencia.setContentText(idioma.getString(contenido));
+        ButtonType botonOK = new ButtonType("OK", ButtonData.OK_DONE);
+        advertencia.getButtonTypes().setAll(botonOK);
         advertencia.show();
     }
 }

@@ -5,7 +5,6 @@
  */
 package controlador;
 
-import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import negocio.ConfiguracionConexion;
@@ -44,7 +45,6 @@ public class VentanaPeticionIPController implements Initializable {
     private TextField campoIPNode3;
     @FXML
     private TextField campoIPNode4;
-
     @FXML
     private TextField campoPuertoNode;
 
@@ -62,34 +62,42 @@ public class VentanaPeticionIPController implements Initializable {
     @FXML
     public void desplegarIniciarSesion(ActionEvent event) throws IOException {
 
-        if (verificarCampoVacioPuertoNode(campoPuertoNode)) {
-            if (verificarCamposVaciosIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarCamposVaciosIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
-                if (verificarLongitudCamposIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarLongitudCamposIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
+        if (verificarCamposVaciosIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarCamposVaciosIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4, campoPuertoNode)) {
+            if (verificarLongitudCamposIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarLongitudCamposIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
 
-                    ConfiguracionConexion conexionIP = new ConfiguracionConexion();
-                    ipRMI = campoIPRMI1.getText() + "." + campoIPRMI2.getText() + "." + campoIPRMI3.getText() + "." + campoIPRMI4.getText();
-                    ipNode = campoIPNode1.getText() + "." + campoIPNode2.getText() + "." + campoIPNode3.getText() + "." + campoIPNode4.getText();
-                    puertoNode = campoPuertoNode.getText();
+                ConfiguracionConexion conexionIP = new ConfiguracionConexion();
+                ipRMI = campoIPRMI1.getText() + "." + campoIPRMI2.getText() + "." + campoIPRMI3.getText() + "." + campoIPRMI4.getText();
+                ipNode = campoIPNode1.getText() + "." + campoIPNode2.getText() + "." + campoIPNode3.getText() + "." + campoIPNode4.getText();
+                puertoNode = campoPuertoNode.getText();
 
-                    conexionIP.actualizarIP(ipRMI, ipNode, puertoNode);
+                conexionIP.actualizarIP(ipRMI, ipNode, puertoNode);
 
-                    ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
-                    FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
-                    Parent root = (Parent) loger.load();
-                    Stage iniciarSesion = new Stage();
-                    iniciarSesion.setScene(new Scene(root));
-                    iniciarSesion.show();
-                    Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    ventanaAnterior.close();
-                } else {
-                    System.out.println("Los campos no pueden tener más de 3 numeros");
-                }
+                ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
+                FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
+                Parent root = (Parent) loger.load();
+                Stage iniciarSesion = new Stage();
+                iniciarSesion.setScene(new Scene(root));
+                iniciarSesion.show();
+                Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                ventanaAnterior.close();
             } else {
-                System.out.println("Alguno de los campos esta vacio");
+                mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCampoExcedido", "contenidoCampoExcedido");
             }
         } else {
-            System.out.println("Puerto vacío");
+            mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
         }
+
+    }
+
+    public void mostrarMensajeAdvertencia(String titulo, String encabezado, String contenido) {
+        ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
+        Alert advertencia = new Alert(Alert.AlertType.WARNING);
+        advertencia.setTitle(idioma.getString(titulo));
+        advertencia.setHeaderText(idioma.getString(encabezado));
+        advertencia.setContentText(idioma.getString(contenido));
+        ButtonType botonOK = new ButtonType("OK", ButtonData.OK_DONE);
+        advertencia.getButtonTypes().setAll(botonOK);
+        advertencia.show();
     }
 
     public boolean verificarCamposVaciosIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
@@ -100,20 +108,12 @@ public class VentanaPeticionIPController implements Initializable {
         return camposLlenos;
     }
 
-    public boolean verificarCamposVaciosIPNode(TextField campoIPNode1, TextField campoIPNode2, TextField campoIPNode3, TextField campoIPNode4) {
+    public boolean verificarCamposVaciosIPNode(TextField campoIPNode1, TextField campoIPNode2, TextField campoIPNode3, TextField campoIPNode4, TextField campoPuertoNode) {
         boolean camposLlenos = true;
-        if (campoIPNode1.getText().isEmpty() || campoIPNode2.getText().isEmpty() || campoIPNode3.getText().isEmpty() || campoIPNode4.getText().isEmpty()) {
+        if (campoIPNode1.getText().isEmpty() || campoIPNode2.getText().isEmpty() || campoIPNode3.getText().isEmpty() || campoIPNode4.getText().isEmpty() || campoPuertoNode.getText().isEmpty()) {
             camposLlenos = false;
         }
         return camposLlenos;
-    }
-
-    public boolean verificarCampoVacioPuertoNode(TextField campoPuertoNode) {
-        boolean campoLleno = true;
-        if (campoPuertoNode.getText().isEmpty()) {
-            campoLleno = false;
-        }
-        return campoLleno;
     }
 
     public boolean verificarLongitudCamposIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {

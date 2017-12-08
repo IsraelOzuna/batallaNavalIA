@@ -11,6 +11,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +24,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import negocio.ConfiguracionConexion;
 import negocio.IJugador;
+import negocio.IPuntaje;
+import negocio.Puntaje;
 
 /**
  * FXML Controller class
@@ -46,43 +46,73 @@ public class VentanaMenuController implements Initializable {
     @FXML
     private Button botonCerrarSesion;
     @FXML
-    private TableColumn columnaJugador;
-    @FXML
-    private TableColumn columnaPuntaje;
-    @FXML
     private Label etiquetaNombreUsuario;
-
+    @FXML
+    private Label etiquetaJugador;
+    @FXML
+    private Label etiquetaPuntaje;           
+    @FXML
+    private Label etiquetaJugador1;
+    @FXML
+    private Label etiquetaJugador2;
+    @FXML
+    private Label etiquetaJugador3;
+    @FXML
+    private Label etiquetaPuntajeJugador1;
+    @FXML
+    private Label etiquetaPuntajeJugador2;
+    @FXML
+    private Label etiquetaPuntajeJugador3;
+    
     private String ipNode;
-    @FXML
-    private ImageView imagenBarcoMenu;
-    @FXML
-    private ImageView imagenMisil;
-    @FXML
-    private ImageView imagenRadar;
-    @FXML
-    private TableView<?> tablaRank;
-    @FXML
-    private TableColumn<?, ?> columnaPosicion;
 
     ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
+
     String ipRMI = conexionRMI.obtenerIPRMI();
 
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
         configurarIdioma();
+        llenarTabla();
     }
 
     public void obtenerNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
         etiquetaNombreUsuario.setText(nombreUsuario);
     }
-
+      
     public void configurarIdioma() {
         botonIniciarPartida.setText(idioma.getString("botIniciarPartida"));
         botonCerrarSesion.setText(idioma.getString("botCerrarSesion"));
-        columnaJugador.setText(idioma.getString("columJugador"));
-        columnaPuntaje.setText(idioma.getString("columPuntaje"));
+        etiquetaJugador.setText(idioma.getString("columJugador"));
+        etiquetaPuntaje.setText(idioma.getString("columPuntaje"));
+    }
+
+    public void obtenerIpNode(String ipNode) {
+        this.ipNode = ipNode;
+    }
+
+    public void llenarTabla() {
+        IPuntaje stubPuntaje;        
+        List<Puntaje> mejoresPuntajes = null;
+        try {
+            conexionRMI = new ConfiguracionConexion();
+            ipRMI = conexionRMI.obtenerIPRMI();
+            Registry registry;
+            registry = LocateRegistry.getRegistry(ipRMI);
+            stubPuntaje = (IPuntaje) registry.lookup("ServidorBatallaNaval");
+            mejoresPuntajes = stubPuntaje.obtenerMejoresPuntajes();
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(VentanaMenuController.class.getName()).log(Level.SEVERE, null, ex);           
+        }
+        
+        etiquetaJugador1.setText(mejoresPuntajes.get(0).getNombreJugador());
+        etiquetaPuntajeJugador1.setText(String.valueOf(mejoresPuntajes.get(0).getPuntosTotales()));
+        etiquetaJugador2.setText(mejoresPuntajes.get(1).getNombreJugador());
+        etiquetaPuntajeJugador2.setText(String.valueOf(mejoresPuntajes.get(1).getPuntosTotales()));
+        etiquetaJugador3.setText(mejoresPuntajes.get(2).getNombreJugador());
+        etiquetaPuntajeJugador3.setText(String.valueOf(mejoresPuntajes.get(2).getPuntosTotales()));                
     }
 
     @FXML
@@ -99,22 +129,20 @@ public class VentanaMenuController implements Initializable {
         buscarPartida.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
-    }
-
-    public void obtenerIpNode(String ipNode) {
-        this.ipNode = ipNode;
+        controladorBuscarPartida.setStageBuscar(buscarPartida);
     }
 
     @FXML
-    private void cerrarSesion(ActionEvent event) throws IOException {
-        IJugador stub;
+    public void cerrarSesion(ActionEvent event) throws IOException {
+        IJugador stubJugador;
         try {
             Registry registry = LocateRegistry.getRegistry(ipRMI);
-            stub = (IJugador) registry.lookup("ServidorBatallaNaval");
-            stub.cerrarSesion(nombreUsuario);
+            stubJugador = (IJugador) registry.lookup("ServidorBatallaNaval");
+            stubJugador.cerrarSesion(nombreUsuario);
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(VentanaMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
         Parent root = (Parent) loger.load();
         Stage menu = new Stage();
@@ -122,6 +150,5 @@ public class VentanaMenuController implements Initializable {
         menu.show();
         Stage ventanaRegistrar = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaRegistrar.close();
-
     }
 }

@@ -41,9 +41,5 @@ public class Partida implements Serializable{
 
     public void setPartidasPerdidas(int partidasPerdidas) {
         this.partidasPerdidas = partidasPerdidas;
-    }
-    
-    
-    
-    
+    } 
 }

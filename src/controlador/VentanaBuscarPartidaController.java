@@ -6,13 +6,11 @@
 package controlador;
 
 import io.socket.client.IO;
-import static io.socket.client.IO.socket;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +34,8 @@ public class VentanaBuscarPartidaController implements Initializable {
     private ResourceBundle idioma;
     private String nombreUsuario;
     private Socket socket;
+    
+    Stage ventanaActual;
 
     @FXML
     private Label etiquetaBuscandoPartida;
@@ -62,13 +62,13 @@ public class VentanaBuscarPartidaController implements Initializable {
             crearConexion(ipNode, puertoNode);
             socket.emit("buscarPartida", nombreUsuario);
         } catch (URISyntaxException ex) {
-
+            Logger.getLogger(VentanaBuscarPartidaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void crearConexion(String node, String puerto) throws URISyntaxException {
 
-        socket = IO.socket("http://" + node + ":" +puerto);
+        socket = IO.socket("http://" + node + ":" + puerto);
 
         socket.on("SeHaEncontradoUnaFlotaEnemiga", new Emitter.Listener() {
             @Override
@@ -81,7 +81,6 @@ public class VentanaBuscarPartidaController implements Initializable {
                         Logger.getLogger(VentanaBuscarPartidaController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
-                //socket.disconnect();
             }
         });
         socket.connect();
@@ -90,14 +89,16 @@ public class VentanaBuscarPartidaController implements Initializable {
     public void desplegarTablero(String nombreRival, Boolean primerTirador) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaTablero.fxml"), idioma);
         Parent root = (Parent) loger.load();
-
         VentanaTableroController controladorTablero = loger.getController();
         controladorTablero.adquirirDatos(socket, nombreUsuario, nombreRival, primerTirador);
-
         Stage tablero = new Stage();
         tablero.setScene(new Scene(root));
-        tablero.show();
-        //Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //ventanaAnterior.close();
+        tablero.show();        
+        controladorTablero.setStageTablero(tablero);
+        ventanaActual.close();
+    }
+
+    public void setStageBuscar(Stage ventanaBuscar) {
+        ventanaActual = ventanaBuscar;
     }
 }

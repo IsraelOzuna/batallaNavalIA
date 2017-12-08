@@ -13,8 +13,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Irdevelo
  */
 public class Utileria {
- 
-        public String cifrarContrasena(String contrasena) throws NoSuchAlgorithmException {
+    public String cifrarContrasena(String contrasena) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
         byte[] hash = messageDigest.digest(contrasena.getBytes());
         StringBuilder stringBuilder = new StringBuilder();
@@ -24,8 +23,4 @@ public class Utileria {
         }
         return stringBuilder.toString();
     }
-    
-    
-    
-    
 }
