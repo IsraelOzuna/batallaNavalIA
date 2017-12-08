@@ -338,20 +338,31 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <JFXButton fx:id="botonEmpezar" layoutX="900.0" layoutY="436.0" onAction="#empezarPartida" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #E65C0A;" text="Empezar" textFill="WHITE">
+      <JFXButton fx:id="botonEmpezar" layoutX="413.0" layoutY="467.0" onAction="#empezarPartida" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #E65C0A;" text="Empezar" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
-      <Label fx:id="etiquetaUsuarioRival" layoutX="209.0" layoutY="454.0" prefHeight="17.0" prefWidth="74.0" textFill="#e65c0a">
+      <Label fx:id="etiquetaUsuarioRival" alignment="CENTER" layoutX="37.0" layoutY="440.0" prefHeight="19.0" prefWidth="400.0" textFill="#e65c0a">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaMiUsuario" layoutX="631.0" layoutY="454.0" prefHeight="17.0" prefWidth="74.0" textFill="#e65c0a">
+      <Label fx:id="etiquetaMiUsuario" alignment="CENTER" layoutX="461.0" layoutY="440.0" prefHeight="19.0" prefWidth="400.0" textFill="#e65c0a">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="16.0" />
          </font>
       </Label>
+      <JFXButton fx:id="botonAbandonarPartida" layoutX="880.0" layoutY="448.0" onAction="#abandonarPartida" text="Abandonar partida" textFill="WHITE" underline="true">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -82,5 +82,5 @@ public class ConfiguracionConexion {
             Logger.getLogger(VentanaPeticionIPController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return puertoNode;
-    }
+    }   
 }

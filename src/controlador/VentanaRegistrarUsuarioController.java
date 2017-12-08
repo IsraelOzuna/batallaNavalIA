@@ -72,9 +72,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     private JFXButton botonRegistrarse;
     @FXML
     private JFXButton botonCancelar;
-
-    private static final String formatoCorreo = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
+    
     /**
      * Initializes the controller class.
      */
@@ -195,6 +193,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     public static boolean validarCorreo(String correo) {
+        String formatoCorreo = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern patron = Pattern.compile(formatoCorreo);
         Matcher matcher = patron.matcher(correo);
         return matcher.matches();

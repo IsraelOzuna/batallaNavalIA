@@ -91,10 +91,12 @@ public class VentanaTableroController implements Initializable {
     private IPartida stubPartida;
 
     private Stage ventanaActual;
-        
 
     ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
     String ipRMI = conexionRMI.obtenerIPRMI();
+    
+    @FXML
+    private JFXButton botonAbandonarPartida;
 
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
@@ -124,6 +126,7 @@ public class VentanaTableroController implements Initializable {
         etiquetaFilas.setText(idioma.getString("etFilas"));
         etiquetaColumnas.setText(idioma.getString("etColumnas"));
         botonEmpezar.setText(idioma.getString("botonEmpezar"));
+        botonAbandonarPartida.setText(idioma.getString("botonAbandonarPartida"));
     }
 
     public boolean verificarCombos() {
@@ -314,6 +317,8 @@ public class VentanaTableroController implements Initializable {
             }
         });
 
+        
+        
         socket.on("tiroContrincante", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
@@ -331,6 +336,16 @@ public class VentanaTableroController implements Initializable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        volverMenu();
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            });
                             mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste");
                         }
 
@@ -347,22 +362,29 @@ public class VentanaTableroController implements Initializable {
                         Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                volverMenu();
-                            } catch (IOException ex) {
-                                Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    });
-
                 } else if (contadorTirosContrincante == 3) {
                     contadorTirosContrincante = 0;
                     tableroOponente.setDisable(false);
                 }
             }
+        });
+        
+          socket.on("jugadorAbandonoPartida", new Emitter.Listener(){
+            @Override
+            public void call(Object... os) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            volverMenu();
+                            System.out.println("Tu abuelita abandono la partida ");
+                        } catch (IOException ex) {
+                            Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+            }
+            
         });
 
         socket.on("ganarPartida", new Emitter.Listener() {
@@ -371,6 +393,16 @@ public class VentanaTableroController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    volverMenu();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
                         mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste");
                     }
 
@@ -386,21 +418,15 @@ public class VentanaTableroController implements Initializable {
                     Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            volverMenu();
-                        } catch (IOException ex) {
-                            Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                });
             }
         });
     }
 
     public void volverMenu() throws IOException {
+        socket.off("iniciarPartida");
+        socket.off("tiroContrincante");
+        socket.off("ganarPartida");
+        socket.off("interrumpirPartida");
         socket.disconnect();
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
         Parent root = (Parent) loger.load();
@@ -438,7 +464,7 @@ public class VentanaTableroController implements Initializable {
             if (tiroRecibido.equals(coordenadasOcupada)) {
                 posicionesASalvo--;
             }
-        }        
+        }
     }
 
     public void marcarDisparoRecibido(String tiroRecibido) {
@@ -453,5 +479,15 @@ public class VentanaTableroController implements Initializable {
 
     public void setStageTablero(Stage ventanaTablero) {
         ventanaActual = ventanaTablero;
-    }    
+    }
+
+    @FXML
+    public void abandonarPartida(ActionEvent event) {
+    socket.emit("interrumpirPartida", esPrimerTirador,nombreUsuario);
+        try {
+            volverMenu();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
