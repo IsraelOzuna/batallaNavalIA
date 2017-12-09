@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import negocio.ConfiguracionConexion;
 import negocio.IJugador;
 import negocio.Utileria;
@@ -203,9 +204,10 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     public void regresarVentanaIniciarSesion(ActionEvent event) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
         Parent root = (Parent) loger.load();
-        Stage menu = new Stage();
-        menu.setScene(new Scene(root));
-        menu.show();
+        Stage iniciarSesion = new Stage();
+        iniciarSesion.setScene(new Scene(root));
+        iniciarSesion.initStyle(StageStyle.UNDECORATED);
+        iniciarSesion.show();        
         Stage ventanaRegistrar = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaRegistrar.close();
     }

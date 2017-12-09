@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -27,6 +28,7 @@ public class BatallaNaval extends Application {
         Scene scene = new Scene(root);
         
         ventanaIP.setScene(scene);
+        ventanaIP.initStyle(StageStyle.UNDECORATED);
         ventanaIP.show();
     }
 

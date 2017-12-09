@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import negocio.ConfiguracionConexion;
 
 /**
@@ -34,7 +35,7 @@ public class VentanaBuscarPartidaController implements Initializable {
     private ResourceBundle idioma;
     private String nombreUsuario;
     private Socket socket;
-    
+
     Stage ventanaActual;
 
     @FXML
@@ -93,6 +94,7 @@ public class VentanaBuscarPartidaController implements Initializable {
         controladorTablero.adquirirDatos(socket, nombreUsuario, nombreRival, primerTirador);
         Stage tablero = new Stage();
         tablero.setScene(new Scene(root));
+        tablero.initStyle(StageStyle.UNDECORATED);
         tablero.show();        
         controladorTablero.setStageTablero(tablero);
         ventanaActual.close();

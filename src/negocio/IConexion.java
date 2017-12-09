@@ -14,6 +14,6 @@ import java.rmi.RemoteException;
  */
 public interface IConexion extends Remote{
     
-    public String obtenerIPRMI()throws RemoteException;
+    public boolean obtenerIPRMI()throws RemoteException;
     
 }

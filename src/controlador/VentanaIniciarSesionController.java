@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import negocio.ConfiguracionConexion;
 import negocio.IJugador;
 import negocio.Utileria;
@@ -107,6 +108,7 @@ public class VentanaIniciarSesionController implements Initializable {
                         controladorMenu.obtenerNombreUsuario(campoUsuario.getText());
                         Stage menu = new Stage();
                         menu.setScene(new Scene(root));
+                        menu.initStyle(StageStyle.UNDECORATED);                                            
                         menu.show();
                         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         ventanaAnterior.close();

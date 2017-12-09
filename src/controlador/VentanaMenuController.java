@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import negocio.ConfiguracionConexion;
 import negocio.IJugador;
 import negocio.IPuntaje;
@@ -126,7 +127,8 @@ public class VentanaMenuController implements Initializable {
 
         Stage buscarPartida = new Stage();
         buscarPartida.setScene(new Scene(root));
-        buscarPartida.show();
+        buscarPartida.initStyle(StageStyle.UNDECORATED);  
+        buscarPartida.show();                                                  
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
         controladorBuscarPartida.setStageBuscar(buscarPartida);
@@ -145,9 +147,10 @@ public class VentanaMenuController implements Initializable {
         
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
         Parent root = (Parent) loger.load();
-        Stage menu = new Stage();
-        menu.setScene(new Scene(root));
-        menu.show();
+        Stage iniciarSesion = new Stage();
+        iniciarSesion.setScene(new Scene(root));
+        iniciarSesion.initStyle(StageStyle.UNDECORATED);
+        iniciarSesion.show();
         Stage ventanaRegistrar = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaRegistrar.close();
     }

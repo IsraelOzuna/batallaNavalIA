@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import negocio.Barco;
 import negocio.ConfiguracionConexion;
 import negocio.IPartida;
@@ -94,7 +95,7 @@ public class VentanaTableroController implements Initializable {
 
     ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
     String ipRMI = conexionRMI.obtenerIPRMI();
-    
+
     @FXML
     private JFXButton botonAbandonarPartida;
 
@@ -317,8 +318,6 @@ public class VentanaTableroController implements Initializable {
             }
         });
 
-        
-        
         socket.on("tiroContrincante", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
@@ -332,21 +331,15 @@ public class VentanaTableroController implements Initializable {
                 contadorTirosContrincante++;
                 if (verificarPosicionesBarcosASalvo()) {
                     socket.emit("perderPartida", esPrimerTirador, nombreUsuario);
-
                     Platform.runLater(new Runnable() {
                         @Override
-                        public void run() {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        volverMenu();
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-                            });
-                            mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste");
+                        public void run() {                            
+                            try {
+                                mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste");
+                                volverMenu();
+                            } catch (IOException ex) {
+                                Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
 
                     });
@@ -368,23 +361,23 @@ public class VentanaTableroController implements Initializable {
                 }
             }
         });
-        
-          socket.on("jugadorAbandonoPartida", new Emitter.Listener(){
+
+        socket.on("jugadorAbandonoPartida", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            volverMenu();
-                            System.out.println("Tu abuelita abandono la partida ");
+                            mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoRivalAbandono", "contenidoRivalAbandono");
+                            volverMenu();                            
                         } catch (IOException ex) {
                             Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 });
             }
-            
+
         });
 
         socket.on("ganarPartida", new Emitter.Listener() {
@@ -392,18 +385,13 @@ public class VentanaTableroController implements Initializable {
             public void call(Object... os) {
                 Platform.runLater(new Runnable() {
                     @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    volverMenu();
-                                } catch (IOException ex) {
-                                    Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }
-                        });
-                        mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste");
+                    public void run() {                        
+                        try {
+                            mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste");
+                            volverMenu();
+                        } catch (IOException ex) {
+                            Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
 
                 });
@@ -434,6 +422,7 @@ public class VentanaTableroController implements Initializable {
         controladorMenu.obtenerNombreUsuario(nombreUsuario);
         Stage menu = new Stage();
         menu.setScene(new Scene(root));
+        menu.initStyle(StageStyle.UNDECORATED);
         menu.show();
         ventanaActual.close();
     }
@@ -483,7 +472,7 @@ public class VentanaTableroController implements Initializable {
 
     @FXML
     public void abandonarPartida(ActionEvent event) {
-    socket.emit("interrumpirPartida", esPrimerTirador,nombreUsuario);
+        socket.emit("interrumpirPartida", esPrimerTirador, nombreUsuario);
         try {
             volverMenu();
         } catch (IOException ex) {
