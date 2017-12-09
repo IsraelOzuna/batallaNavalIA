@@ -22,9 +22,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -35,6 +32,10 @@ import negocio.ConfiguracionConexion;
 import negocio.IPartida;
 import negocio.IPuntaje;
 
+/**
+ *
+ * @author Irdevelo
+ */
 public class VentanaTableroController implements Initializable {
 
     private ResourceBundle idioma;
@@ -91,7 +92,7 @@ public class VentanaTableroController implements Initializable {
 
     private IPartida stubPartida;
 
-    private Stage ventanaActual;
+    private Stage ventanaAnterior;
 
     ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
     String ipRMI = conexionRMI.obtenerIPRMI();
@@ -106,6 +107,10 @@ public class VentanaTableroController implements Initializable {
         tableroOponente.setDisable(true);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void desactivarBoton(ActionEvent event) {
 
@@ -123,6 +128,9 @@ public class VentanaTableroController implements Initializable {
         }
     }
 
+    /**
+     *
+     */
     public void configurarIdioma() {
         etiquetaFilas.setText(idioma.getString("etFilas"));
         etiquetaColumnas.setText(idioma.getString("etColumnas"));
@@ -130,26 +138,36 @@ public class VentanaTableroController implements Initializable {
         botonAbandonarPartida.setText(idioma.getString("botonAbandonarPartida"));
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean verificarCombos() {
         boolean comboVacio = true;
         if (comboColumnas.getItems().isEmpty()) {
-            mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoComboColumnas", "contenidoComboColumnas");
+            DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoComboColumnas", "contenidoComboColumnas", idioma);
             comboVacio = false;
         }
 
         if (comboFilas.getItems().isEmpty()) {
-            mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoComboFilas", "contenidoComboFilas");
+            DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoComboFilas", "contenidoComboFilas", idioma);
             comboVacio = false;
         }
         return comboVacio;
     }
 
+    /**
+     *
+     */
     @FXML
     public void llenarComboFilas() {
         ObservableList<Integer> numeroFilas = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         comboFilas.setItems(numeroFilas);
     }
 
+    /**
+     *
+     */
     @FXML
     public void llenarComboColumnas() {
         ObservableList<String> letrasColumnas = FXCollections.observableArrayList("A", "B", "C", "D", "E", "F", "G",
@@ -157,6 +175,9 @@ public class VentanaTableroController implements Initializable {
         comboColumnas.setItems(letrasColumnas);
     }
 
+    /**
+     *
+     */
     @FXML
     public void colocarBarco1() {
         Barco barco = new Barco();
@@ -174,11 +195,14 @@ public class VentanaTableroController implements Initializable {
                 tableroPropio.getChildren().add(barco1);
                 barco1.setDisable(true);
             } else {
-                mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada");
+                DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada", idioma);
             }
         }
     }
 
+    /**
+     *
+     */
     @FXML
     public void colocarBarco2() {
         Barco barco = new Barco();
@@ -198,14 +222,17 @@ public class VentanaTableroController implements Initializable {
                     tableroPropio.getChildren().add(barco2);
                     barco2.setDisable(true);
                 } else {
-                    mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada");
+                    DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada", idioma);
                 }
             } else {
-                mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera");
+                DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera", idioma);
             }
         }
     }
 
+    /**
+     *
+     */
     @FXML
     public void colocarBarco3() {
         Barco barco = new Barco();
@@ -225,14 +252,17 @@ public class VentanaTableroController implements Initializable {
                     tableroPropio.getChildren().add(barco3);
                     barco3.setDisable(true);
                 } else {
-                    mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada");
+                    DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada", idioma);
                 }
             } else {
-                mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera");
+                DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera", idioma);
             }
         }
     }
 
+    /**
+     *
+     */
     @FXML
     public void colocarBarco4() {
         Barco barco = new Barco();
@@ -252,15 +282,18 @@ public class VentanaTableroController implements Initializable {
                     tableroPropio.getChildren().add(barco4);
                     barco4.setDisable(true);
                 } else {
-                    mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada");
+                    DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada", idioma);
                 }
             } else {
-                mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera");
+                DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera", idioma);
             }
         }
 
     }
 
+    /**
+     *
+     */
     @FXML
     public void colocarBarco5() {
         Barco barco = new Barco();
@@ -280,32 +313,26 @@ public class VentanaTableroController implements Initializable {
                     tableroPropio.getChildren().add(barco5);
                     barco5.setDisable(true);
                 } else {
-                    mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada");
+                    DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoPosOcupada", "contenidoPosOcupada", idioma);
                 }
             } else {
-                mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera");
+                DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoBarcoFuera", "contenidoBarcoFuera", idioma);
             }
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void empezarPartida(ActionEvent event) {
         if (contadorBarcosAcomodados == 0) {
             socket.emit("configurarPartida", esPrimerTirador, nombreUsuario);
             botonEmpezar.setDisable(true);
         } else {
-            mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoAcomodarBarcos", "contenidoAcomodarBarcos");
+            DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoAcomodarBarcos", "contenidoAcomodarBarcos", idioma);
         }
-    }
-
-    public void mostrarMensajeInformacion(String titulo, String encabezado, String contenido) {
-        Alert advertencia = new Alert(Alert.AlertType.INFORMATION);
-        advertencia.setTitle(idioma.getString(titulo));
-        advertencia.setHeaderText(idioma.getString(encabezado));
-        advertencia.setContentText(idioma.getString(contenido));
-        ButtonType botonOK = new ButtonType("OK", ButtonData.OK_DONE);
-        advertencia.getButtonTypes().setAll(botonOK);
-        advertencia.show();
     }
 
     private void jugarPartida() {
@@ -333,9 +360,9 @@ public class VentanaTableroController implements Initializable {
                     socket.emit("perderPartida", esPrimerTirador, nombreUsuario);
                     Platform.runLater(new Runnable() {
                         @Override
-                        public void run() {                            
+                        public void run() {
                             try {
-                                mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste");
+                                DialogosController.mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste", idioma);
                                 volverMenu();
                             } catch (IOException ex) {
                                 Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
@@ -369,8 +396,8 @@ public class VentanaTableroController implements Initializable {
                     @Override
                     public void run() {
                         try {
-                            mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoRivalAbandono", "contenidoRivalAbandono");
-                            volverMenu();                            
+                            DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoRivalAbandono", "contenidoRivalAbandono", idioma);
+                            volverMenu();
                         } catch (IOException ex) {
                             Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -385,9 +412,9 @@ public class VentanaTableroController implements Initializable {
             public void call(Object... os) {
                 Platform.runLater(new Runnable() {
                     @Override
-                    public void run() {                        
+                    public void run() {
                         try {
-                            mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste");
+                            DialogosController.mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste", idioma);
                             volverMenu();
                         } catch (IOException ex) {
                             Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
@@ -410,6 +437,10 @@ public class VentanaTableroController implements Initializable {
         });
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     public void volverMenu() throws IOException {
         socket.off("iniciarPartida");
         socket.off("tiroContrincante");
@@ -424,9 +455,16 @@ public class VentanaTableroController implements Initializable {
         menu.setScene(new Scene(root));
         menu.initStyle(StageStyle.UNDECORATED);
         menu.show();
-        ventanaActual.close();
+        ventanaAnterior.close();
     }
 
+    /**
+     *
+     * @param socket
+     * @param nombreUsuario
+     * @param nombreRival
+     * @param primerTirador
+     */
     public void adquirirDatos(Socket socket, String nombreUsuario, String nombreRival, Boolean primerTirador) {
         this.socket = socket;
         this.nombreUsuario = nombreUsuario;
@@ -437,6 +475,10 @@ public class VentanaTableroController implements Initializable {
         jugarPartida();
     }
 
+    /**
+     *
+     * @param coordenadas
+     */
     public void guardarCoordenadas(String coordenadas[]) {
         for (String coordenada : coordenadas) {
             coordenadasOcupadas[contadorCoordenadas] = coordenada;
@@ -444,10 +486,18 @@ public class VentanaTableroController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean verificarPosicionesBarcosASalvo() {
         return posicionesASalvo == 0;
     }
 
+    /**
+     *
+     * @param tiroRecibido
+     */
     public void registrarTiroRecibido(String tiroRecibido) {
         for (String coordenadasOcupada : coordenadasOcupadas) {
             if (tiroRecibido.equals(coordenadasOcupada)) {
@@ -456,6 +506,10 @@ public class VentanaTableroController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param tiroRecibido
+     */
     public void marcarDisparoRecibido(String tiroRecibido) {
         String arregloCoordenadasDisparo[];
         arregloCoordenadasDisparo = tiroRecibido.split(",");
@@ -466,10 +520,18 @@ public class VentanaTableroController implements Initializable {
         tableroPropio.getChildren().add(bala);
     }
 
-    public void setStageTablero(Stage ventanaTablero) {
-        ventanaActual = ventanaTablero;
+    /**
+     *
+     * @param ventanaBuscar
+     */
+    public void setStageTablero(Stage ventanaBuscar) {
+        ventanaAnterior = ventanaBuscar;
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void abandonarPartida(ActionEvent event) {
         socket.emit("interrumpirPartida", esPrimerTirador, nombreUsuario);

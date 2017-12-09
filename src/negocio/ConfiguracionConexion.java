@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +23,31 @@ public class ConfiguracionConexion {
 
     private String ipRMI;
     private String ipNode;
-    private String puertoNode;   
+    private String puertoNode;
+    private static Socket socket;
 
+    /**
+     *
+     * @param ipNode
+     * @param puerto
+     * @return
+     * @throws IOException
+     */
+    public static boolean verificarConexionNode(String ipNode, String puerto) throws IOException {
+        boolean estaConectado = false;
+        socket = new Socket(ipNode, Integer.parseInt(puerto));
+        if (socket.isConnected()) {
+            estaConectado = true;
+        }
+        return estaConectado;
+    }
+
+    /**
+     *
+     * @param rmi
+     * @param node
+     * @param puerto
+     */
     public void actualizarIP(String rmi, String node, String puerto) {
 
         Properties properties = new Properties();
@@ -49,6 +73,10 @@ public class ConfiguracionConexion {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String obtenerIPRMI() {
         Properties properties = new Properties();
         try (InputStream cargarIP = ClassLoader.getSystemResourceAsStream("recursos/direccionesIP.properties")) {
@@ -61,6 +89,10 @@ public class ConfiguracionConexion {
         return ipRMI;
     }
 
+    /**
+     *
+     * @return
+     */
     public String obtenerIPNode() {
         Properties properties = new Properties();
         try (InputStream cargarIP = ClassLoader.getSystemResourceAsStream("recursos/direccionesIP.properties")) {
@@ -72,15 +104,19 @@ public class ConfiguracionConexion {
 
         return ipNode;
     }
-    
-    public String obtenerPuertoNode(){
+
+    /**
+     *
+     * @return
+     */
+    public String obtenerPuertoNode() {
         Properties properties = new Properties();
-        try(InputStream cargarPuertoNode = ClassLoader.getSystemResourceAsStream("recursos/direccionesIP.properties")){
+        try (InputStream cargarPuertoNode = ClassLoader.getSystemResourceAsStream("recursos/direccionesIP.properties")) {
             properties.load(cargarPuertoNode);
             puertoNode = properties.getProperty("puertoNode");
-        }catch(IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(VentanaPeticionIPController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return puertoNode;
-    }   
+    }
 }

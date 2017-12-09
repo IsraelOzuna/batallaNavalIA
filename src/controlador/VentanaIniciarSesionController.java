@@ -17,10 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -30,6 +27,10 @@ import negocio.ConfiguracionConexion;
 import negocio.IJugador;
 import negocio.Utileria;
 
+/**
+ *
+ * @author Irdevelo
+ */
 public class VentanaIniciarSesionController implements Initializable {
 
     private ResourceBundle idioma;
@@ -59,6 +60,9 @@ public class VentanaIniciarSesionController implements Initializable {
         configurarIdioma();
     }
 
+    /**
+     *
+     */
     public void configurarIdioma() {
         etiquetaBatallaNaval.setText(idioma.getString("etBatallaNaval"));
         etiquetaUsuario.setText(idioma.getString("etUsuario"));
@@ -69,24 +73,37 @@ public class VentanaIniciarSesionController implements Initializable {
         botonRegistrarse.setText(idioma.getString("botRegistrarseAqui"));
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void cambiarIdiomaIngles(ActionEvent event) {
         idioma = ResourceBundle.getBundle("recursos.idioma_en_US");
         configurarIdioma();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void cambiarIdiomaEspañol(ActionEvent event) {
         idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
         configurarIdioma();
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void ingresar(ActionEvent event) throws IOException {
         boolean usuarioEncontrado;
         IJugador stubJugador;
         if (campoUsuario.getText().isEmpty() || campoContrasena.getText().isEmpty()) {
-            mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios");
+            DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios",idioma);
         } else {
             try {
                 ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
@@ -100,7 +117,7 @@ public class VentanaIniciarSesionController implements Initializable {
 
                 if (usuarioEncontrado) {
                     if (stubJugador.verificarJugadorConectado(campoUsuario.getText())) {
-                        mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoUsuarioConectado", "contenidoUsuarioConectado");
+                        DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoUsuarioConectado", "contenidoUsuarioConectado",idioma);
                     } else {
                         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
                         Parent root = (Parent) loger.load();
@@ -115,16 +132,21 @@ public class VentanaIniciarSesionController implements Initializable {
                     }
 
                 } else {
-                    mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoDatosIncorrectos", "contenidoDatosIncorrectos");
+                    DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoDatosIncorrectos", "contenidoDatosIncorrectos",idioma);
                 }
 
             } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
                 Logger.getLogger(VentanaIniciarSesionController.class.getName()).log(Level.SEVERE, null, ex);
-                mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion");
+                DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion",idioma);
             }
         }
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void desplegarVentanaRegistrarUsuario(ActionEvent event) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaRegistrarUsuario.fxml"), idioma);
@@ -136,13 +158,4 @@ public class VentanaIniciarSesionController implements Initializable {
         ventanaAnterior.close();
     }
 
-    public void mostrarMensajeAdvertencia(String titulo, String encabezado, String contenido) {
-        Alert advertencia = new Alert(Alert.AlertType.WARNING);
-        advertencia.setTitle(idioma.getString(titulo));
-        advertencia.setHeaderText(idioma.getString(encabezado));
-        advertencia.setContentText(idioma.getString(contenido));
-        ButtonType botonOK = new ButtonType("OK", ButtonData.OK_DONE);
-        advertencia.getButtonTypes().setAll(botonOK);
-        advertencia.show();
-    }
 }

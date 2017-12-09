@@ -13,7 +13,19 @@ import java.rmi.RemoteException;
  * @author Irdevelo
  */
 public interface IPartida extends Remote{
-     public void actualizarPartidasGanadas(String nombreJugador) throws RemoteException;
+
+    /**
+     *
+     * @param nombreJugador
+     * @throws RemoteException
+     */
+    public void actualizarPartidasGanadas(String nombreJugador) throws RemoteException;
+
+    /**
+     *
+     * @param nombreJugador
+     * @throws RemoteException
+     */
     public void actualizarPartidasPerdidas(String nombreJugador) throws RemoteException;
     
 }

@@ -19,26 +19,50 @@ public class Partida implements Serializable{
     
     private int partidasPerdidas;
 
+    /**
+     *
+     * @return
+     */
     public String getNombreJugador() {
         return nombreJugador;
     }
 
+    /**
+     *
+     * @param nombreJugador
+     */
     public void setNombreJugador(String nombreJugador) {
         this.nombreJugador = nombreJugador;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPartidasGanadas() {
         return partidasGanadas;
     }
 
+    /**
+     *
+     * @param partidasGanadas
+     */
     public void setPartidasGanadas(int partidasGanadas) {
         this.partidasGanadas = partidasGanadas;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPartidasPerdidas() {
         return partidasPerdidas;
     }
 
+    /**
+     *
+     * @param partidasPerdidas
+     */
     public void setPartidasPerdidas(int partidasPerdidas) {
         this.partidasPerdidas = partidasPerdidas;
     } 

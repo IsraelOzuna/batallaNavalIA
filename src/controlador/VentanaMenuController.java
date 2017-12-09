@@ -78,11 +78,18 @@ public class VentanaMenuController implements Initializable {
         llenarTabla();
     }
 
+    /**
+     *
+     * @param nombreUsuario
+     */
     public void obtenerNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
         etiquetaNombreUsuario.setText(nombreUsuario);
     }
       
+    /**
+     *
+     */
     public void configurarIdioma() {
         botonIniciarPartida.setText(idioma.getString("botIniciarPartida"));
         botonCerrarSesion.setText(idioma.getString("botCerrarSesion"));
@@ -90,10 +97,17 @@ public class VentanaMenuController implements Initializable {
         etiquetaPuntaje.setText(idioma.getString("columPuntaje"));
     }
 
+    /**
+     *
+     * @param ipNode
+     */
     public void obtenerIpNode(String ipNode) {
         this.ipNode = ipNode;
     }
 
+    /**
+     *
+     */
     public void llenarTabla() {
         IPuntaje stubPuntaje;        
         List<Puntaje> mejoresPuntajes = null;
@@ -116,6 +130,11 @@ public class VentanaMenuController implements Initializable {
         etiquetaPuntajeJugador3.setText(String.valueOf(mejoresPuntajes.get(2).getPuntosTotales()));                
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void buscarPartida(ActionEvent event) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaBuscarPartida.fxml"), idioma);
@@ -134,6 +153,11 @@ public class VentanaMenuController implements Initializable {
         controladorBuscarPartida.setStageBuscar(buscarPartida);
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void cerrarSesion(ActionEvent event) throws IOException {
         IJugador stubJugador;

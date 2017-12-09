@@ -13,9 +13,44 @@ import java.rmi.RemoteException;
  * @author Irdevelo
  */
 public interface IJugador extends Remote{    
+
+    /**
+     *
+     * @param nombreJugador
+     * @param contrasena
+     * @return
+     * @throws RemoteException
+     */
     public boolean iniciarSesion(String nombreJugador, String contrasena)throws RemoteException;
+
+    /**
+     *
+     * @param nombreJugador
+     * @return
+     * @throws RemoteException
+     */
     public boolean verificarExistenciaCuenta(String nombreJugador)throws RemoteException;
+
+    /**
+     *
+     * @param jugador
+     * @return
+     * @throws RemoteException
+     */
     public boolean registrarJugador(Jugador jugador)throws RemoteException;
+
+    /**
+     *
+     * @param nombreJugador
+     * @return
+     * @throws RemoteException
+     */
     public boolean verificarJugadorConectado(String nombreJugador)throws RemoteException;
+
+    /**
+     *
+     * @param nombreJugador
+     * @throws RemoteException
+     */
     public void cerrarSesion(String nombreJugador)throws RemoteException;
 }

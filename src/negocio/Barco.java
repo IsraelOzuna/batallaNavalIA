@@ -10,10 +10,17 @@ import java.util.Map;
 
 /**
  *
- * @author iro19
+ * @author Irdevelo
  */
 public class Barco {
-
+    
+    /**
+     *
+     * @param posicionColumna
+     * @param posicionFila
+     * @param tamanoBarco
+     * @return
+     */
     public String[] generarCoordenadas(int posicionColumna, int posicionFila, int tamanoBarco) {
         String coordenadas[] = null;
 
@@ -41,6 +48,12 @@ public class Barco {
         return coordenadas;
     }
 
+    /**
+     *
+     * @param coordenadas
+     * @param coordenadasOcupadas
+     * @return
+     */
     public boolean verificarCoordenadas(String coordenadas[], String coordenadasOcupadas[]) {
         boolean posicionDisponible = true;
 
@@ -55,6 +68,11 @@ public class Barco {
         return posicionDisponible;
     }
 
+    /**
+     *
+     * @param letra
+     * @return
+     */
     public int convertirLetrasANumeros(String letra) {
         int numeroConvertido;
         
@@ -75,6 +93,12 @@ public class Barco {
         return numeroConvertido;
     }
 
+    /**
+     *
+     * @param coordenadasBarco
+     * @param longitudCoordenadas
+     * @return
+     */
     public boolean limitarTablero(String[] coordenadasBarco, int longitudCoordenadas) {
         boolean limiteExcedido = false;
         String coordenadasAOcupar[] = null;
@@ -89,6 +113,12 @@ public class Barco {
         return limiteExcedido;
     }
 
+    /**
+     *
+     * @param coordenadasBarco
+     * @param coordenadasAOcupar
+     * @return
+     */
     public boolean limitarBarco2(String[] coordenadasBarco, String[] coordenadasAOcupar) {
         boolean limiteExcedido = false;
         String coordenadaColumna1 = null;
@@ -107,6 +137,12 @@ public class Barco {
         return limiteExcedido;
     }
 
+    /**
+     *
+     * @param coordenadasBarco
+     * @param coordenadasAOcupar
+     * @return
+     */
     public boolean limitarBarco3(String[] coordenadasBarco, String[] coordenadasAOcupar) {
         boolean limiteExcedido = false;
         String coordenadaColumna1 = null;
@@ -130,6 +166,12 @@ public class Barco {
         return limiteExcedido;
     }
 
+    /**
+     *
+     * @param coordenadasBarco
+     * @param coordenadasAOcupar
+     * @return
+     */
     public boolean limitarBarco5(String[] coordenadasBarco, String[] coordenadasAOcupar) {
         boolean limiteExcedido = false;
         String coordenadaColumna1 = null;
@@ -157,6 +199,15 @@ public class Barco {
         return limiteExcedido;
     }
 
+    /**
+     *
+     * @param coordenada1
+     * @param coordenada2
+     * @param coordenada3
+     * @param coordenada14
+     * @param coordenada5
+     * @return
+     */
     public boolean verificarLimiteExcedido(String coordenada1, String coordenada2, String coordenada3, String coordenada14, String coordenada5) {
         boolean limiteExcedido = false;
         if (Integer.parseInt(coordenada1) >= 9 || Integer.parseInt(coordenada2) >= 9 || Integer.parseInt(coordenada3) >= 9

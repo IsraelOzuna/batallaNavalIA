@@ -47,14 +47,24 @@ public class VentanaBuscarPartidaController implements Initializable {
         configurarIdioma();
     }
 
+    /**
+     *
+     * @param nombreUsuario
+     */
     public void obtenerNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
+    /**
+     *
+     */
     public void configurarIdioma() {
         etiquetaBuscandoPartida.setText(idioma.getString("etBuscandoPartida"));
     }
 
+    /**
+     *
+     */
     public void comenzarBusqueda() {
         try {
             ConfiguracionConexion conexionNode = new ConfiguracionConexion();
@@ -87,6 +97,12 @@ public class VentanaBuscarPartidaController implements Initializable {
         socket.connect();
     }
 
+    /**
+     *
+     * @param nombreRival
+     * @param primerTirador
+     * @throws IOException
+     */
     public void desplegarTablero(String nombreRival, Boolean primerTirador) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaTablero.fxml"), idioma);
         Parent root = (Parent) loger.load();
@@ -100,6 +116,10 @@ public class VentanaBuscarPartidaController implements Initializable {
         ventanaActual.close();
     }
 
+    /**
+     *
+     * @param ventanaBuscar
+     */
     public void setStageBuscar(Stage ventanaBuscar) {
         ventanaActual = ventanaBuscar;
     }
