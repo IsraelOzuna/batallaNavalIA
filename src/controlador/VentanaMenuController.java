@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.io.IOException;
@@ -32,9 +27,11 @@ import negocio.IPuntaje;
 import negocio.Puntaje;
 
 /**
- * FXML Controller class
+ * Plantilla que contiene atributos y métodos necesarios para el control de la
+ * vista VentanaMenu
  *
- * @author Ozuna
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
 public class VentanaMenuController implements Initializable {
 
@@ -51,7 +48,7 @@ public class VentanaMenuController implements Initializable {
     @FXML
     private Label etiquetaJugador;
     @FXML
-    private Label etiquetaPuntaje;           
+    private Label etiquetaPuntaje;
     @FXML
     private Label etiquetaJugador1;
     @FXML
@@ -64,7 +61,7 @@ public class VentanaMenuController implements Initializable {
     private Label etiquetaPuntajeJugador2;
     @FXML
     private Label etiquetaPuntajeJugador3;
-    
+
     private String ipNode;
 
     ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
@@ -79,16 +76,17 @@ public class VentanaMenuController implements Initializable {
     }
 
     /**
+     * Permite obtener el nombre del jugador desde la ventana anterior.
      *
-     * @param nombreUsuario
+     * @param nombreUsuario Clave del jugador para ingresar al sistema.
      */
     public void obtenerNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
         etiquetaNombreUsuario.setText(nombreUsuario);
     }
-      
+
     /**
-     *
+     * Permite la configuración del idioma de la pantalla.
      */
     public void configurarIdioma() {
         botonIniciarPartida.setText(idioma.getString("botIniciarPartida"));
@@ -98,18 +96,21 @@ public class VentanaMenuController implements Initializable {
     }
 
     /**
+     * Permite obtener la dirección IP Node desde el archivo properties.
      *
-     * @param ipNode
+     * @param ipNode Tomará el valor de la IP Node registrada en el archivo
+     * properties.
      */
     public void obtenerIpNode(String ipNode) {
         this.ipNode = ipNode;
     }
 
     /**
-     *
+     * Permite llenar la tabla de ranking con los mejores puntajes obtenidos por
+     * los jugadores
      */
     public void llenarTabla() {
-        IPuntaje stubPuntaje;        
+        IPuntaje stubPuntaje;
         List<Puntaje> mejoresPuntajes = null;
         try {
             conexionRMI = new ConfiguracionConexion();
@@ -119,20 +120,21 @@ public class VentanaMenuController implements Initializable {
             stubPuntaje = (IPuntaje) registry.lookup("ServidorBatallaNaval");
             mejoresPuntajes = stubPuntaje.obtenerMejoresPuntajes();
         } catch (RemoteException | NotBoundException ex) {
-            Logger.getLogger(VentanaMenuController.class.getName()).log(Level.SEVERE, null, ex);           
+            Logger.getLogger(VentanaMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         etiquetaJugador1.setText(mejoresPuntajes.get(0).getNombreJugador());
         etiquetaPuntajeJugador1.setText(String.valueOf(mejoresPuntajes.get(0).getPuntosTotales()));
         etiquetaJugador2.setText(mejoresPuntajes.get(1).getNombreJugador());
         etiquetaPuntajeJugador2.setText(String.valueOf(mejoresPuntajes.get(1).getPuntosTotales()));
         etiquetaJugador3.setText(mejoresPuntajes.get(2).getNombreJugador());
-        etiquetaPuntajeJugador3.setText(String.valueOf(mejoresPuntajes.get(2).getPuntosTotales()));                
+        etiquetaPuntajeJugador3.setText(String.valueOf(mejoresPuntajes.get(2).getPuntosTotales()));
     }
 
     /**
+     * Permite desplegar la ventana para buscar partida
      *
-     * @param event
+     * @param event Un clic en el boton Iniciar Partida
      * @throws IOException
      */
     @FXML
@@ -146,16 +148,17 @@ public class VentanaMenuController implements Initializable {
 
         Stage buscarPartida = new Stage();
         buscarPartida.setScene(new Scene(root));
-        buscarPartida.initStyle(StageStyle.UNDECORATED);  
-        buscarPartida.show();                                                  
+        buscarPartida.initStyle(StageStyle.UNDECORATED);
+        buscarPartida.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
         controladorBuscarPartida.setStageBuscar(buscarPartida);
     }
 
     /**
+     * Permite Permite que un jugador cierre sesión.
      *
-     * @param event
+     * @param event Un clic en el botón Cerrar sesión
      * @throws IOException
      */
     @FXML
@@ -168,7 +171,7 @@ public class VentanaMenuController implements Initializable {
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(VentanaMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
         Parent root = (Parent) loger.load();
         Stage iniciarSesion = new Stage();

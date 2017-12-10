@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.security.MessageDigest;
@@ -11,14 +6,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Plantilla que contiene diversos métodos utilizados para el funcionamiento de
+ * tareas específicas
  *
- * @author Irdevelo
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
 public class Utileria {
 
     /**
+     * Permite cifrar una contraseña antes de mandarla a la BD.
      *
-     * @param contrasena
+     * @param contrasena Contraseña del jugador para ingresar al sistema.
      * @return
      * @throws NoSuchAlgorithmException
      */
@@ -34,9 +33,11 @@ public class Utileria {
     }
 
     /**
+     * Permite validar si el correo ingresado contiene el formato correcto.
      *
-     * @param correo
-     * @return
+     * @param correo Correo electrónico del jugador.
+     * @return Un valor verdadero si el correo tiene el formato correcto o un
+     * valor falso en caso de lo contrario
      */
     public static boolean validarCorreo(String correo) {
         String formatoCorreo = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

@@ -1,24 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
+ * Interface que contiene los métodos remotos para la conexión con el servidor
+ * RMI.
  *
- * @author Irdevelo
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
-public interface IConexion extends Remote{
-    
+public interface IConexion extends Remote {
+
     /**
      *
-     * @return
+     * @return Permite verificar si existe conexion con el servidor RMI.
      * @throws RemoteException
      */
-    public boolean obtenerIPRMI()throws RemoteException;
-    
+    public boolean obtenerIPRMI() throws RemoteException;
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import negocio.Jugador;
@@ -17,8 +12,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,9 +29,11 @@ import negocio.IJugador;
 import negocio.Utileria;
 
 /**
- * FXML Controller class
+ * Plantilla que contiene atributos y métodos necesarios para el control de la
+ * vista VentanaRegistrarUsuario
  *
- * @author Ozuna
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
 public class VentanaRegistrarUsuarioController implements Initializable {
 
@@ -71,12 +66,6 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     @FXML
     private JFXButton botonCancelar;
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param idioma
-     */
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
@@ -84,7 +73,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     /**
-     *
+     * Permite la configuración del idioma de la pantalla.
      */
     public void configurarIdioma() {
         etiquetaIngresarDatos.setText((idioma.getString("etIngresarDatos")));
@@ -98,8 +87,9 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     /**
+     * Permite hacer el proceso de registro de un jugador en el sistema.
      *
-     * @param event
+     * @param event Un clic en el boton Registrar.
      */
     @FXML
     public void registrarUsuario(ActionEvent event) {
@@ -137,13 +127,16 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     /**
+     * Permite corroborar que los campos no estén vacíos.
      *
-     * @param campoNombre
-     * @param campoApellidos
-     * @param campoCorreo
-     * @param campoUsuario
-     * @param campoContrasena
-     * @return
+     * @param campoNombre Campo en donde el usuario introduce su nombre.
+     * @param campoApellidos Campo en donde el usuario introduce sus apellidos.
+     * @param campoCorreo Campo en donde el usuario introduce su correo.
+     * @param campoUsuario Campo en donde el usuario introduce su nombre de
+     * jugador.
+     * @param campoContrasena Campo en donde el usuario introduce su contraseña.
+     * @return Un valor verdadero si todos los campos están llenos o un valor
+     * falso en caso de que alguno esté vacío.
      */
     public boolean verificarCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoUsuario, PasswordField campoContrasena) {
         boolean camposVacios = false;
@@ -154,11 +147,13 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     /**
+     * Permite verificar que el límite permitido de los campos no sea excedido.
      *
-     * @param campoNombre
-     * @param campoApellidos
-     * @param campoCorreo
-     * @param campoUsuario
+     * @param campoNombre Campo en donde el usuario introduce su nombre.
+     * @param campoApellidos Campo en donde el usuario introduce sus apellidos.
+     * @param campoCorreo Campo en donde el usuario introduce su correo.
+     * @param campoUsuario Campo en donde el usuario introduce su nombre de
+     * jugador.
      * @return
      */
     public boolean verificarLongitud(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoUsuario) {
@@ -172,6 +167,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     /**
+     * Permite registrar al jugador una vez que se ha validado.
      *
      * @param stub
      * @throws NoSuchAlgorithmException
@@ -195,8 +191,9 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     }
 
     /**
+     * Permite regresar a la VentanaIniciarSesión.
      *
-     * @param event
+     * @param event Un clic en el botón regresar.
      * @throws IOException
      */
     @FXML

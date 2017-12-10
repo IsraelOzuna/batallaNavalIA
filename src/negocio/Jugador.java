@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.io.Serializable;
 
 /**
+ * Plantilla con la información del jugador.
  *
- * @author Irdevelo
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
 public class Jugador implements Serializable {
 
@@ -23,94 +20,57 @@ public class Jugador implements Serializable {
 
     private String apellidos;
 
-    /**
-     *
-     * @return
-     */
     public String getNombreJugador() {
         return nombreJugador;
     }
 
-    /**
-     *
-     * @param nombreJugador
-     */
     public void setNombreJugador(String nombreJugador) {
         this.nombreJugador = nombreJugador;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getContrasena() {
         return contrasena;
     }
 
-    /**
-     *
-     * @param contrasena
-     */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getCorreo() {
         return correo;
     }
 
-    /**
-     *
-     * @param correo
-     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     *
-     * @param nombre
-     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getApellidos() {
         return apellidos;
     }
 
-    /**
-     *
-     * @param apellidos
-     */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
 
     /**
+     * Permite verificar si el nombre de jugador elegido tiene el
+     * formato corecto
      *
-     * @param nombreUsuario
-     * @return
+     * @param nombreJugador Clave del jugador para ingresar al sistema.
+     * @return Un valor verdadero si el nombre del jugador tiene el formato
+     * correcto o un valor falso en caso de lo contrario
      */
-    public static boolean verificarNombreUsuarioCorrecto(String nombreUsuario) {
+    public static boolean verificarNombreUsuarioCorrecto(String nombreJugador) {
         boolean nombreUsuarioCorrecto = true;
-        String caracteres[] = nombreUsuario.split(" ");
+        String caracteres[] = nombreJugador.split(" ");
         if (caracteres.length > 1) {
             nombreUsuarioCorrecto = false;
         }

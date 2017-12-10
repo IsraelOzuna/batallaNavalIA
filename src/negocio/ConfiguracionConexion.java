@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import controlador.VentanaPeticionIPController;
@@ -16,8 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Plantilla con atributos y métodos necesarios para la conexión a los
+ * servidores de RMI y Node
  *
- * @author Irdevelo
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
 public class ConfiguracionConexion {
 
@@ -27,10 +25,13 @@ public class ConfiguracionConexion {
     private static Socket socket;
 
     /**
+     * Permite verificar si existe conexion con el servidor Node.
      *
-     * @param ipNode
-     * @param puerto
-     * @return
+     * @param ipNode Dirección IP del servidor Node con la que se intentará
+     * comprobar conexión.
+     * @param puerto Puerto por el que se intentará comprobar conexión.
+     * @return Valor verdadero si la conexión se comrueba o un valor falso en
+     * caso de ser lo contrario.
      * @throws IOException
      */
     public static boolean verificarConexionNode(String ipNode, String puerto) throws IOException {
@@ -43,10 +44,15 @@ public class ConfiguracionConexion {
     }
 
     /**
+     * Permite actualizar en el archivo Properties las direcciones a las cuales
+     * se conectará el juego.
      *
-     * @param rmi
-     * @param node
-     * @param puerto
+     * @param rmi Dirección IP del servidor RMI con el que se establecerá la
+     * conexión.
+     * @param node Dirección IP del servidor Node con el que se establecerá la
+     * conexión.
+     * @param puerto Puerto por el que se establecerá la conexión con servidor
+     * Node.
      */
     public void actualizarIP(String rmi, String node, String puerto) {
 
@@ -74,8 +80,10 @@ public class ConfiguracionConexion {
     }
 
     /**
+     * Permite obtener la direción IP del archivo Properties para la conexión
+     * con el servidor RMI.
      *
-     * @return
+     * @return La dirección IP para la conexión con el servidor RMI.
      */
     public String obtenerIPRMI() {
         Properties properties = new Properties();
@@ -90,8 +98,10 @@ public class ConfiguracionConexion {
     }
 
     /**
+     * Permite obtener la direción IP del archivo Properties para la conexión
+     * con el servidor RMI.
      *
-     * @return
+     * @return La dirección IP para la conexión con el servidor Node.
      */
     public String obtenerIPNode() {
         Properties properties = new Properties();
@@ -106,8 +116,9 @@ public class ConfiguracionConexion {
     }
 
     /**
+     * Permite obtener el puerto para la conexión con el servidor Node.
      *
-     * @return
+     * @return El puerto para la conexión con el servidor Node.
      */
     public String obtenerPuertoNode() {
         Properties properties = new Properties();

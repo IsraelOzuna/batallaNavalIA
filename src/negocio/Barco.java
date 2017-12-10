@@ -1,25 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Plantilla que contiene métodos utilizados para acomodar los barcos en el
+ * tablero.
  *
- * @author Irdevelo
+ * @author Irvin Dereb Vera López.
+ * @author Israel Reyes Ozuna.
  */
 public class Barco {
-    
+
     /**
+     * Permite generar las coordenadas que ocupará un barco a partir de la
+     * posición seleccionada.
      *
-     * @param posicionColumna
-     * @param posicionFila
-     * @param tamanoBarco
-     * @return
+     * @param posicionColumna Posición de la columna seleccionada por el jugador
+     * para acomodar el barco.
+     * @param posicionFila Posición de la fila seleccionada por el jugador para
+     * acomodar el barco.
+     * @param tamanoBarco Indica el tamaño de casilas que ocupará el barco.
+     * @return Un arreglo con las posiciones que el barco ocupará en caso de ser
+     * acomodado.
      */
     public String[] generarCoordenadas(int posicionColumna, int posicionFila, int tamanoBarco) {
         String coordenadas[] = null;
@@ -49,12 +52,17 @@ public class Barco {
     }
 
     /**
+     * Permite verificar si las coordenadas que ocupará un barco no están
+     * ocupadas
      *
-     * @param coordenadas
-     * @param coordenadasOcupadas
-     * @return
+     * @param coordenadas Arreglo con las coordenadas que el barco ocupará en
+     * caso de ser posicionado.
+     * @param coordenadasOcupadas Arreglo con las coordenadas que son ocupadas
+     * actualmente en el tablero.
+     * @return Un valor verdadero si las posciones están libres en el tablero o
+     * un valor falso si las coordenadas ya están ocupadas.
      */
-    public boolean verificarCoordenadas(String coordenadas[], String coordenadasOcupadas[]) {
+    public boolean verificarCoordenadasLibres(String coordenadas[], String coordenadasOcupadas[]) {
         boolean posicionDisponible = true;
 
         for (String coordenadasOcupada : coordenadasOcupadas) {
@@ -69,13 +77,15 @@ public class Barco {
     }
 
     /**
+     * Permite la conversión de la coordenada de una columna a un numero entero.
      *
-     * @param letra
-     * @return
+     * @param letra Columna seleccionada por el jugador.
+     * @return Un valor entero a partir de la columna seleccionada por el
+     * jugador.
      */
     public int convertirLetrasANumeros(String letra) {
         int numeroConvertido;
-        
+
         Map<String, Integer> letras = new HashMap<>();
         letras.put("A", 0);
         letras.put("B", 1);
@@ -86,28 +96,31 @@ public class Barco {
         letras.put("G", 6);
         letras.put("H", 7);
         letras.put("I", 8);
-        letras.put("J", 9);                
-                
-        numeroConvertido = letras.get(letra);       
-        
+        letras.put("J", 9);
+
+        numeroConvertido = letras.get(letra);
+
         return numeroConvertido;
     }
 
     /**
+     * Permite limitar el tablero para evitar que lo barcos se salgan de él.
      *
-     * @param coordenadasBarco
-     * @param longitudCoordenadas
-     * @return
+     * @param coordenadasBarco Arreglo con las coordenadas que el barco ocupará
+     * en caso de ser posicionado.
+     * @param longitudBarco Indica el tamaño de casilas que ocupará el barco.
+     * @return Valor verdadero si el barco excede el límite del tablero o un
+     * valor falso si está dentro del rango del tablero.
      */
-    public boolean limitarTablero(String[] coordenadasBarco, int longitudCoordenadas) {
+    public boolean limitarTablero(String[] coordenadasBarco, int longitudBarco) {
         boolean limiteExcedido = false;
         String coordenadasAOcupar[] = null;
 
-        if (longitudCoordenadas == 2) {
+        if (longitudBarco == 2) {
             limiteExcedido = limitarBarco2(coordenadasBarco, coordenadasAOcupar);
-        } else if (longitudCoordenadas == 3) {
+        } else if (longitudBarco == 3) {
             limiteExcedido = limitarBarco3(coordenadasBarco, coordenadasAOcupar);
-        } else if (longitudCoordenadas == 5) {
+        } else if (longitudBarco == 5) {
             limiteExcedido = limitarBarco5(coordenadasBarco, coordenadasAOcupar);
         }
         return limiteExcedido;
@@ -204,14 +217,14 @@ public class Barco {
      * @param coordenada1
      * @param coordenada2
      * @param coordenada3
-     * @param coordenada14
+     * @param coordenada4
      * @param coordenada5
      * @return
      */
-    public boolean verificarLimiteExcedido(String coordenada1, String coordenada2, String coordenada3, String coordenada14, String coordenada5) {
+    public boolean verificarLimiteExcedido(String coordenada1, String coordenada2, String coordenada3, String coordenada4, String coordenada5) {
         boolean limiteExcedido = false;
         if (Integer.parseInt(coordenada1) >= 9 || Integer.parseInt(coordenada2) >= 9 || Integer.parseInt(coordenada3) >= 9
-                || Integer.parseInt(coordenada14) >= 9 || Integer.parseInt(coordenada5) > 9) {
+                || Integer.parseInt(coordenada4) >= 9 || Integer.parseInt(coordenada5) > 9) {
             limiteExcedido = true;
         }
         return limiteExcedido;

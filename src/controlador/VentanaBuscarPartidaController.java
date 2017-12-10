@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import io.socket.client.IO;
@@ -48,22 +43,23 @@ public class VentanaBuscarPartidaController implements Initializable {
     }
 
     /**
+     * Permite obtener el nombre del jugador desde la ventana anterior.
      *
-     * @param nombreUsuario
+     * @param nombreUsuario Clave del jugador para ingresar al sistema.
      */
     public void obtenerNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
     /**
-     *
+     * Permite la configuración del idioma de la pantalla.
      */
     public void configurarIdioma() {
         etiquetaBuscandoPartida.setText(idioma.getString("etBuscandoPartida"));
     }
 
     /**
-     *
+     * Permite iniciar la búsqueda de una partida.
      */
     public void comenzarBusqueda() {
         try {
@@ -77,6 +73,15 @@ public class VentanaBuscarPartidaController implements Initializable {
         }
     }
 
+    /**
+     * Permite crear conexión con el servidor Node.
+     *
+     * @param node Dirección IP del servidor Node con el que se establecerá la
+     * conexión.
+     * @param puerto Puerto por el que se establecerá la conexión con servidor
+     * Node.
+     * @throws URISyntaxException
+     */
     private void crearConexion(String node, String puerto) throws URISyntaxException {
 
         socket = IO.socket("http://" + node + ":" + puerto);
@@ -98,9 +103,11 @@ public class VentanaBuscarPartidaController implements Initializable {
     }
 
     /**
+     * Permite desplegar la VentanaTablero.
      *
-     * @param nombreRival
-     * @param primerTirador
+     * @param nombreRival Nombre del contrincante.
+     * @param primerTirador Valor verdadero si es el primer tirador o valor
+     * falso en caso de lo contrario.
      * @throws IOException
      */
     public void desplegarTablero(String nombreRival, Boolean primerTirador) throws IOException {
@@ -111,12 +118,14 @@ public class VentanaBuscarPartidaController implements Initializable {
         Stage tablero = new Stage();
         tablero.setScene(new Scene(root));
         tablero.initStyle(StageStyle.UNDECORATED);
-        tablero.show();        
+        tablero.show();
         controladorTablero.setStageTablero(tablero);
         ventanaActual.close();
     }
 
     /**
+     * Permite pasar como párametro la ventana actual para posteriormente
+     * cerrarla.
      *
      * @param ventanaBuscar
      */
