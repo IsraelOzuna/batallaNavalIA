@@ -14,7 +14,7 @@ public class Barco {
 
     /**
      * Permite generar las coordenadas que ocupará un barco a partir de la
-     * posición seleccionada.
+     * posición seleccionada y su tamaño.
      *
      * @param posicionColumna Posición de la columna seleccionada por el jugador
      * para acomodar el barco.
@@ -104,40 +104,43 @@ public class Barco {
     }
 
     /**
-     * Permite limitar el tablero para evitar que lo barcos se salgan de él.
+     * Permite verificar que los barcos que llegan no salgan del tablero
      *
-     * @param coordenadasBarco Arreglo con las coordenadas que el barco ocupará
-     * en caso de ser posicionado.
+     * @param coordenadasBarco Arreglo con las coordenadas que el barco ocupará.
+     *
      * @param longitudBarco Indica el tamaño de casilas que ocupará el barco.
      * @return Valor verdadero si el barco excede el límite del tablero o un
      * valor falso si está dentro del rango del tablero.
      */
-    public boolean limitarTablero(String[] coordenadasBarco, int longitudBarco) {
-        boolean limiteExcedido = false;
-        String coordenadasAOcupar[] = null;
+    public boolean limitarTablero(String coordenadasBarco [], int longitudBarco) {
+        boolean limiteExcedido = false;        
 
         if (longitudBarco == 2) {
-            limiteExcedido = limitarBarco2(coordenadasBarco, coordenadasAOcupar);
+            limiteExcedido = limitarBarco2(coordenadasBarco);
         } else if (longitudBarco == 3) {
-            limiteExcedido = limitarBarco3(coordenadasBarco, coordenadasAOcupar);
+            limiteExcedido = limitarBarco3(coordenadasBarco);
         } else if (longitudBarco == 5) {
-            limiteExcedido = limitarBarco5(coordenadasBarco, coordenadasAOcupar);
+            limiteExcedido = limitarBarco5(coordenadasBarco);
         }
         return limiteExcedido;
     }
 
     /**
+     * Permite verificar si el barco de 2 posiciones excede el limite del
+     * tablero
      *
-     * @param coordenadasBarco
-     * @param coordenadasAOcupar
-     * @return
+     * @param coordenadasBarco las coordenadas generadas donde el barco quiere
+     * ser posicionado     
+     * @return Valor verdadero si el barco de dos posiciones excede el limite y
+     * un valor falso si puede ser acomodado en esas posiciones.
      */
-    public boolean limitarBarco2(String[] coordenadasBarco, String[] coordenadasAOcupar) {
+    public boolean limitarBarco2(String coordenadasBarco []) {
+        String coordenadasAOcupar[];
         boolean limiteExcedido = false;
         String coordenadaColumna1 = null;
         String coordenadaColumna2 = null;
         for (int i = 0; i < coordenadasBarco.length; i++) {
-            coordenadasAOcupar = coordenadasBarco[i].split(",");
+            coordenadasAOcupar = coordenadasBarco[i].split(","); 
             if (i == 0) {
                 coordenadaColumna1 = coordenadasAOcupar[0];
             } else {
@@ -151,12 +154,16 @@ public class Barco {
     }
 
     /**
+     * Permite verificar si el barco de 3 posiciones excede el limite del
+     * tablero
      *
-     * @param coordenadasBarco
-     * @param coordenadasAOcupar
-     * @return
+     * @param coordenadasBarco las coordenadas generadas donde el barco quiere
+     * ser posicionado     
+     * @return Valor verdadero si el barco de tres posiciones excede el limite y
+     * un valor falso si puede ser acomodado en esas posiciones
      */
-    public boolean limitarBarco3(String[] coordenadasBarco, String[] coordenadasAOcupar) {
+    public boolean limitarBarco3(String coordenadasBarco[]) {
+        String coordenadasAOcupar[];
         boolean limiteExcedido = false;
         String coordenadaColumna1 = null;
         String coordenadaColumna2 = null;
@@ -180,13 +187,17 @@ public class Barco {
     }
 
     /**
+     * Permite verificar si los barcos de 5 posiciones exceden el limite del
+     * tablero
      *
-     * @param coordenadasBarco
-     * @param coordenadasAOcupar
-     * @return
+     * @param coordenadasBarco las coordenadas generadas donde el barco quiere
+     * ser posicionado     
+     * @return Valor verdadero si el barco de 5 posiciones excede el limite y un
+     * valor falso si puede ser acomodado en esas posiciones
      */
-    public boolean limitarBarco5(String[] coordenadasBarco, String[] coordenadasAOcupar) {
-        boolean limiteExcedido = false;
+    public boolean limitarBarco5(String coordenadasBarco[]) {
+        String coordenadasAOcupar[];
+        boolean limiteExcedido;
         String coordenadaColumna1 = null;
         String coordenadaColumna2 = null;
         String coordenadaColumna3 = null;
@@ -213,13 +224,16 @@ public class Barco {
     }
 
     /**
+     * Método auxiliar para el método limitarBarco5 que ayuda a saber si el
+     * barco excede el limite del tablero
      *
-     * @param coordenada1
-     * @param coordenada2
-     * @param coordenada3
-     * @param coordenada4
-     * @param coordenada5
-     * @return
+     * @param coordenada1 primera coordenada generada del barco
+     * @param coordenada2 segunda coordenada generada del barco
+     * @param coordenada3 tercera coordenada generada del barco
+     * @param coordenada4 cuarta coordenada generada del barco
+     * @param coordenada5 quinta coordenada generada del barco
+     * @return Valor verdadero si el barco excede el limite del tablero y un
+     * valor falso si puede ser acomodado en las coordenadas dadas
      */
     public boolean verificarLimiteExcedido(String coordenada1, String coordenada2, String coordenada3, String coordenada4, String coordenada5) {
         boolean limiteExcedido = false;
@@ -229,4 +243,19 @@ public class Barco {
         }
         return limiteExcedido;
     }
+
+    /**
+     * Permite revisar si aún existen barcos disponibles para poder seguir
+     * jugando
+     *
+     * @param posicionesASalvo numero que indica si hay más de una casilla
+     * que contiene un barco
+     * 
+     * @return Valo verdadero si no hay más barcos y valor falso si aún quedan
+     * disponibles
+     */
+    public static boolean verificarPosicionesBarcosASalvo(int posicionesASalvo) {
+        return posicionesASalvo == 0;
+    }
+
 }

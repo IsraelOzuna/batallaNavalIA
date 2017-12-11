@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
-import io.socket.client.Socket;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -27,9 +21,11 @@ import negocio.ConfiguracionConexion;
 import negocio.IConexion;
 
 /**
- * FXML Controller class
+ * Plantilla que contiene atributos y métodos necesarios para el control de 
+ * la vista VentanaPeticionIP
  *
- * @author Irdevelo
+ * @author Irvin Dereb Vera López
+ * @author Israel Reyes Ozuna
  */
 public class VentanaPeticionIPController implements Initializable {
 
@@ -57,18 +53,19 @@ public class VentanaPeticionIPController implements Initializable {
     private String ipNode;
 
     private String puertoNode;
-
-    private Socket socket;
-
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
     /**
-     *
-     * @param event
-     * @throws IOException
+     * Despliega la ventana para iniciar sesión si se cumplieron las conexiones
+     * con ambos servidores
+     * 
+     * @param event clic en Aceptar
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     @FXML
     public void desplegarIniciarSesion(ActionEvent event) throws IOException {
@@ -117,12 +114,15 @@ public class VentanaPeticionIPController implements Initializable {
     }
 
     /**
-     *
-     * @param campoIPRMI1
-     * @param campoIPRMI2
-     * @param campoIPRMI3
-     * @param campoIPRMI4
-     * @return
+     * Permite revisar si alguno de los campos para ingresar la ip de RMI se 
+     * encuentra vacio
+     * 
+     * @param campoIPRMI1 primer campo obtenido
+     * @param campoIPRMI2 segundo campo obtenido
+     * @param campoIPRMI3 tercer campo obtenido
+     * @param campoIPRMI4 cuarto campo obtenido
+     * @return Valor verdadero si todos los campos contienen al menos un caracter
+     * o valor falso si alguno se encuentra vacio
      */
     public boolean verificarCamposVaciosIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
         boolean camposLlenos = true;
@@ -133,13 +133,16 @@ public class VentanaPeticionIPController implements Initializable {
     }
 
     /**
-     *
-     * @param campoIPNode1
-     * @param campoIPNode2
-     * @param campoIPNode3
-     * @param campoIPNode4
-     * @param campoPuertoNode
-     * @return
+     * Permite revisar si alguno de los campos para ingresar la ip de Node se
+     * encuentre vacio
+     * 
+     * @param campoIPNode1 primer campo obtenido 
+     * @param campoIPNode2 segundo campo obtenido
+     * @param campoIPNode3 tercer campo obtenido
+     * @param campoIPNode4 cuarto campo obtenido
+     * @param campoPuertoNode campo donde se ingresa el puerto a conectar
+     * @return Valor verdadero si todos los campos contienen al menos un caracter
+     * o valor falso si alguno se encuentra vacio
      */
     public boolean verificarCamposVaciosIPNode(TextField campoIPNode1, TextField campoIPNode2, TextField campoIPNode3, TextField campoIPNode4, TextField campoPuertoNode) {
         boolean camposLlenos = true;
@@ -150,12 +153,15 @@ public class VentanaPeticionIPController implements Initializable {
     }
 
     /**
-     *
-     * @param campoIPRMI1
-     * @param campoIPRMI2
-     * @param campoIPRMI3
-     * @param campoIPRMI4
-     * @return
+     * Permite revisar que la informacion ingresada en los campos no exceda los
+     * 3 caracteres
+     * 
+     * @param campoIPRMI1 primer campo obtenido
+     * @param campoIPRMI2 segundo campo obtenido
+     * @param campoIPRMI3 tercer campo obtenido
+     * @param campoIPRMI4 cuarto campo obtenido
+     * @return Valor verdadero si todos los campos tienen de 1 a 3 numeros
+     * o valor falso si alguno excede el limite
      */
     public boolean verificarLongitudCamposIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
         boolean camposCorrectos = true;
@@ -166,12 +172,15 @@ public class VentanaPeticionIPController implements Initializable {
     }
 
     /**
-     *
-     * @param campoIPNode1
-     * @param campoIPNode2
-     * @param campoIPNode3
-     * @param campoIPNode4
-     * @return
+     * Permite revisar si alguno de los campos para ingresar la ip de Node 
+     * excede los 3 caracteres
+     * 
+     * @param campoIPNode1 primer campo obtenido 
+     * @param campoIPNode2 segundo campo obtenido
+     * @param campoIPNode3 tercer campo obtenido
+     * @param campoIPNode4 cuarto campo obtenido     
+     * @return Valor verdadero si todos los campos tienen de 1 a 3 numeros 
+     * o valor falso si alguno excede el limite
      */
     public boolean verificarLongitudCamposIPNode(TextField campoIPNode1, TextField campoIPNode2, TextField campoIPNode3, TextField campoIPNode4) {
         boolean camposCorrectos = true;

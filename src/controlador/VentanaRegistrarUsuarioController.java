@@ -10,8 +10,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -117,8 +115,7 @@ public class VentanaRegistrarUsuarioController implements Initializable {
                 } else {
                     DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCorreoInvalido", "contenidoCorreoInvalido", idioma);
                 }
-            } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {
-                Logger.getLogger(VentanaRegistrarUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException | NotBoundException | NoSuchAlgorithmException ex) {                
                 DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexion", "contenidoNoConexion", idioma);
             }
         } else {
@@ -154,7 +151,8 @@ public class VentanaRegistrarUsuarioController implements Initializable {
      * @param campoCorreo Campo en donde el usuario introduce su correo.
      * @param campoUsuario Campo en donde el usuario introduce su nombre de
      * jugador.
-     * @return
+     * @return Un valor verdadero si alguno de los campos excede el limite 
+     * de caracteres permitidos o un valor falso si todo esta en el rango
      */
     public boolean verificarLongitud(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoUsuario) {
         boolean longitudExcedida = false;
@@ -169,9 +167,13 @@ public class VentanaRegistrarUsuarioController implements Initializable {
     /**
      * Permite registrar al jugador una vez que se ha validado.
      *
-     * @param stub
-     * @throws NoSuchAlgorithmException
-     * @throws RemoteException
+     * @param stub necesario para acceder al método remoto con cual se registra
+     * un usario
+     * 
+     * @throws NoSuchAlgorithmException puede arrojar esta excepción si ocurre un fallo
+     * al momento de tratar de registrar el jugador en la base de datos
+     * @throws RemoteException puede arrojar esta excepción si ocurre un fallo
+     * al momento de tratar de registrar el jugador en la base de datos
      */
     public void registrarJugadorValidado(IJugador stub) throws NoSuchAlgorithmException, RemoteException {
         Jugador jugador = new Jugador();
@@ -194,7 +196,8 @@ public class VentanaRegistrarUsuarioController implements Initializable {
      * Permite regresar a la VentanaIniciarSesión.
      *
      * @param event Un clic en el botón regresar.
-     * @throws IOException
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     @FXML
     public void regresarVentanaIniciarSesion(ActionEvent event) throws IOException {

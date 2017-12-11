@@ -1,8 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*--------------------------------------------------------*/
+/*                  Batalla naval tuerta
+    @version 1.0 / 11 de diciembre de 2017
+    Desarrolladores: Irvin Dereb Vera López
+                     Israel Reyes Ozuna
+    Descripción: El juego presentado a continuación es una de
+                 las variates del famoso juego "Batalla naval”
+                 en el cual dos jugadores se enfrentaran hasta
+                 que alguno logre derribar todos los barcos del 
+                 rival pero con la dificultad de que nunca sabrá
+                 si le ha dado a un barco hasta que termine con
+                 todos                 
+/*--------------------------------------------------------*/      
+
 package batallanaval;
 
 import java.io.IOException;

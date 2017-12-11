@@ -6,6 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -111,7 +112,7 @@ public class VentanaMenuController implements Initializable {
      */
     public void llenarTabla() {
         IPuntaje stubPuntaje;
-        List<Puntaje> mejoresPuntajes = null;
+        List<Puntaje> mejoresPuntajes = new ArrayList();
         try {
             conexionRMI = new ConfiguracionConexion();
             ipRMI = conexionRMI.obtenerIPRMI();
@@ -135,31 +136,43 @@ public class VentanaMenuController implements Initializable {
      * Permite desplegar la ventana para buscar partida
      *
      * @param event Un clic en el boton Iniciar Partida
-     * @throws IOException
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     @FXML
     public void buscarPartida(ActionEvent event) throws IOException {
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaBuscarPartida.fxml"), idioma);
-        Parent root = (Parent) loger.load();
+        ConfiguracionConexion puertoNode = new ConfiguracionConexion();
+        String puerto;
+        puerto = puertoNode.obtenerPuertoNode();
 
-        VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
-        controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
-        controladorBuscarPartida.comenzarBusqueda();
+        try {
+            if (ConfiguracionConexion.verificarConexionNode(ipNode, puerto)) {
+                FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaBuscarPartida.fxml"), idioma);
+                Parent root = (Parent) loger.load();
 
-        Stage buscarPartida = new Stage();
-        buscarPartida.setScene(new Scene(root));
-        buscarPartida.initStyle(StageStyle.UNDECORATED);
-        buscarPartida.show();
-        Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        ventanaAnterior.close();
-        controladorBuscarPartida.setStageBuscar(buscarPartida);
+                VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
+                controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
+                controladorBuscarPartida.comenzarBusqueda();
+
+                Stage buscarPartida = new Stage();
+                buscarPartida.setScene(new Scene(root));
+                buscarPartida.initStyle(StageStyle.UNDECORATED);
+                buscarPartida.show();
+                Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                ventanaAnterior.close();
+                controladorBuscarPartida.setStageBuscar(buscarPartida);
+            }
+        } catch (IOException ex) {
+            DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexionNode", "contenidoNoConexionNode",idioma);
+        }
     }
 
     /**
      * Permite Permite que un jugador cierre sesión.
      *
      * @param event Un clic en el botón Cerrar sesión
-     * @throws IOException
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     @FXML
     public void cerrarSesion(ActionEvent event) throws IOException {

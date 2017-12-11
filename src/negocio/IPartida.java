@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Interface que contiene los métodos remotos pertenecientes las partidas.
+ * Interfaz que contiene los métodos remotos pertenecientes las partidas.
  *
  * @author Irvin Dereb Vera López.
  * @author Israel Reyes Ozuna.
@@ -16,7 +16,8 @@ public interface IPartida extends Remote {
      * confrontación.
      *
      * @param nombreJugador Clave del jugador para ingresar al sistema.
-     * @throws RemoteException
+     * @throws RemoteException puede arrojar esta excepción si ocurre un fallo
+     * con el servidor RMI
      */
     public void actualizarPartidasGanadas(String nombreJugador) throws RemoteException;
 
@@ -25,7 +26,8 @@ public interface IPartida extends Remote {
      * confrontación.
      *
      * @param nombreJugador Clave del jugador para ingresar al sistema.
-     * @throws RemoteException
+     * @throws RemoteException puede arrojar esta excepción si ocurre un fallo
+     * con el servidor RMI
      */
     public void actualizarPartidasPerdidas(String nombreJugador) throws RemoteException;
 

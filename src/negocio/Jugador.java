@@ -61,8 +61,8 @@ public class Jugador implements Serializable {
     }
 
     /**
-     * Permite verificar si el nombre de jugador elegido tiene el
-     * formato corecto
+     * Permite verificar si el nombre de jugador elegido tiene el formato
+     * corecto
      *
      * @param nombreJugador Clave del jugador para ingresar al sistema.
      * @return Un valor verdadero si el nombre del jugador tiene el formato

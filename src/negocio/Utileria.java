@@ -18,8 +18,11 @@ public class Utileria {
      * Permite cifrar una contraseña antes de mandarla a la BD.
      *
      * @param contrasena Contraseña del jugador para ingresar al sistema.
-     * @return
-     * @throws NoSuchAlgorithmException
+     * @return una cadena que representa la ingresada por el usuario pero
+     * cifrada 
+     * 
+     * @throws NoSuchAlgorithmException puede arrojar esta excepción si ocurre
+     * un fallo al momento de que el método trata de cifrar la contraseña
      */
     public String cifrarContrasena(String contrasena) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

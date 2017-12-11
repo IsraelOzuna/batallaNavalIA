@@ -2,7 +2,6 @@ package controlador;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -80,24 +79,22 @@ public class VentanaBuscarPartidaController implements Initializable {
      * conexión.
      * @param puerto Puerto por el que se establecerá la conexión con servidor
      * Node.
-     * @throws URISyntaxException
+     * @throws URISyntaxException puede arrojar esta excepción si la dirección
+     * a Node no es la correcta
      */
     private void crearConexion(String node, String puerto) throws URISyntaxException {
 
         socket = IO.socket("http://" + node + ":" + puerto);
 
-        socket.on("SeHaEncontradoUnaFlotaEnemiga", new Emitter.Listener() {
-            @Override
-            public void call(Object... os) {
-                Platform.runLater(() -> {
-                    try {
-                        desplegarTablero((String) os[0], (Boolean) os[1]);
-                        socket.off("SeHaEncontradoUnaFlotaEnemiga");
-                    } catch (IOException ex) {
-                        Logger.getLogger(VentanaBuscarPartidaController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                });
-            }
+        socket.on("SeHaEncontradoUnaFlotaEnemiga", (Object... os) -> {
+            Platform.runLater(() -> {
+                try {
+                    desplegarTablero((String) os[0], (Boolean) os[1]);
+                    socket.off("SeHaEncontradoUnaFlotaEnemiga");
+                } catch (IOException ex) {
+                    Logger.getLogger(VentanaBuscarPartidaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
         });
         socket.connect();
     }
@@ -108,7 +105,8 @@ public class VentanaBuscarPartidaController implements Initializable {
      * @param nombreRival Nombre del contrincante.
      * @param primerTirador Valor verdadero si es el primer tirador o valor
      * falso en caso de lo contrario.
-     * @throws IOException
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     public void desplegarTablero(String nombreRival, Boolean primerTirador) throws IOException {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaTablero.fxml"), idioma);
@@ -127,7 +125,8 @@ public class VentanaBuscarPartidaController implements Initializable {
      * Permite pasar como párametro la ventana actual para posteriormente
      * cerrarla.
      *
-     * @param ventanaBuscar
+     * @param ventanaBuscar un Stage para que pueda ser cerrado cuando se
+     * encuentre una partida
      */
     public void setStageBuscar(Stage ventanaBuscar) {
         ventanaActual = ventanaBuscar;

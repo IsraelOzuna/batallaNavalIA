@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.util.ResourceBundle;
@@ -11,17 +6,20 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 
 /**
- *
- * @author Irdevelo
+ * Permite el manejo de mensajes de retroalimentación para el usuario
+ * 
+ * @author Irvin Dereb Vera López
+ * @author Israel Reyes Ozuna
  */
 public class DialogosController {
     
     /**
-     *
-     * @param titulo
-     * @param encabezado
-     * @param contenido
-     * @param idioma
+     * Muestra un mensaje de advertencia de acuerdo al fallo ocurrido
+     * 
+     * @param titulo nombre de la advertencia mostrada
+     * @param encabezado un pequeño mensaje donde se muestra que ocurrió
+     * @param contenido mayor retroalimentación 
+     * @param idioma el idioma especificado en el que está el juego
      */
     public static void mostrarMensajeAdvertencia(String titulo, String encabezado, String contenido, ResourceBundle idioma) {
         Alert advertencia = new Alert(Alert.AlertType.WARNING);
@@ -34,11 +32,12 @@ public class DialogosController {
     }
     
     /**
-     *
-     * @param titulo
-     * @param encabezado
-     * @param contenido
-     * @param idioma
+     * Muestra un mensaje de información acorde a lo ocurrido en el juego
+     * 
+     * @param titulo nombre de la advertencia mostrada
+     * @param encabezado un pequeño mensaje donde se muestra que ocurrió
+     * @param contenido mayor retroalimentación 
+     * @param idioma el idioma especificado en el que está el juego
      */
     public static void mostrarMensajeInformacion(String titulo, String encabezado, String contenido, ResourceBundle idioma) {
         Alert advertencia = new Alert(Alert.AlertType.INFORMATION);

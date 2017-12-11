@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.rmi.Remote;
@@ -11,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * Interface que contiene los métodos remotos pertenecientes las partidas.
+ * Interfaz que contiene los métodos remotos pertenecientes las partidas.
  *
  * @author Irvin Dereb Vera López.
  * @author Israel Reyes Ozuna.
@@ -25,14 +20,17 @@ public interface IPuntaje extends Remote {
      * @param puntajeObtenido Valor obtenido de acuerdo a el triunfo o derrota
      * del jugador.
      * @param nombreJugador Clave del jugador para ingresar al sistema.
-     * @throws RemoteException
+     * @throws RemoteException puede arrojar esta excepción si ocurre un fallo
+     * con el servidor RMI
      */
     public void actualizarPuntajeJugador(int puntajeObtenido, String nombreJugador) throws RemoteException;
 
     /**
      * Permite obtener el ranking de los 3 mejores puntajes.
      *
-     * @return @throws RemoteException
+     * @return Una lista con objetos de la clase puntaje
+     * @throws RemoteException puede arrojar esta excepción si ocurre un fallo
+     * con el servidor RMI
      */
     public List<negocio.Puntaje> obtenerMejoresPuntajes() throws RemoteException;
 }

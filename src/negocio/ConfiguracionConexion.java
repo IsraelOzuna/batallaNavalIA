@@ -30,9 +30,10 @@ public class ConfiguracionConexion {
      * @param ipNode Dirección IP del servidor Node con la que se intentará
      * comprobar conexión.
      * @param puerto Puerto por el que se intentará comprobar conexión.
-     * @return Valor verdadero si la conexión se comrueba o un valor falso en
+     * @return Valor verdadero si la conexión se comprueba o un valor falso en
      * caso de ser lo contrario.
-     * @throws IOException
+     * @throws IOException puede arrojar esta excepción si la dirección ingresada
+     * no es correcta o contiene caracteres no validos
      */
     public static boolean verificarConexionNode(String ipNode, String puerto) throws IOException {
         boolean estaConectado = false;

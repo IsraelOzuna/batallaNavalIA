@@ -28,4 +28,5 @@ public class Puntaje implements Serializable {
     public void setPuntosTotales(int puntosTotales) {
         this.puntosTotales = puntosTotales;
     }
+
 }

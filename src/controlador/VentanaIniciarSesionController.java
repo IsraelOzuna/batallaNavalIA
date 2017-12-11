@@ -28,8 +28,11 @@ import negocio.IJugador;
 import negocio.Utileria;
 
 /**
- *
- * @author Irdevelo
+ * Plantilla que contiene atributos y métodos necesarios para el control de la
+ * vista IniciarSesion 
+ * 
+ * @author Irvin Dereb Vera López
+ * @author Israel Reyes Ozuna
  */
 public class VentanaIniciarSesionController implements Initializable {
 
@@ -61,7 +64,7 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     /**
-     *
+     * Permite la configuración del idioma de la pantalla.
      */
     public void configurarIdioma() {
         etiquetaBatallaNaval.setText(idioma.getString("etBatallaNaval"));
@@ -74,8 +77,8 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     /**
-     *
-     * @param event
+     * Permite cambiar el idioma a todo el juego por inglés
+     * @param event clic en el botón English
      */
     @FXML
     public void cambiarIdiomaIngles(ActionEvent event) {
@@ -84,8 +87,8 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     /**
-     *
-     * @param event
+     * Permite cambiar el idioma a todo el juego po español
+     * @param event clic en el botón Español
      */
     @FXML
     public void cambiarIdiomaEspañol(ActionEvent event) {
@@ -94,9 +97,12 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     /**
-     *
-     * @param event
-     * @throws IOException
+     * Permite, mediante validaciones en la clase Jugador, acceder al juego
+     * con una cuenta ya registrada
+     * 
+     * @param event clic en Iniciar sesión
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     @FXML
     public void ingresar(ActionEvent event) throws IOException {
@@ -143,9 +149,11 @@ public class VentanaIniciarSesionController implements Initializable {
     }
 
     /**
-     *
-     * @param event
-     * @throws IOException
+     * Permite abrir la ventana para registrar un nuevo usuario 
+     * 
+     * @param event clic en Registrate aquí
+     * @throws IOException puede arrojar esta excepción si no se completa 
+     * correctamente la carga de la siguiente ventana
      */
     @FXML
     public void desplegarVentanaRegistrarUsuario(ActionEvent event) throws IOException {
