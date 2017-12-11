@@ -21,8 +21,8 @@ import negocio.ConfiguracionConexion;
 import negocio.IConexion;
 
 /**
- * Plantilla que contiene atributos y métodos necesarios para el control de 
- * la vista VentanaPeticionIP
+ * Plantilla que contiene atributos y métodos necesarios para el control de la
+ * vista VentanaPeticionIP
  *
  * @author Irvin Dereb Vera López
  * @author Israel Reyes Ozuna
@@ -53,7 +53,7 @@ public class VentanaPeticionIPController implements Initializable {
     private String ipNode;
 
     private String puertoNode;
-   
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -62,9 +62,9 @@ public class VentanaPeticionIPController implements Initializable {
     /**
      * Despliega la ventana para iniciar sesión si se cumplieron las conexiones
      * con ambos servidores
-     * 
+     *
      * @param event clic en Aceptar
-     * @throws IOException puede arrojar esta excepción si no se completa 
+     * @throws IOException puede arrojar esta excepción si no se completa
      * correctamente la carga de la siguiente ventana
      */
     @FXML
@@ -73,6 +73,7 @@ public class VentanaPeticionIPController implements Initializable {
         if (verificarCamposVaciosIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarCamposVaciosIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4, campoPuertoNode)) {
             if (verificarLongitudCamposIPRMI(campoIPRMI1, campoIPRMI2, campoIPRMI3, campoIPRMI4) && verificarLongitudCamposIPNode(campoIPNode1, campoIPNode2, campoIPNode3, campoIPNode4)) {
                 boolean conectadoRMI = false;
+                boolean esPuertoValido = false;
                 ipRMI = campoIPRMI1.getText() + "." + campoIPRMI2.getText() + "." + campoIPRMI3.getText() + "." + campoIPRMI4.getText();
                 ipNode = campoIPNode1.getText() + "." + campoIPNode2.getText() + "." + campoIPNode3.getText() + "." + campoIPNode4.getText();
                 puertoNode = campoPuertoNode.getText();
@@ -84,45 +85,49 @@ public class VentanaPeticionIPController implements Initializable {
                     stubConexion = (IConexion) registry.lookup("ServidorBatallaNaval");
                     conectadoRMI = stubConexion.obtenerIPRMI();
                 } catch (RemoteException | NotBoundException ex) {
-                    DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexionRMI", "contenidoNoConexionRMI",idioma);
+                    DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexionRMI", "contenidoNoConexionRMI", idioma);
                 }
 
                 if (conectadoRMI) {
-                    try {
-                        if (ConfiguracionConexion.verificarConexionNode(ipNode, puertoNode)) {
-                            conexionRMI.actualizarIP(ipRMI, ipNode, puertoNode);
-                            FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
-                            Parent root;
-                            root = (Parent) loger.load();
-                            Stage iniciarSesion = new Stage();
-                            iniciarSesion.setScene(new Scene(root));
-                            iniciarSesion.initStyle(StageStyle.UNDECORATED);
-                            iniciarSesion.show();
-                            Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            ventanaAnterior.close();
+                    if (ConfiguracionConexion.verificarPuertoNode(esPuertoValido, puertoNode)) {
+                        try {
+                            if (ConfiguracionConexion.verificarConexionNode(ipNode, puertoNode)) {
+                                conexionRMI.actualizarIP(ipRMI, ipNode, puertoNode);
+                                FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaIniciarSesion.fxml"), idioma);
+                                Parent root;
+                                root = (Parent) loger.load();
+                                Stage iniciarSesion = new Stage();
+                                iniciarSesion.setScene(new Scene(root));
+                                iniciarSesion.initStyle(StageStyle.UNDECORATED);
+                                iniciarSesion.show();
+                                Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                ventanaAnterior.close();
+                            }
+                        } catch (IOException ex) {
+                            DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexionNode", "contenidoNoConexionNode", idioma);
                         }
-                    } catch (IOException ex) {
-                        DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexionNode", "contenidoNoConexionNode",idioma);
+                    }else{
+                        DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoPuertoInvalido", "contenidoPuertoInvalido", idioma);
                     }
                 }
             } else {
-                DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCampoExcedido", "contenidoCampoExcedido",idioma);
+                DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCampoExcedido", "contenidoCampoExcedido", idioma);
             }
         } else {
-            DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios",idioma);
+            DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoCamposVacios", "contenidoCamposVacios", idioma);
         }
     }
 
     /**
-     * Permite revisar si alguno de los campos para ingresar la ip de RMI se 
+     * Permite revisar si alguno de los campos para ingresar la ip de RMI se
      * encuentra vacio
-     * 
+     *
      * @param campoIPRMI1 primer campo obtenido
      * @param campoIPRMI2 segundo campo obtenido
      * @param campoIPRMI3 tercer campo obtenido
      * @param campoIPRMI4 cuarto campo obtenido
-     * @return Valor verdadero si todos los campos contienen al menos un caracter
-     * o valor falso si alguno se encuentra vacio
+     * @return Valor verdadero si todos los campos contienen al menos un
+     * caracter o valor falso si alguno se encuentra vacio
      */
     public boolean verificarCamposVaciosIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
         boolean camposLlenos = true;
@@ -135,14 +140,14 @@ public class VentanaPeticionIPController implements Initializable {
     /**
      * Permite revisar si alguno de los campos para ingresar la ip de Node se
      * encuentre vacio
-     * 
-     * @param campoIPNode1 primer campo obtenido 
+     *
+     * @param campoIPNode1 primer campo obtenido
      * @param campoIPNode2 segundo campo obtenido
      * @param campoIPNode3 tercer campo obtenido
      * @param campoIPNode4 cuarto campo obtenido
      * @param campoPuertoNode campo donde se ingresa el puerto a conectar
-     * @return Valor verdadero si todos los campos contienen al menos un caracter
-     * o valor falso si alguno se encuentra vacio
+     * @return Valor verdadero si todos los campos contienen al menos un
+     * caracter o valor falso si alguno se encuentra vacio
      */
     public boolean verificarCamposVaciosIPNode(TextField campoIPNode1, TextField campoIPNode2, TextField campoIPNode3, TextField campoIPNode4, TextField campoPuertoNode) {
         boolean camposLlenos = true;
@@ -155,13 +160,13 @@ public class VentanaPeticionIPController implements Initializable {
     /**
      * Permite revisar que la informacion ingresada en los campos no exceda los
      * 3 caracteres
-     * 
+     *
      * @param campoIPRMI1 primer campo obtenido
      * @param campoIPRMI2 segundo campo obtenido
      * @param campoIPRMI3 tercer campo obtenido
      * @param campoIPRMI4 cuarto campo obtenido
-     * @return Valor verdadero si todos los campos tienen de 1 a 3 numeros
-     * o valor falso si alguno excede el limite
+     * @return Valor verdadero si todos los campos tienen de 1 a 3 numeros o
+     * valor falso si alguno excede el limite
      */
     public boolean verificarLongitudCamposIPRMI(TextField campoIPRMI1, TextField campoIPRMI2, TextField campoIPRMI3, TextField campoIPRMI4) {
         boolean camposCorrectos = true;
@@ -172,15 +177,15 @@ public class VentanaPeticionIPController implements Initializable {
     }
 
     /**
-     * Permite revisar si alguno de los campos para ingresar la ip de Node 
+     * Permite revisar si alguno de los campos para ingresar la ip de Node
      * excede los 3 caracteres
-     * 
-     * @param campoIPNode1 primer campo obtenido 
+     *
+     * @param campoIPNode1 primer campo obtenido
      * @param campoIPNode2 segundo campo obtenido
      * @param campoIPNode3 tercer campo obtenido
-     * @param campoIPNode4 cuarto campo obtenido     
-     * @return Valor verdadero si todos los campos tienen de 1 a 3 numeros 
-     * o valor falso si alguno excede el limite
+     * @param campoIPNode4 cuarto campo obtenido
+     * @return Valor verdadero si todos los campos tienen de 1 a 3 numeros o
+     * valor falso si alguno excede el limite
      */
     public boolean verificarLongitudCamposIPNode(TextField campoIPNode1, TextField campoIPNode2, TextField campoIPNode3, TextField campoIPNode4) {
         boolean camposCorrectos = true;

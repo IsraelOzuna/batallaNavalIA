@@ -80,7 +80,7 @@ public class VentanaTableroController implements Initializable {
 
     private String nombreJugador;
 
-    private final String coordenadasOcupadas[] = new String[16];
+    private static final String COORDENADAS_OCUPADAS[] = new String[16];
 
     private int posicionesASalvo = 16;
 
@@ -197,7 +197,7 @@ public class VentanaTableroController implements Initializable {
 
             String coordenadasBarco1[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
-            if (barco.verificarCoordenadasLibres(coordenadasBarco1, coordenadasOcupadas)) {
+            if (barco.verificarCoordenadasLibres(coordenadasBarco1, COORDENADAS_OCUPADAS)) {
                 contadorBarcosAcomodados--;
                 guardarCoordenadas(coordenadasBarco1);
                 GridPane.setConstraints(barco1, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
@@ -225,7 +225,7 @@ public class VentanaTableroController implements Initializable {
             String coordenadasBarco2[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
             if (!barco.limitarTablero(coordenadasBarco2, tamanoBarco)) {
-                if (barco.verificarCoordenadasLibres(coordenadasBarco2, coordenadasOcupadas)) {
+                if (barco.verificarCoordenadasLibres(coordenadasBarco2, COORDENADAS_OCUPADAS)) {
                     contadorBarcosAcomodados--;
                     guardarCoordenadas(coordenadasBarco2);
                     GridPane.setConstraints(barco2, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
@@ -256,7 +256,7 @@ public class VentanaTableroController implements Initializable {
             String coordenadasBarco3[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
             if (!barco.limitarTablero(coordenadasBarco3, tamanoBarco)) {
-                if (barco.verificarCoordenadasLibres(coordenadasBarco3, coordenadasOcupadas)) {
+                if (barco.verificarCoordenadasLibres(coordenadasBarco3, COORDENADAS_OCUPADAS)) {
                     contadorBarcosAcomodados--;
                     guardarCoordenadas(coordenadasBarco3);
                     GridPane.setConstraints(barco3, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1);
@@ -287,7 +287,7 @@ public class VentanaTableroController implements Initializable {
             String coordenadasBarco4[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
             if (!barco.limitarTablero(coordenadasBarco4, tamanoBarco)) {
-                if (barco.verificarCoordenadasLibres(coordenadasBarco4, coordenadasOcupadas)) {
+                if (barco.verificarCoordenadasLibres(coordenadasBarco4, COORDENADAS_OCUPADAS)) {
                     contadorBarcosAcomodados--;
                     guardarCoordenadas(coordenadasBarco4);
                     GridPane.setConstraints(barco4, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero + 1);
@@ -319,7 +319,7 @@ public class VentanaTableroController implements Initializable {
             String coordenadasBarco5[] = barco.generarCoordenadas(barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero - 1, tamanoBarco);
 
             if (!barco.limitarTablero(coordenadasBarco5, tamanoBarco)) {
-                if (barco.verificarCoordenadasLibres(coordenadasBarco5, coordenadasOcupadas)) {
+                if (barco.verificarCoordenadasLibres(coordenadasBarco5, COORDENADAS_OCUPADAS)) {
                     contadorBarcosAcomodados--;
                     guardarCoordenadas(coordenadasBarco5);
                     GridPane.setConstraints(barco5, barco.convertirLetrasANumeros(ordenadaLetra), ordenadaNumero + 1);
@@ -490,7 +490,7 @@ public class VentanaTableroController implements Initializable {
      */
     public void guardarCoordenadas(String coordenadas[]) {
         for (String coordenada : coordenadas) {
-            coordenadasOcupadas[contadorCoordenadas] = coordenada;
+            COORDENADAS_OCUPADAS[contadorCoordenadas] = coordenada;
             contadorCoordenadas++;
         }
     }
@@ -501,7 +501,7 @@ public class VentanaTableroController implements Initializable {
      * @param tiroRecibido la coordenada a la cual tiró el rival
      */
     public void registrarTiroRecibido(String tiroRecibido) {
-        for (String coordenadaOcupada : coordenadasOcupadas) {
+        for (String coordenadaOcupada : COORDENADAS_OCUPADAS) {
             if (tiroRecibido.equals(coordenadaOcupada)) {
                 posicionesASalvo--;
             }

@@ -32,16 +32,36 @@ public class ConfiguracionConexion {
      * @param puerto Puerto por el que se intentará comprobar conexión.
      * @return Valor verdadero si la conexión se comprueba o un valor falso en
      * caso de ser lo contrario.
-     * @throws IOException puede arrojar esta excepción si la dirección ingresada
-     * no es correcta o contiene caracteres no validos
+     * @throws IOException puede arrojar esta excepción si la dirección
+     * ingresada no es correcta o contiene caracteres no validos
      */
     public static boolean verificarConexionNode(String ipNode, String puerto) throws IOException {
         boolean estaConectado = false;
+
         socket = new Socket(ipNode, Integer.parseInt(puerto));
         if (socket.isConnected()) {
             estaConectado = true;
-        }
+        }        
+
         return estaConectado;
+    }
+
+    /**
+     *
+     * @param esPuertoValido
+     * @param puerto
+     * @return
+     */
+    public static boolean verificarPuertoNode(boolean esPuertoValido, String puerto) {        
+        try{
+            int puertoNode = Integer.parseInt(puerto);            
+            if(puertoNode > 0){
+                esPuertoValido = true;
+            }
+        }catch(NumberFormatException ex){
+            esPuertoValido = false;
+        }
+        return esPuertoValido;        
     }
 
     /**

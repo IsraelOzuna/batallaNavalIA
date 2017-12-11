@@ -136,42 +136,32 @@ public class VentanaMenuController implements Initializable {
      * Permite desplegar la ventana para buscar partida
      *
      * @param event Un clic en el boton Iniciar Partida
-     * @throws IOException puede arrojar esta excepción si no se completa 
+     * @throws IOException puede arrojar esta excepción si no se completa
      * correctamente la carga de la siguiente ventana
      */
     @FXML
-    public void buscarPartida(ActionEvent event) throws IOException {
-        ConfiguracionConexion puertoNode = new ConfiguracionConexion();
-        String puerto;
-        puerto = puertoNode.obtenerPuertoNode();
+    public void buscarPartida(ActionEvent event) throws IOException {        
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaBuscarPartida.fxml"), idioma);
+        Parent root = (Parent) loger.load();
 
-        try {
-            if (ConfiguracionConexion.verificarConexionNode(ipNode, puerto)) {
-                FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaBuscarPartida.fxml"), idioma);
-                Parent root = (Parent) loger.load();
+        VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
+        controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
+        controladorBuscarPartida.comenzarBusqueda();
 
-                VentanaBuscarPartidaController controladorBuscarPartida = loger.getController();
-                controladorBuscarPartida.obtenerNombreUsuario(nombreUsuario);
-                controladorBuscarPartida.comenzarBusqueda();
-
-                Stage buscarPartida = new Stage();
-                buscarPartida.setScene(new Scene(root));
-                buscarPartida.initStyle(StageStyle.UNDECORATED);
-                buscarPartida.show();
-                Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                ventanaAnterior.close();
-                controladorBuscarPartida.setStageBuscar(buscarPartida);
-            }
-        } catch (IOException ex) {
-            DialogosController.mostrarMensajeAdvertencia("tituloAdvertencia", "encabezadoNoConexionNode", "contenidoNoConexionNode",idioma);
-        }
+        Stage buscarPartida = new Stage();
+        buscarPartida.setScene(new Scene(root));
+        buscarPartida.initStyle(StageStyle.UNDECORATED);
+        buscarPartida.show();
+        Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        ventanaAnterior.close();
+        controladorBuscarPartida.setStageBuscar(buscarPartida);
     }
 
     /**
      * Permite Permite que un jugador cierre sesión.
      *
      * @param event Un clic en el botón Cerrar sesión
-     * @throws IOException puede arrojar esta excepción si no se completa 
+     * @throws IOException puede arrojar esta excepción si no se completa
      * correctamente la carga de la siguiente ventana
      */
     @FXML
