@@ -33,7 +33,7 @@
             <Image url="@../imagenes/radar2.gif" />
          </image>
       </ImageView>
-      <Button fx:id="botonCerrarSesion" layoutX="758.0" layoutY="14.0" mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-background-color: bluedark;" text="Cerrar sesión" textFill="WHITE" underline="true">
+      <Button fx:id="botonCerrarSesion" layoutX="758.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: bluedark;" text="Cerrar sesión" textFill="WHITE" underline="true">
          <font>
             <Font name="Berlin Sans FB" size="12.0" />
          </font>
@@ -44,7 +44,7 @@
             <ColorAdjust />
          </effect>
       </Button>
-      <JFXButton fx:id="botonIniciarPartida" layoutX="325.0" layoutY="350.0" onAction="#buscarPartida" opacity="0.66" prefHeight="81.0" prefWidth="200.0" style="-fx-background-color: #E65C0A;" text="Iniciar partida" textFill="WHITE">
+      <JFXButton fx:id="botonIniciarPartida" layoutX="350.0" layoutY="352.0" opacity="0.66" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #E65C0A;" text="Iniciar partida" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="19.0" />
          </font>
@@ -88,5 +88,13 @@
             <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font>
       </Label>
+      <JFXButton fx:id="botonIniciarPartidaIA" layoutX="350.0" layoutY="411.0" onAction="#jugarIA" opacity="0.66" prefHeight="45.0" prefWidth="150.0" style="-fx-background-color: #E65C0A;" text="Jugar IA" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="19.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </AnchorPane>

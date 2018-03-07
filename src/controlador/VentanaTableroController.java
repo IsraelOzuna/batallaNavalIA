@@ -32,7 +32,7 @@ import negocio.IPartida;
 import negocio.IPuntaje;
 
 /**
- * Plantilla que contiene atrbutos y metodos utilizados para el manejo de las 
+ * Plantilla que contiene atrbutos y metodos utilizados para el manejo de las
  * diferentes acciones que se realizan en la vista VentanaTablero
  *
  * @author Irvin Dereb Vera López
@@ -82,9 +82,13 @@ public class VentanaTableroController implements Initializable {
 
     private static final String COORDENADAS_OCUPADAS[] = new String[16];
 
+    private static final String COORDENADAS_IA[] = new String[16];
+
     private int posicionesASalvo = 16;
 
     private int contadorCoordenadas = 0;
+
+    private int contadorCoordenadasIA = 0;
 
     private int contadorTiros = 3;
 
@@ -111,7 +115,7 @@ public class VentanaTableroController implements Initializable {
     /**
      * Permite desactivar los botones que sean pulsados al momento de realizar
      * los tiros al contrincante
-     * 
+     *
      * @param event Un clic en cualquier botón
      */
     @FXML
@@ -121,7 +125,7 @@ public class VentanaTableroController implements Initializable {
             JFXButton botonPresionado = (JFXButton) event.getSource();
             botonPresionado.setDisable(true);
             botonPresionado.setStyle("-fx-background-color: FF2625");
-            socket.emit("tiroRecibido", botonPresionado.getId(), esPrimerTirador, nombreJugador);
+            //socket.emit("tiroRecibido", botonPresionado.getId(), esPrimerTirador, nombreJugador);
             contadorTiros--;
         }
 
@@ -142,11 +146,11 @@ public class VentanaTableroController implements Initializable {
     }
 
     /**
-     * Permite verificar si ambos combos contienen información para poder 
+     * Permite verificar si ambos combos contienen información para poder
      * acomodar un barco
-     * 
-     * @return Valor verdadero si ambos combos contienen información y falso 
-     * si ambos o alguno de los dos está vacio
+     *
+     * @return Valor verdadero si ambos combos contienen información y falso si
+     * ambos o alguno de los dos está vacio
      */
     public boolean verificarCombos() {
         boolean comboVacio = true;
@@ -185,7 +189,7 @@ public class VentanaTableroController implements Initializable {
 
     /**
      * Permite, con la ayuda de otros métodos implementados en la clase Barco,
-     * realizar el acomodo del barco de una posición en el tablero 
+     * realizar el acomodo del barco de una posición en el tablero
      */
     @FXML
     public void colocarBarco1() {
@@ -210,7 +214,7 @@ public class VentanaTableroController implements Initializable {
     }
 
     /**
-     * Permite, con la ayuda de otros métodos implementados en la clase Barco, 
+     * Permite, con la ayuda de otros métodos implementados en la clase Barco,
      * realizar el acomodo del barco de dos posiciones en el tablero
      */
     @FXML
@@ -272,7 +276,7 @@ public class VentanaTableroController implements Initializable {
     }
 
     /**
-     * Permite, con la ayuda de otros métodos implementados en la clase Barco, 
+     * Permite, con la ayuda de otros métodos implementados en la clase Barco,
      * realizar el acomodo del primer barco de cinco posiciones en el tablero
      */
     @FXML
@@ -337,155 +341,228 @@ public class VentanaTableroController implements Initializable {
     /**
      * Permite realizar la conexión con el servidor de Node para poder comenzar
      * a jugar
-     * @param event clic en el botón empezar 
+     *
+     * @param event clic en el botón empezar
+     *
+     * @FXML public void empezarPartida(ActionEvent event) { if
+     * (contadorBarcosAcomodados == 0) { socket.emit("configurarPartida",
+     * esPrimerTirador, nombreJugador); botonEmpezar.setDisable(true); } else {
+     * DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo",
+     * "encabezadoAcomodarBarcos", "contenidoAcomodarBarcos", idioma); } }
      */
     @FXML
     public void empezarPartida(ActionEvent event) {
-        if (contadorBarcosAcomodados == 0) {
-            socket.emit("configurarPartida", esPrimerTirador, nombreJugador);
-            botonEmpezar.setDisable(true);
-        } else {
-            DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoAcomodarBarcos", "contenidoAcomodarBarcos", idioma);
-        }
+        botonEmpezar.setDisable(true);
+        acomodarBarcosIA();
     }
-    
+
+    public String[] acomodarBarcosIA() {
+        String[] posicionesBarcos = new String[16];
+        for (int i = 1; i <= 5; i++) {
+            if (i == 1) {
+                Barco barco = new Barco();
+                int tamanoBarco = 1;
+
+                int filas = (int) (Math.random() * 10);
+                int columnas = (int) (Math.random() * 10);
+
+                String coordenadasBarco1[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+
+                while (barco.verificarCoordenadasLibres(coordenadasBarco1, posicionesBarcos) == false) {
+                    filas = (int) (Math.random() * 10);
+                    columnas = (int) (Math.random() * 10);
+                    coordenadasBarco1 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                }
+                if (!barco.limitarTablero(coordenadasBarco1, tamanoBarco)) {
+                    guardarCoordenadasIA(coordenadasBarco1);
+                }
+            }
+
+            if (i == 2) {
+                Barco barco = new Barco();
+                int tamanoBarco = 2;
+                int filas = (int) (Math.random() * 10);
+                int columnas = (int) (Math.random() * 10);
+
+                String coordenadasBarco2[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+
+                while (barco.verificarCoordenadasLibres(coordenadasBarco2, posicionesBarcos) == false) {
+                    filas = (int) (Math.random() * 10);
+                    columnas = (int) (Math.random() * 10);
+                    coordenadasBarco2 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                }
+                if (!barco.limitarTablero(coordenadasBarco2, tamanoBarco)) {
+                    guardarCoordenadasIA(coordenadasBarco2);
+                }
+            }
+
+            if (i == 3) {
+                Barco barco = new Barco();
+                int tamanoBarco = 3;
+
+                int filas = (int) (Math.random() * 10);
+                int columnas = (int) (Math.random() * 10);
+
+                String coordenadasBarco3[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+
+                while (barco.verificarCoordenadasLibres(coordenadasBarco3, posicionesBarcos) == false) {
+                    filas = (int) (Math.random() * 10);
+                    columnas = (int) (Math.random() * 10);
+                    coordenadasBarco3 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                }
+                if (!barco.limitarTablero(coordenadasBarco3, tamanoBarco)) {
+                    guardarCoordenadasIA(coordenadasBarco3);
+                }
+            }
+
+            if (i == 5) {
+                Barco barco = new Barco();
+                int tamanoBarco = 5;
+
+                int filas = (int) (Math.random() * 10);
+                int columnas = (int) (Math.random() * 10);
+
+                String coordenadasBarco4[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+
+                while (barco.verificarCoordenadasLibres(coordenadasBarco4, posicionesBarcos) == false) {
+                    filas = (int) (Math.random() * 10);
+                    columnas = (int) (Math.random() * 10);
+                    coordenadasBarco4 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                }
+                if (!barco.limitarTablero(coordenadasBarco4, tamanoBarco)) {
+                    guardarCoordenadasIA(coordenadasBarco4);
+                }
+
+                barco = new Barco();
+                filas = (int) (Math.random() * 10);
+                columnas = (int) (Math.random() * 10);
+
+                String coordenadasBarco5[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+
+                while (barco.verificarCoordenadasLibres(coordenadasBarco5, posicionesBarcos) == false) {
+                    filas = (int) (Math.random() * 10);
+                    columnas = (int) (Math.random() * 10);
+                    coordenadasBarco5 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                }
+                if (!barco.limitarTablero(coordenadasBarco5, tamanoBarco)) {
+                    guardarCoordenadasIA(coordenadasBarco5);
+                }
+            }
+        }
+
+        for (int i = 0; i < 16; i++) {
+            System.out.print(COORDENADAS_IA[i] + " , ");
+        }
+        return posicionesBarcos;
+    }
+
     /**
-     * Permite realizar diferentes acciones de acuerdo a la respuesta que se 
+     * Permite realizar diferentes acciones de acuerdo a la respuesta que se
      * esta esperando del servidor de Node
      */
-    private void jugarPartida() {
-        /**
-         * Espera una señal del servidor de Node para poder comenzar una partida
-         */
-        socket.on("iniciarPartida", (Object... os) -> {
-            if (esPrimerTirador) {
-                tableroOponente.setDisable(false);
-            }
-        });
-                
-        /**
-         * Espera una señal del servidor de Node para relizar acciones con el 
-         * tiro que es recibido, ya sea perder o continuar con la partida
-         */
-        socket.on("tiroContrincante", (Object... os) -> {
-            registrarTiroRecibido((String) os[0]);
-            Platform.runLater(() -> {
-                marcarDisparoRecibido((String) os[0]);
-            });
-            contadorTirosContrincante++;
-            if (Barco.verificarPosicionesBarcosASalvo(posicionesASalvo)) {
-                socket.emit("perderPartida", esPrimerTirador, nombreJugador);
-                Platform.runLater(() -> {
-                    try {
-                        DialogosController.mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste", idioma);
-                        volverMenu();
-                    } catch (IOException ex) {
-                        Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                });
-                try {
-                    String ipRMI1 = conexionRMI.obtenerIPRMI();
-                    Registry registry = LocateRegistry.getRegistry(ipRMI1);
-                    stubPuntaje = (IPuntaje) registry.lookup("ServidorBatallaNaval");
-                    stubPuntaje.actualizarPuntajeJugador(30, nombreJugador);
-                    stubPartida = (IPartida) registry.lookup("ServidorBatallaNaval");
-                    stubPartida.actualizarPartidasPerdidas(nombreJugador);
-                }catch (RemoteException | NotBoundException ex) {
-                    Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else if (contadorTirosContrincante == 3) {
-                contadorTirosContrincante = 0;
-                tableroOponente.setDisable(false);
-            }
-        });
-
-        /**
-         * Espera una señal del servidor de Node para saber si un jugador 
-         * abandonó la partida y quien fue
-         */
-        socket.on("jugadorAbandonoPartida", (Object... os) -> {
-            Platform.runLater(() -> {
-                try {
-                    DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoRivalAbandono", "contenidoRivalAbandono", idioma);
-                    volverMenu();
-                } catch (IOException ex) {
-                    Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-        });
-
-        /**
-         * Espera una señal del servidor de Node para saber si un jugador
-         * de acuerdo a los tiros realizados pudo ganar la partida
-         */
-        socket.on("ganarPartida", (Object... os) -> {
-            Platform.runLater(() -> {
-                try {
-                    DialogosController.mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste", idioma);
-                    volverMenu();
-                } catch (IOException ex) {
-                    Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            
-            try {
-                Registry registry = LocateRegistry.getRegistry(ipRMI);
-                stubPuntaje = (IPuntaje) registry.lookup("ServidorBatallaNaval");
-                stubPuntaje.actualizarPuntajeJugador(100, nombreJugador);
-                stubPartida = (IPartida) registry.lookup("ServidorBatallaNaval");
-                stubPartida.actualizarPartidasGanadas(nombreJugador);
-            } catch (RemoteException | NotBoundException ex) {
-                Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-    }
-
+    //private void jugarPartida() {
     /**
-     * Permite que de acuerdo a lo ocurrido durante la partida, el jugador 
-     * regrese al menú principal 
-     * @throws IOException  puede arrojar esta excepción si no se completa 
-     * correctamente la carga de la siguiente ventana
+     * Espera una señal del servidor de Node para poder comenzar una partida
+     *
+     * socket.on("iniciarPartida", (Object... os) -> { if (esPrimerTirador) {
+     * tableroOponente.setDisable(false); } });
+     *
+     * /**
+     * Espera una señal del servidor de Node para relizar acciones con el tiro
+     * que es recibido, ya sea perder o continuar con la partida
+     *
+     * socket.on("tiroContrincante", (Object... os) -> {
+     * registrarTiroRecibido((String) os[0]); Platform.runLater(() -> {
+     * marcarDisparoRecibido((String) os[0]); }); contadorTirosContrincante++;
+     * if (Barco.verificarPosicionesBarcosASalvo(posicionesASalvo)) {
+     * socket.emit("perderPartida", esPrimerTirador, nombreJugador);
+     * Platform.runLater(() -> { try {
+     * DialogosController.mostrarMensajeInformacion("tituloPerdiste",
+     * "encabezadoPerdiste", "contenidoPerdiste", idioma); volverMenu(); } catch
+     * (IOException ex) {
+     * Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE,
+     * null, ex); } }); try { String ipRMI1 = conexionRMI.obtenerIPRMI();
+     * Registry registry = LocateRegistry.getRegistry(ipRMI1); stubPuntaje =
+     * (IPuntaje) registry.lookup("ServidorBatallaNaval");
+     * stubPuntaje.actualizarPuntajeJugador(30, nombreJugador); stubPartida =
+     * (IPartida) registry.lookup("ServidorBatallaNaval");
+     * stubPartida.actualizarPartidasPerdidas(nombreJugador); }catch
+     * (RemoteException | NotBoundException ex) {
+     * Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE,
+     * null, ex); } } else if (contadorTirosContrincante == 3) {
+     * contadorTirosContrincante = 0; tableroOponente.setDisable(false); } });
      */
-    public void volverMenu() throws IOException {
-        socket.off("iniciarPartida");
-        socket.off("tiroContrincante");
-        socket.off("ganarPartida");
-        socket.off("interrumpirPartida");
-        socket.disconnect();
-        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
-        Parent root = (Parent) loger.load();
-        VentanaMenuController controladorMenu = loger.getController();
-        controladorMenu.obtenerNombreUsuario(nombreJugador);
-        Stage menu = new Stage();
-        menu.setScene(new Scene(root));
-        menu.initStyle(StageStyle.UNDECORATED);
-        menu.show();
-        ventanaActual.close();
-    }
-
     /**
-     * Permite recuperar datos de la ventana Buscar para saber quienes son los 
+     * Espera una señal del servidor de Node para saber si un jugador abandonó
+     * la partida y quien fue
+     *
+     * socket.on("jugadorAbandonoPartida", (Object... os) -> {
+     * Platform.runLater(() -> { try {
+     * DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo",
+     * "encabezadoRivalAbandono", "contenidoRivalAbandono", idioma);
+     * volverMenu(); } catch (IOException ex) {
+     * Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE,
+     * null, ex); } }); });
+     */
+    /**
+     * Espera una señal del servidor de Node para saber si un jugador de acuerdo
+     * a los tiros realizados pudo ganar la partida
+     *
+     * socket.on("ganarPartida", (Object... os) -> { Platform.runLater(() -> {
+     * try { DialogosController.mostrarMensajeInformacion("tituloGanaste",
+     * "encabezadoGanaste", "contenidoGanaste", idioma); volverMenu(); } catch
+     * (IOException ex) {
+     * Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE,
+     * null, ex); } });
+     *
+     * try { Registry registry = LocateRegistry.getRegistry(ipRMI); stubPuntaje
+     * = (IPuntaje) registry.lookup("ServidorBatallaNaval");
+     * stubPuntaje.actualizarPuntajeJugador(100, nombreJugador); stubPartida =
+     * (IPartida) registry.lookup("ServidorBatallaNaval");
+     * stubPartida.actualizarPartidasGanadas(nombreJugador); } catch
+     * (RemoteException | NotBoundException ex) {
+     * Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE,
+     * null, ex); } }); }
+     */
+    /**
+     * Permite que de acuerdo a lo ocurrido durante la partida, el jugador
+     * regrese al menú principal
+     *
+     * @throws IOException puede arrojar esta excepción si no se completa
+     * correctamente la carga de la siguiente ventana
+     *
+     * public void volverMenu() throws IOException {
+     * socket.off("iniciarPartida"); socket.off("tiroContrincante");
+     * socket.off("ganarPartida"); socket.off("interrumpirPartida");
+     * socket.disconnect(); FXMLLoader loger = new
+     * FXMLLoader(getClass().getResource("/vista/VentanaMenu.fxml"), idioma);
+     * Parent root = (Parent) loger.load(); VentanaMenuController
+     * controladorMenu = loger.getController();
+     * controladorMenu.obtenerNombreUsuario(nombreJugador); Stage menu = new
+     * Stage(); menu.setScene(new Scene(root));
+     * menu.initStyle(StageStyle.UNDECORATED); menu.show();
+     * ventanaActual.close(); }
+     */
+    /**
+     * Permite recuperar datos de la ventana Buscar para saber quienes son los
      * jugadores que estarán en esa partida
-     * 
+     *
      * @param socket el lugar a donde se hará la conexión en Node
      * @param nombreJugador El nombre de usuario del jugador local
      * @param nombreRival El nombre de usuario del rival
      * @param primerTirador para saber si es el primer o segundo tirador
+     *
+     * public void adquirirDatos(Socket socket, String nombreJugador, String
+     * nombreRival, Boolean primerTirador) { this.socket = socket;
+     * this.nombreJugador = nombreJugador; this.nombreRival = nombreRival;
+     * this.esPrimerTirador = primerTirador;
+     * etiquetaMiUsuario.setText(nombreJugador);
+     * etiquetaUsuarioRival.setText(nombreRival); jugarPartida(); }
      */
-    public void adquirirDatos(Socket socket, String nombreJugador, String nombreRival, Boolean primerTirador) {
-        this.socket = socket;
-        this.nombreJugador = nombreJugador;
-        this.nombreRival = nombreRival;
-        this.esPrimerTirador = primerTirador;
-        etiquetaMiUsuario.setText(nombreJugador);
-        etiquetaUsuarioRival.setText(nombreRival);
-        jugarPartida();
-    }
-
     /**
      * Permite almacenar todas las coordenadas donde fueron posicionados los
      * barcos del jugador
-     * 
+     *
      * @param coordenadas arreglo en donde se almacenan las coordenadas
      */
     public void guardarCoordenadas(String coordenadas[]) {
@@ -495,9 +572,16 @@ public class VentanaTableroController implements Initializable {
         }
     }
 
+    public void guardarCoordenadasIA(String coordenadas[]) {
+        for (String coordenada : coordenadas) {
+            COORDENADAS_IA[contadorCoordenadasIA] = coordenada;
+            contadorCoordenadasIA++;
+        }
+    }
+
     /**
      * Permite guardar el tiro del rival para saber si atino a un barco o no
-     * 
+     *
      * @param tiroRecibido la coordenada a la cual tiró el rival
      */
     public void registrarTiroRecibido(String tiroRecibido) {
@@ -510,7 +594,7 @@ public class VentanaTableroController implements Initializable {
 
     /**
      * Permite marcar en el tablero propio los disparos que el rival ha hecho
-     * 
+     *
      * @param tiroRecibido la coordenada a la cual tiró el rival
      */
     public void marcarDisparoRecibido(String tiroRecibido) {
@@ -524,9 +608,9 @@ public class VentanaTableroController implements Initializable {
     }
 
     /**
-     * Permite recibir uns instancia del tablero para poder cerrarlo cuando
-     * sea necesario
-     * 
+     * Permite recibir uns instancia del tablero para poder cerrarlo cuando sea
+     * necesario
+     *
      * @param ventanaActual scene del tablero
      */
     public void setStageTablero(Stage ventanaActual) {
@@ -535,16 +619,14 @@ public class VentanaTableroController implements Initializable {
 
     /**
      * Permite verificar cual jugador fue el que abandonó la partida
-     * 
+     *
      * @param event clic en abandonar partida
+     *
+     *
+     * public void abandonarPartida(ActionEvent event) {
+     * socket.emit("interrumpirPartida", esPrimerTirador, nombreJugador); try {
+     * volverMenu(); } catch (IOException ex) {
+     * Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE,
+     * null, ex); } }
      */
-    @FXML
-    public void abandonarPartida(ActionEvent event) {
-        socket.emit("interrumpirPartida", esPrimerTirador, nombreJugador);
-        try {
-            volverMenu();
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaTableroController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

@@ -65,15 +65,15 @@ public class VentanaMenuController implements Initializable {
 
     private String ipNode;
 
-    ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
+    //ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
 
-    String ipRMI = conexionRMI.obtenerIPRMI();
+    //String ipRMI = conexionRMI.obtenerIPRMI();
 
     @Override
     public void initialize(URL url, ResourceBundle idioma) {
         this.idioma = idioma;
         configurarIdioma();
-        llenarTabla();
+        //llenarTabla();
     }
 
     /**
@@ -101,15 +101,15 @@ public class VentanaMenuController implements Initializable {
      *
      * @param ipNode Tomará el valor de la IP Node registrada en el archivo
      * properties.
-     */
+     
     public void obtenerIpNode(String ipNode) {
         this.ipNode = ipNode;
-    }
+    }*/
 
     /**
      * Permite llenar la tabla de ranking con los mejores puntajes obtenidos por
      * los jugadores
-     */
+     
     public void llenarTabla() {
         IPuntaje stubPuntaje;
         List<Puntaje> mejoresPuntajes = new ArrayList();
@@ -130,7 +130,7 @@ public class VentanaMenuController implements Initializable {
         etiquetaPuntajeJugador2.setText(String.valueOf(mejoresPuntajes.get(1).getPuntosTotales()));
         etiquetaJugador3.setText(mejoresPuntajes.get(2).getNombreJugador());
         etiquetaPuntajeJugador3.setText(String.valueOf(mejoresPuntajes.get(2).getPuntosTotales()));
-    }
+    }*/
 
     /**
      * Permite desplegar la ventana para buscar partida
@@ -138,7 +138,7 @@ public class VentanaMenuController implements Initializable {
      * @param event Un clic en el boton Iniciar Partida
      * @throws IOException puede arrojar esta excepción si no se completa
      * correctamente la carga de la siguiente ventana
-     */
+     
     @FXML
     public void buscarPartida(ActionEvent event) throws IOException {        
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaBuscarPartida.fxml"), idioma);
@@ -155,6 +155,19 @@ public class VentanaMenuController implements Initializable {
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
         controladorBuscarPartida.setStageBuscar(buscarPartida);
+    }*/
+    
+    @FXML
+    public void jugarIA (ActionEvent event) throws IOException{
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaTablero.fxml"), idioma);
+        Parent root = (Parent) loger.load();
+        VentanaTableroController controladorTablero = loger.getController();        
+        Stage tablero = new Stage();
+        tablero.setScene(new Scene(root));
+        tablero.initStyle(StageStyle.UNDECORATED);
+        tablero.show();
+        controladorTablero.setStageTablero(tablero);
+        //ventanaActual.close();
     }
 
     /**
@@ -163,7 +176,7 @@ public class VentanaMenuController implements Initializable {
      * @param event Un clic en el botón Cerrar sesión
      * @throws IOException puede arrojar esta excepción si no se completa
      * correctamente la carga de la siguiente ventana
-     */
+     
     @FXML
     public void cerrarSesion(ActionEvent event) throws IOException {
         IJugador stubJugador;
@@ -183,5 +196,5 @@ public class VentanaMenuController implements Initializable {
         iniciarSesion.show();
         Stage ventanaRegistrar = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaRegistrar.close();
-    }
+    }*/
 }

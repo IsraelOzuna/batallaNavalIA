@@ -112,7 +112,7 @@ public class VentanaBuscarPartidaController implements Initializable {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaTablero.fxml"), idioma);
         Parent root = (Parent) loger.load();
         VentanaTableroController controladorTablero = loger.getController();
-        controladorTablero.adquirirDatos(socket, nombreUsuario, nombreRival, primerTirador);
+        //controladorTablero.adquirirDatos(socket, nombreUsuario, nombreRival, primerTirador);
         Stage tablero = new Stage();
         tablero.setScene(new Scene(root));
         tablero.initStyle(StageStyle.UNDECORATED);

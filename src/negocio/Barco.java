@@ -50,7 +50,7 @@ public class Barco {
 
         return coordenadas;
     }
-
+    
     /**
      * Permite verificar si las coordenadas que ocupará un barco no están
      * ocupadas

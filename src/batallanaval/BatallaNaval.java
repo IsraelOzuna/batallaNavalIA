@@ -32,7 +32,7 @@ public class BatallaNaval extends Application {
     @Override
     public void start(Stage ventanaIP) throws IOException {
         ResourceBundle idioma = ResourceBundle.getBundle("recursos.idioma_es_MX");
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaPeticionIP.fxml"),idioma);
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/VentanaMenu.fxml"),idioma);
         
         Scene scene = new Scene(root);
         
