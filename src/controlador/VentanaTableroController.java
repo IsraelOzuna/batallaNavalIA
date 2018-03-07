@@ -2,7 +2,7 @@ package controlador;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import io.socket.client.Socket;
+
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -76,7 +76,6 @@ public class VentanaTableroController implements Initializable {
 
     private Boolean esPrimerTirador;
 
-    private Socket socket;
 
     private String nombreJugador;
 
@@ -95,6 +94,8 @@ public class VentanaTableroController implements Initializable {
     private int contadorTirosContrincante = 0;
 
     private int contadorBarcosAcomodados = 5;
+    
+    private int contadorBarcosAcomodadosIA = 5;
 
     private IPuntaje stubPuntaje;
 
@@ -365,17 +366,17 @@ public class VentanaTableroController implements Initializable {
 
                 int filas = (int) (Math.random() * 10);
                 int columnas = (int) (Math.random() * 10);
-
+                
                 String coordenadasBarco1[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
 
-                while (barco.verificarCoordenadasLibres(coordenadasBarco1, posicionesBarcos) == false) {
+                while (barco.verificarCoordenadasLibres(coordenadasBarco1, COORDENADAS_IA) == false || barco.limitarTablero(coordenadasBarco1, tamanoBarco)) {
                     filas = (int) (Math.random() * 10);
                     columnas = (int) (Math.random() * 10);
                     coordenadasBarco1 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
                 }
-                if (!barco.limitarTablero(coordenadasBarco1, tamanoBarco)) {
-                    guardarCoordenadasIA(coordenadasBarco1);
-                }
+                contadorBarcosAcomodadosIA--;
+                guardarCoordenadasIA(coordenadasBarco1);
+                System.out.println("ingresa el 1");
             }
 
             if (i == 2) {
@@ -383,17 +384,17 @@ public class VentanaTableroController implements Initializable {
                 int tamanoBarco = 2;
                 int filas = (int) (Math.random() * 10);
                 int columnas = (int) (Math.random() * 10);
-
+                
                 String coordenadasBarco2[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
 
-                while (barco.verificarCoordenadasLibres(coordenadasBarco2, posicionesBarcos) == false) {
+                while (barco.verificarCoordenadasLibres(coordenadasBarco2, COORDENADAS_IA) == false || barco.limitarTablero(coordenadasBarco2, tamanoBarco)) {
                     filas = (int) (Math.random() * 10);
                     columnas = (int) (Math.random() * 10);
                     coordenadasBarco2 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
                 }
-                if (!barco.limitarTablero(coordenadasBarco2, tamanoBarco)) {
-                    guardarCoordenadasIA(coordenadasBarco2);
-                }
+                contadorBarcosAcomodadosIA--;
+                guardarCoordenadasIA(coordenadasBarco2);
+                System.out.println("ingresa el 2");
             }
 
             if (i == 3) {
@@ -404,15 +405,15 @@ public class VentanaTableroController implements Initializable {
                 int columnas = (int) (Math.random() * 10);
 
                 String coordenadasBarco3[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
-
-                while (barco.verificarCoordenadasLibres(coordenadasBarco3, posicionesBarcos) == false) {
+                
+                while (barco.verificarCoordenadasLibres(coordenadasBarco3, COORDENADAS_IA) == false || barco.limitarTablero(coordenadasBarco3, tamanoBarco)) {
                     filas = (int) (Math.random() * 10);
                     columnas = (int) (Math.random() * 10);
                     coordenadasBarco3 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
                 }
-                if (!barco.limitarTablero(coordenadasBarco3, tamanoBarco)) {
-                    guardarCoordenadasIA(coordenadasBarco3);
-                }
+                contadorBarcosAcomodadosIA--;
+                guardarCoordenadasIA(coordenadasBarco3);
+                System.out.println("ingresa el 3");
             }
 
             if (i == 5) {
@@ -421,32 +422,40 @@ public class VentanaTableroController implements Initializable {
 
                 int filas = (int) (Math.random() * 10);
                 int columnas = (int) (Math.random() * 10);
-
+                
                 String coordenadasBarco4[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
-
-                while (barco.verificarCoordenadasLibres(coordenadasBarco4, posicionesBarcos) == false) {
+                System.out.println(filas);
+                System.out.println(columnas);
+                while (barco.verificarCoordenadasLibres(coordenadasBarco4, COORDENADAS_IA) == false || barco.limitarTablero(coordenadasBarco4, tamanoBarco)) {
                     filas = (int) (Math.random() * 10);
                     columnas = (int) (Math.random() * 10);
                     coordenadasBarco4 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                    System.out.println("entra al while");
+                    System.out.println(coordenadasBarco4[0] + "," + coordenadasBarco4[1]);
                 }
-                if (!barco.limitarTablero(coordenadasBarco4, tamanoBarco)) {
-                    guardarCoordenadasIA(coordenadasBarco4);
-                }
+                contadorBarcosAcomodadosIA--;
+                guardarCoordenadasIA(coordenadasBarco4);
+                System.out.println("ingresa el 5.1");
 
                 barco = new Barco();
                 filas = (int) (Math.random() * 10);
                 columnas = (int) (Math.random() * 10);
-
+                System.out.println(filas);
+                System.out.println(columnas);
                 String coordenadasBarco5[] = barco.generarCoordenadas(filas, columnas, tamanoBarco);
 
-                while (barco.verificarCoordenadasLibres(coordenadasBarco5, posicionesBarcos) == false) {
+                while (barco.verificarCoordenadasLibres(coordenadasBarco5, COORDENADAS_IA) == false  || barco.limitarTablero(coordenadasBarco5, tamanoBarco)) {
                     filas = (int) (Math.random() * 10);
                     columnas = (int) (Math.random() * 10);
+                    System.out.println(filas);
+                    System.out.println(columnas);
+                    System.out.println("Entra al while2");
                     coordenadasBarco5 = barco.generarCoordenadas(filas, columnas, tamanoBarco);
+                    System.out.println(coordenadasBarco5[0] + "," + coordenadasBarco5[1]);
                 }
-                if (!barco.limitarTablero(coordenadasBarco5, tamanoBarco)) {
-                    guardarCoordenadasIA(coordenadasBarco5);
-                }
+                contadorBarcosAcomodadosIA--;
+                guardarCoordenadasIA(coordenadasBarco5);
+                System.out.println("ingresa el 5.2");
             }
         }
 
