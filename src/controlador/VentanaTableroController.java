@@ -9,6 +9,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,13 +98,15 @@ public class VentanaTableroController implements Initializable {
 
     private int contadorBarcosAcomodadosIA = 5;
 
+    Queue<String> cola = new LinkedList();
+
     private IPuntaje stubPuntaje;
 
     private IPartida stubPartida;
 
     private Stage ventanaActual;
 
-    private int[][] visitados = new int[10][10];
+    private String[][] visitados = new String[10][10];
 
     ConfiguracionConexion conexionRMI = new ConfiguracionConexion();
     String ipRMI = conexionRMI.obtenerIPRMI();
@@ -356,6 +360,16 @@ public class VentanaTableroController implements Initializable {
     public void empezarPartida(ActionEvent event) {
         botonEmpezar.setDisable(true);
         acomodarBarcosIA();
+        llenarMatriz();
+    }
+
+    public void llenarMatriz() {
+        //poner visitados en 0's
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                visitados[i][j] = "0";
+            }
+        }
     }
 
     public void acomodarBarcosIA() {
@@ -448,6 +462,7 @@ public class VentanaTableroController implements Initializable {
         for (int i = 0; i < 16; i++) {
             System.out.print(COORDENADAS_IA[i] + " , ");
         }
+
         realizarTiros();
     }
 
@@ -609,36 +624,101 @@ public class VentanaTableroController implements Initializable {
     }
 
     public void tirosIA() {
-        int hijo;
         for (int i = 0; i < 3; i++) {
-            int fila = (int) (Math.random() * 10);
-            int columna = (int) (Math.random() * 10);
-            String coord = String.valueOf(fila) + "," + String.valueOf(columna);            
-
-            for (int j = 0; j < 16; j++) {
-                while (!coord.equals(COORDENADAS_IA[j])) {
-                    fila = (int) (Math.random() * 10);
-                    columna = (int) (Math.random() * 10);                    
-                }
+            if (cola.isEmpty()) {
+                String coord = escogerCasillaRandom();
+            } else {
+                verificarCoordenadasVisitadas(cola.peek());
+                meterHijosACola(cola.peek());
+                marcarDisparoRecibido(cola.poll());
             }
-            
-            for (int j = 0; j < COORDENADAS_IA.length; j++) {
-                if (coord.equals(COORDENADAS_IA[j])) {
-                    marcarDisparoRecibido(coord);
-                    //Norte
-                    hijo = fila - 1;
-                    if (COORDENADAS_IA[hijo].equals(String.valueOf(hijo) + "," + String.valueOf(columna))) {
-                        visitados[hijo][columna] = 1;
-                        marcarDisparoRecibido(String.valueOf(hijo) + "," + String.valueOf(columna));
-                        marcarDisparoRecibido(String.valueOf(hijo - 1) + "," + String.valueOf(columna));
-                        visitados[hijo - 1][columna] = 1;
-                    }
+        }
+        realizarTiros();
+    }
 
-                }
+    public String escogerCasillaRandom() {
+        String coord = "";
+        int fila = (int) (Math.random() * 10);
+        int columna = (int) (Math.random() * 10);
+        String coordenada = String.valueOf(columna) + "," + String.valueOf(fila);
+        while (verificarCoordenadasVisitadas(coordenada)) {
+            fila = (int) (Math.random() * 10);
+            columna = (int) (Math.random() * 10);
+            coordenada = String.valueOf(columna) + "," + String.valueOf(fila);
+        }
+        marcarDisparoRecibido(coordenada);
+        if (checarSiDioEnBlanco(coordenada)) {
+            meterHijosACola(coordenada);
+        }
+        return coord;
+    }
+
+    public void meterHijosACola(String coordenada) {
+        System.out.println("Se ejecuta metodo meterHijosCola");
+        String[] coord = coordenada.split(",");
+        String nuevaCoord;
+        int fila;
+        int columna;
+        //norte
+        fila = Integer.parseInt(coord[1]) - 1;
+        columna = Integer.parseInt(coord[0]);
+        nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
+        for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
+            if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
+                System.out.println("Se agrega a la cola");
+                cola.add(nuevaCoord);
+            }
+        }
+        //sur
+        fila = Integer.parseInt(coord[1]) + 1;
+        columna = Integer.parseInt(coord[0]);
+        nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
+        for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
+            if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
+                cola.add(nuevaCoord);
             }
         }
 
-        realizarTiros();
+        //este
+        fila = Integer.parseInt(coord[1]);
+        columna = Integer.parseInt(coord[0]) + 1;
+        nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
+        for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
+            if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
+                cola.add(nuevaCoord);
+            }
+        }
+
+        //oeste
+        fila = Integer.parseInt(coord[1]);
+        columna = Integer.parseInt(coord[0]) - 1;
+        nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
+        for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
+            if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
+                cola.add(nuevaCoord);
+            }
+        }
+    }
+
+    public boolean checarSiDioEnBlanco(String coordenada) {
+        boolean siAtino = false;
+        for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
+            if (COORDENADAS_OCUPADAS[i].equals(coordenada)) {
+                siAtino = true;
+            }
+        }
+        return siAtino;
+    }
+
+    public boolean verificarCoordenadasVisitadas(String coordenada) {
+        boolean esta = true;
+        String[] coord = coordenada.split(",");
+        System.out.println(coord[0] + "," + coord[1]);
+        if (visitados[Integer.parseInt(coord[0])][Integer.parseInt(coord[1])].equals("0")) {
+            visitados[Integer.parseInt(coord[0])][Integer.parseInt(coord[1])] = "1";
+            esta = false;
+        }
+        return esta;
     }
 
     /**
