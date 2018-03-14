@@ -1,7 +1,7 @@
 package controlador;
 
-import io.socket.client.IO;
-import io.socket.client.Socket;
+//import io.socket.client.IO;
+//import io.socket.client.Socket;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -28,7 +28,7 @@ public class VentanaBuscarPartidaController implements Initializable {
 
     private ResourceBundle idioma;
     private String nombreUsuario;
-    private Socket socket;
+    //private Socket socket;
 
     Stage ventanaActual;
 
@@ -60,17 +60,17 @@ public class VentanaBuscarPartidaController implements Initializable {
     /**
      * Permite iniciar la búsqueda de una partida.
      */
-    public void comenzarBusqueda() {
+    /*public void comenzarBusqueda() {
         try {
             ConfiguracionConexion conexionNode = new ConfiguracionConexion();
             String ipNode = conexionNode.obtenerIPNode();
             String puertoNode = conexionNode.obtenerPuertoNode();
             crearConexion(ipNode, puertoNode);
-            socket.emit("buscarPartida", nombreUsuario);
+            //socket.emit("buscarPartida", nombreUsuario);
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaBuscarPartidaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 
     /**
      * Permite crear conexión con el servidor Node.
@@ -82,7 +82,7 @@ public class VentanaBuscarPartidaController implements Initializable {
      * @throws URISyntaxException puede arrojar esta excepción si la dirección
      * a Node no es la correcta
      */
-    private void crearConexion(String node, String puerto) throws URISyntaxException {
+    /*private void crearConexion(String node, String puerto) throws URISyntaxException {
 
         socket = IO.socket("http://" + node + ":" + puerto);
 
@@ -97,7 +97,7 @@ public class VentanaBuscarPartidaController implements Initializable {
             });
         });
         socket.connect();
-    }
+    }*/
 
     /**
      * Permite desplegar la VentanaTablero.

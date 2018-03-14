@@ -621,6 +621,7 @@ public class VentanaTableroController implements Initializable {
      */
     public void marcarDisparoRecibido(String tiroRecibido) {
         String arregloCoordenadasDisparo[];
+        System.out.println("Marca disparo recibido " + tiroRecibido);
         arregloCoordenadasDisparo = tiroRecibido.split(",");
         ImageView bala = new ImageView("imagenes/balazo.png");
         bala.setFitHeight(39);
@@ -640,12 +641,16 @@ public class VentanaTableroController implements Initializable {
             if (cola.isEmpty()) {
                 escogerCasillaRandom();
             } else {
-                verificarCoordenadasVisitadas(cola.peek());
+                while(verificarCoordenadasVisitadas(cola.peek())){
+                    System.out.println("coordenada " + cola.peek() + " ya se visitÃ³ y se saca");
+                    cola.poll();
+                }
                 meterHijosACola(cola.peek());
                 marcarDisparoRecibido(cola.poll());
             }
         }
         realizarTiros();
+        System.out.println("Termina turno");
     }
 
     public String escogerCasillaRandom() {
@@ -666,6 +671,7 @@ public class VentanaTableroController implements Initializable {
     }
 
     public void meterHijosACola(String coordenada) {
+        System.out.println("Se ejecuta metodo meterHijosCola");
         String[] coord = coordenada.split(",");
         String nuevaCoord;
         int fila;
@@ -676,7 +682,10 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {                
-                cola.add(nuevaCoord);
+                if(visitados[columna][fila].equals("0")){
+                    System.out.println("Se agrega a la cola hijo norte " + nuevaCoord);
+                    cola.add(nuevaCoord);
+                }
             }
         }
         //sur
@@ -685,7 +694,10 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
-                cola.add(nuevaCoord);
+                if(visitados[columna][fila].equals("0")){
+                    cola.add(nuevaCoord);
+                    System.out.println("Se agrega a la cola hijo sur " + nuevaCoord);
+                }
             }
         }
 
@@ -695,7 +707,10 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
-                cola.add(nuevaCoord);
+                if(visitados[columna][fila].equals("0")){
+                    cola.add(nuevaCoord);
+                    System.out.println("Se agrega a la cola hijo este " + nuevaCoord);
+                }
             }
         }
 
@@ -705,7 +720,10 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
-                cola.add(nuevaCoord);
+                if(visitados[columna][fila].equals("0")){
+                    cola.add(nuevaCoord);
+                    System.out.println("Se agrega a la cola hijo oeste" + nuevaCoord);
+                }
             }
         }
     }
