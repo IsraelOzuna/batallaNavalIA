@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -86,6 +87,8 @@ public class VentanaTableroController implements Initializable {
 
     private int posicionesASalvo = 16;
 
+    private int posicionesASalvoIA = 16;
+
     private int contadorCoordenadas = 0;
 
     private int contadorCoordenadasIA = 0;
@@ -125,14 +128,19 @@ public class VentanaTableroController implements Initializable {
      * @param event Un clic en cualquier botón
      */
     @FXML
-    public void desactivarBoton(ActionEvent event) {
+    public void desactivarBoton(ActionEvent event) throws IOException {
         JFXButton botonPresionado = (JFXButton) event.getSource();
         String coordenada = botonPresionado.getId();
         if (contadorTiros > 0) {
             for (int i = 0; i < COORDENADAS_IA.length; i++) {
                 if (COORDENADAS_IA[i].equals(coordenada)) {
+                    posicionesASalvoIA--;
                     botonPresionado.setDisable(true);
                     botonPresionado.setStyle("-fx-background-color: 009900");
+                    if (posicionesASalvoIA == 0) {
+                        DialogosController.mostrarMensajeInformacion("tituloGanaste", "encabezadoGanaste", "contenidoGanaste", idioma);
+                        ventanaActual.close();                      
+                    }
                     break;
                 } else {
                     botonPresionado.setDisable(true);
@@ -370,7 +378,7 @@ public class VentanaTableroController implements Initializable {
             botonEmpezar.setDisable(true);
             acomodarBarcosIA();
             llenarMatriz();
-        }else{
+        } else {
             DialogosController.mostrarMensajeInformacion("tituloCuadroDialogo", "encabezadoAcomodaBarcos", "contenidoAcomodaBarcos", idioma);
         }
     }
@@ -610,6 +618,7 @@ public class VentanaTableroController implements Initializable {
         for (String coordenadaOcupada : COORDENADAS_OCUPADAS) {
             if (tiroRecibido.equals(coordenadaOcupada)) {
                 posicionesASalvo--;
+                System.out.println(posicionesASalvo);
             }
         }
     }
@@ -621,7 +630,6 @@ public class VentanaTableroController implements Initializable {
      */
     public void marcarDisparoRecibido(String tiroRecibido) {
         String arregloCoordenadasDisparo[];
-        System.out.println("Marca disparo recibido " + tiroRecibido);
         arregloCoordenadasDisparo = tiroRecibido.split(",");
         ImageView bala = new ImageView("imagenes/balazo.png");
         bala.setFitHeight(39);
@@ -636,17 +644,22 @@ public class VentanaTableroController implements Initializable {
         }
     }
 
-    public void tirosIA() {
+    public void tirosIA() throws IOException {
         for (int i = 0; i < 3; i++) {
             if (cola.isEmpty()) {
                 escogerCasillaRandom();
             } else {
-                while(verificarCoordenadasVisitadas(cola.peek())){
-                    System.out.println("coordenada " + cola.peek() + " ya se visitÃ³ y se saca");
+                while (verificarCoordenadasVisitadas(cola.peek())) {
+                    System.out.println("coordenada " + cola.peek() + " ya se visito y se saca");
                     cola.poll();
                 }
                 meterHijosACola(cola.peek());
                 marcarDisparoRecibido(cola.poll());
+                posicionesASalvo--;
+                if (posicionesASalvo == 0) {
+                    DialogosController.mostrarMensajeInformacion("tituloPerdiste", "encabezadoPerdiste", "contenidoPerdiste", idioma);
+                    ventanaActual.close();
+                }
             }
         }
         realizarTiros();
@@ -681,8 +694,8 @@ public class VentanaTableroController implements Initializable {
         columna = Integer.parseInt(coord[0]);
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
-            if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {                
-                if(visitados[columna][fila].equals("0")){
+            if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
+                if (visitados[columna][fila].equals("0")) {
                     System.out.println("Se agrega a la cola hijo norte " + nuevaCoord);
                     cola.add(nuevaCoord);
                 }
@@ -694,7 +707,7 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
-                if(visitados[columna][fila].equals("0")){
+                if (visitados[columna][fila].equals("0")) {
                     cola.add(nuevaCoord);
                     System.out.println("Se agrega a la cola hijo sur " + nuevaCoord);
                 }
@@ -707,7 +720,7 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
-                if(visitados[columna][fila].equals("0")){
+                if (visitados[columna][fila].equals("0")) {
                     cola.add(nuevaCoord);
                     System.out.println("Se agrega a la cola hijo este " + nuevaCoord);
                 }
@@ -720,7 +733,7 @@ public class VentanaTableroController implements Initializable {
         nuevaCoord = String.valueOf(columna) + "," + String.valueOf(fila);
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(nuevaCoord)) {
-                if(visitados[columna][fila].equals("0")){
+                if (visitados[columna][fila].equals("0")) {
                     cola.add(nuevaCoord);
                     System.out.println("Se agrega a la cola hijo oeste" + nuevaCoord);
                 }
@@ -733,6 +746,8 @@ public class VentanaTableroController implements Initializable {
         for (int i = 0; i < COORDENADAS_OCUPADAS.length; i++) {
             if (COORDENADAS_OCUPADAS[i].equals(coordenada)) {
                 siAtino = true;
+                posicionesASalvo--;
+                System.out.println(posicionesASalvo);
             }
         }
         return siAtino;
@@ -740,7 +755,7 @@ public class VentanaTableroController implements Initializable {
 
     public boolean verificarCoordenadasVisitadas(String coordenada) {
         boolean encontrado = true;
-        String[] coord = coordenada.split(",");        
+        String[] coord = coordenada.split(",");
         if (visitados[Integer.parseInt(coord[0])][Integer.parseInt(coord[1])].equals("0")) {
             visitados[Integer.parseInt(coord[0])][Integer.parseInt(coord[1])] = "1";
             encontrado = false;
@@ -756,8 +771,7 @@ public class VentanaTableroController implements Initializable {
      */
     public void setStageTablero(Stage ventanaActual) {
         this.ventanaActual = ventanaActual;
-    }
-
+    }    
     /**
      * Permite verificar cual jugador fue el que abandonó la partida
      *
